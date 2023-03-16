@@ -1,0 +1,51 @@
+.playbar_container{
+    position: fixed;
+    height: 90px;
+    width: 100%;
+    bottom: 0;
+    display:flex;
+    justify-content: center;
+    background-color: #181818;
+    border-top: 1px solid #242424;
+}
+
+.icons{
+    position: relative;
+    top: 9px;
+    height: 50%;
+    width: 210px;
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.icons #shuffle{
+    position: relative;
+    top: 2px;
+    right: 42px;
+}
+
+.icons #previous{
+    position: relative;
+    top: 2px;
+    right: 17px;
+}
+
+.icons #play{
+    position: relative;
+    top: 5px;
+    right: 1px;
+}
+
+.icons #next{
+    position: relative;
+    top: 2px;
+    left: 15px;
+}
+
+.icons #repeat{
+    position: relative;
+    top: 2px;
+    left: 40px;
+}
