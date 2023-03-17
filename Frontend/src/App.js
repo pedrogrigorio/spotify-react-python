@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Footer from './components/Footer/Footer';
-import SideBar from './components/SideBar/SideBar'
-import styles from './App.module.css';
+import SideBar from './components/SideMenu/SideMenu'
+import './App.css';
 
  
 
@@ -41,7 +41,7 @@ function App() {
 
 
   return (
-    <div className={styles.layout}>
+    <div className="App">
         {/* <button onClick={() => searchMusic()}>Aperte aqui</button>
         <button onClick={() => readInfo()}>Ver informações</button> */}
         <SideBar />

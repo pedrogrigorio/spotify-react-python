@@ -4,7 +4,7 @@ import FooterRight from './FooterRight';
 import MusicControlBox from './player/MusicControl';
 import MusicProgressBar from './player/ProgressBar';
 import Audio from './Audio'
-import styles from "../Styles/footer.module.css";
+import styles from "./Styles/Footer.module.css";
 import useWindowSize from '../hooks/WindowSize';
 
 

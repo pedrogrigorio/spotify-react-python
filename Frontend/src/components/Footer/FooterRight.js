@@ -3,7 +3,7 @@ import * as Icons from '../icons';
 import IconButton from '../buttons/ButtonIconSelect';
 import RangeSlider from './Slider';
 
-import styles from "../Styles/footer-right.module.css";
+import styles from "./Styles/FooterRight.module.css";
 
 
 export default function FooterRigth(props){

@@ -1,5 +1,5 @@
 import TextRegularM from '../text/BasicTextManager';
-import styles from "../Styles/footer-left.module.css";
+import styles from "./Styles/FooterLeft.module.css";
 
 export default function FooterLeft(props) {
     return (

@@ -16,5 +16,4 @@ export default function convertTime(time) {
     ret = ret.map(re => `${re}`.padStart(2, '0'));
   
     return ret.join(':');
-  }
-  
+}
