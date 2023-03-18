@@ -1,9 +1,14 @@
-import { useState } from 'react';
-import Footer from './components/Footer/Footer';
-import SideBar from './components/SideMenu/SideMenu'
 import './App.css';
-
- 
+import Container from './components/layout/Container/Container';
+import Footer from './components/layout/Footer/Footer';
+import SideMenu from './components/layout/SideMenu/SideMenu';
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import { useState } from 'react';
+import Home from './components/pages/Home';
+import Search from './components/pages/Search';
+import Library from './components/pages/Library';
+import LikedSongs from './components/pages/LikedSongs';
+import teste from './img/teste.jpg'
 
 function App() {
 
@@ -33,19 +38,28 @@ function App() {
 
         });  
     });
-}
+  }
 
   function readInfo() { 
     console.log(songs.img_src)
   }
 
-
   return (
     <div className="App">
-        {/* <button onClick={() => searchMusic()}>Aperte aqui</button>
-        <button onClick={() => readInfo()}>Ver informações</button> */}
-        <SideBar />
-        <Footer img={songs.img_src} title={songs.title} artist={songs.artist} trackData={songs.src}/>  
+      <Router>
+        <SideMenu />
+        <Container>
+          <Routes>
+            <Route path='/' element={<Home />}></Route>
+            <Route path='/search' element={<Library />}></Route>
+            <Route path='/library' element={<Search />}></Route>
+            <Route path='/library' element={<Search />}></Route>
+            <Route path='/liked-songs' element={<LikedSongs />}></Route>
+          </Routes>
+        </Container>
+        <Footer img={teste} title="Billie Jean" artist="Alexandr Misko"/>
+      </Router>
+      
     </div>
   );
 }

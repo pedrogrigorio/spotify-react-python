@@ -1,0 +1,17 @@
+.soundBar{
+    display: flex;
+    align-items: center;
+}
+
+.soundBar #volume{
+    position: relative;
+    right: -4px;
+    top: 1px;
+    margin: 3px 12px;
+    margin-bottom: 0px;
+    cursor: pointer;
+}
+
+.soundBar input{
+    width: 93px;
+}
