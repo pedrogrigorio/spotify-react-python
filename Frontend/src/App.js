@@ -8,7 +8,7 @@ import Home from './pages/Home/Home';
 import Search from './pages/Search/Search';
 import Library from './pages/Library/Library';
 import LikedSongs from './pages/LikedSongs/LikedSongs';
-import teste from './img/teste.jpg'
+import teste from './assets/img/teste.jpg'
 
 function App() {
 

@@ -1,10 +1,10 @@
 import React from 'react'
 import Volume from '../../icons/Volume'
 import { useState } from "react"
-import Slider from './Slider'
-import styles from './SongSlider.module.css'
+import Slider from '../Slider/Slider'
+import styles from './VolumeSlider.module.css'
 
-function SongSlider({volume, setVolume, size}) {
+function VolumeSlider({volume, setVolume, size}) {
 
     const[mute, setMute]  = useState(false)
 
@@ -28,4 +28,4 @@ function SongSlider({volume, setVolume, size}) {
     )
 }
 
-export default SongSlider
+export default VolumeSlider

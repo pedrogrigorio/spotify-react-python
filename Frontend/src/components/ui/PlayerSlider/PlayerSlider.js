@@ -1,6 +1,6 @@
 import React from 'react'
-import Slider from './Slider'
-import convertTime from '../../utils/convertTime'
+import Slider from '../Slider/Slider'
+import convertTime from '../../../helpers/convertTime'
 import styles from './PlayerSlider.module.css'
 
 export default function ProgressBar(props) {

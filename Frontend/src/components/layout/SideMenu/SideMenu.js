@@ -1,7 +1,7 @@
 import styles from './SideMenu.module.css'
 import {SidebarData} from './SideMenuData'
 import {SidebarData2} from './SideMenuData2'
-import menu_logo from '../../../img/spotify_menu_logo.png'
+import menu_logo from '../../../assets/img/spotify_menu_logo.png'
 
 function Sidebar(){
 

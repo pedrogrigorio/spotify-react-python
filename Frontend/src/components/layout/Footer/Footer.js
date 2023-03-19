@@ -8,8 +8,8 @@ import Repeat from '../../icons/Repeat'
 import Queue from '../../icons/Queue'
 import ConnectDevice from '../../icons/ConnectDevice'
 import FullScreen from '../../icons/FullScreen'
-import SongSlider from './SongSlider'
-import PlayerSlider from './PlayerSlider'
+import VolumeSlider from '../../ui/VolumeSlider/VolumeSlider'
+import PlayerSlider from '../../ui/PlayerSlider/PlayerSlider'
 import Audio from "./Audio"
 
 function PlayerBar(props){
@@ -61,7 +61,7 @@ function PlayerBar(props){
             <div className={styles.footerRight}>
                 <div id={styles.queue}><Queue size="16" fill="white" /></div>
                 <div id={styles.connect_device}><ConnectDevice size="16" fill="white" /></div>
-                <div id={styles.volume_control}><SongSlider volume={volume} setVolume={setVolume}/></div>
+                <div id={styles.volume_control}><VolumeSlider volume={volume} setVolume={setVolume}/></div>
                 <div id={styles.fullscren}><FullScreen size="14" fill="white" /></div>
                 <Audio
                     ref={audioRef}
