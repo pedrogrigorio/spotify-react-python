@@ -4,10 +4,10 @@ import Footer from './components/layout/Footer/Footer';
 import SideMenu from './components/layout/SideMenu/SideMenu';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import { useState } from 'react';
-import Home from './components/pages/Home';
-import Search from './components/pages/Search';
-import Library from './components/pages/Library';
-import LikedSongs from './components/pages/LikedSongs';
+import Home from './pages/Home/Home';
+import Search from './pages/Search/Search';
+import Library from './pages/Library/Library';
+import LikedSongs from './pages/LikedSongs/LikedSongs';
 import teste from './img/teste.jpg'
 
 function App() {
