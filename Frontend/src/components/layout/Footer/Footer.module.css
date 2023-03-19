@@ -1,0 +1,158 @@
+.playbar_container{
+    position: fixed;
+    height: 90px;
+    width: 100%;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: 30% 40% 30%;
+    background-color: #181818;
+    border-top: 1px solid #242424;
+    padding: 17px 16px 17px 16px;
+}
+
+/* Left */
+
+.footerLeft{
+    position: relative;
+    bottom: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.imgBox{
+    width: 56px;
+    height: 56px;
+}
+
+.imgBox img{
+    width: 100%;
+    height: 100%;
+}
+
+.songDetails{
+    margin-left: 14px;
+    margin-right: 14px;
+}
+
+.songDetails p{
+    margin: 0px;
+}
+
+.songDetails #title{
+    position: relative;
+    top: 1px;
+    margin-bottom: 4px;
+    color: white;
+    font-size: 14px;
+    font-family: "Circular Medium";
+}
+
+.songDetails #artist{
+    font-size: 11px;
+    color: rgb(179, 179, 179);
+    font-family: "Circular Medium";
+}
+
+/* Middle */
+
+.footerMid{
+    height: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.icons{
+    position: relative;
+    right: -1px;
+    height: 50%;
+    width: 210px;
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.icons #shuffle{
+    position: relative;
+    top: 2px;
+    right: 44px;
+}
+
+.icons #previous{
+    position: relative;
+    top: 2px;
+    right: 19px;
+}
+
+.icons #play{
+    position: relative;
+    top: 5px;
+    right: 2px;
+}
+
+.icons #play:hover{
+    transform: scale(1.05);
+    transition: .1s;
+}
+
+.icons #next{
+    position: relative;
+    top: 2px;
+    left: 16px;
+}
+
+.icons #repeat{
+    position: relative;
+    top: 2px;
+    left: 41px;
+}
+
+.icons :hover{
+    cursor: pointer;
+    filter: brightness(130%);
+}
+  
+/* RIGHT */
+
+.footerRight {
+    position: relative;
+    bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.footerRight #queue{
+    position: relative;
+    right: -4px;
+    top: 1px;
+    margin: 0px 10px;
+    cursor: pointer;
+}
+
+.footerRight #connect_device{
+    position: relative;
+    right: -10px;
+    margin: 0px 0px;
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+.footerRight #volume_control{
+    position: relative;
+    right: -4px;
+    top: 0px;
+    margin: -3px 6px;
+    margin-bottom: 0px;
+    cursor: pointer;
+}
+
+.footerRight #fullscren{
+    position: relative;
+    right: -1px;
+    margin: 1px 10px;
+    margin-bottom: 4px;
+    cursor: pointer;
+}

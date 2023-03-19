@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import React from 'react';
 
-const SearchIcon = ({active, size}) => {
+const SearchIcon = ({size}) => {
+
+    const [active, setActive] = useState(false)
 
     const fill = active ? '#FFF' : '#B3B3B3'
     return(
-        <div>
+        <div onClick={() => setActive(!active)}>
             {active ? (
-                <svg width={size} height={size} viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width={size} height={size} viewBox="1 -5 37 57" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 0C30.263 0 39 8.73746 39 19.4998C39 30.2625 30.263 39 19.5 39C8.73701 39 0 30.2625 0 19.4998C0 8.73746 8.73701 0 19.5 0ZM17.2208 11.7047C17.2208 11.2711 16.8409 10.9187 16.4294 10.9187H13.1372C12.694 10.9187 12.3458 11.2711 12.3458 11.7047V27.1994C12.3458 27.6334 12.694 27.9857 13.1372 27.9857H16.4294C16.8409 27.9857 17.2208 27.6334 17.2208 27.1994V11.7047ZM26.9708 11.7047C26.9708 11.2711 26.6226 10.9187 26.1794 10.9187H22.8872C22.444 10.9187 22.0958 11.2711 22.0958 11.7047V27.1994C22.0958 27.6334 22.444 27.9857 22.8872 27.9857H26.1794C26.6226 27.9857 26.9708 27.6334 26.9708 27.1994V11.7047Z" fill="white"/>
                 </svg>
             ) : (
