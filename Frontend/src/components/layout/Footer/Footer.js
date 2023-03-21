@@ -48,6 +48,7 @@ function PlayerBar(props){
                     <p id={styles.artist}>{props.artist}</p> 
                 </div>
             </div>
+
             <div className={styles.footerMid}>
                 <ul className={styles.icons}>
                     <div id={styles.shuffle}><Shuffle size="17" fill="#bababa"/></div>
@@ -58,6 +59,7 @@ function PlayerBar(props){
                 </ul>
                 <PlayerSlider currentTime={currentTime} duration={duration} handleTrackClick={handleTrackClick} />
             </div>
+
             <div className={styles.footerRight}>
                 <div id={styles.queue}><Queue size="16" fill="white" /></div>
                 <div id={styles.connect_device}><ConnectDevice size="16" fill="white" /></div>
