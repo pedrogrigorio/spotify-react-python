@@ -24,7 +24,6 @@ function PlayerBar(props){
         audioRef.current.currentTime = position
     }
 
-    /*
     useEffect(() => {
         if(isPlaying) {
             audioRef.current.play()
@@ -35,7 +34,7 @@ function PlayerBar(props){
     
     useEffect(() => {
         audioRef.current.volume = volume
-    }, [audioRef,volume])*/
+    }, [audioRef,volume])
 
     return (
         <footer className={styles.playbar_container}>
@@ -53,7 +52,7 @@ function PlayerBar(props){
                 <ul className={styles.icons}>
                     <div id={styles.shuffle}><Shuffle size="17" fill="#bababa"/></div>
                     <div id={styles.previous}><Previous size="14"/></div>
-                    <div id={styles.play}><PlayButton size="47"/></div>
+                    <div id={styles.play} onClick={() => setIsPlaying(!isPlaying)}><PlayButton size="47" active={isPlaying}/></div>
                     <div id={styles.next}><Next size="14"/></div>
                     <div id={styles.repeat}><Repeat size="16" fill="#bababa"/></div>
                 </ul>
