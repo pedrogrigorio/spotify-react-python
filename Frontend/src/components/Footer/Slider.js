@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import styles from "./Styles/Slider.module.css";
+import styles from "../Styles/range-slider.module.css";
 
 export default function Slider(props) {
 

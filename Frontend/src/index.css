@@ -90,6 +90,7 @@ p{
     cursor: pointer;
     padding: 0;
     margin-right: 16px;
+    left: 200px;
 }
 .PrevBtn svg,
 .NextBtn svg{

@@ -1,16 +1,16 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import FooterLeft from './FooterLeft';
 import FooterRight from './FooterRight';
 import MusicControlBox from './player/MusicControl';
 import MusicProgressBar from './player/ProgressBar';
 import Audio from './Audio'
-import styles from "./Styles/Footer.module.css";
+import styles from "../Styles/footer.module.css";
 import useWindowSize from '../hooks/WindowSize';
 
+ 
 
-
-
-export default function Footer(props) {
+function Footer({songInfo}) {
     
     const audioRef = useRef(null)
     const size = useWindowSize();
@@ -19,9 +19,11 @@ export default function Footer(props) {
     const [duration, setDuration] = useState(0)
     const [currentTime, setCurrentTime] = useState(0)
 
+
     const handleTrackClick = (position) => {
         audioRef.current.currentTime = position
     }
+
 
     useEffect(() => {
         if(isPlaying) {
@@ -40,10 +42,11 @@ export default function Footer(props) {
     return (
         <div className={styles.footer}>
             <div className={styles.nowplayingbar}>
+
                 <FooterLeft 
-                    img={props.img}
-                    title={props.title}
-                    artist={props.artist}
+                    img={songInfo.img}
+                    title={songInfo.title}
+                    artist={songInfo.artist}
                 />
                 <div className={styles.footerMid}>
                     <MusicControlBox 
@@ -59,7 +62,7 @@ export default function Footer(props) {
                         ref={audioRef}
                         handleDuration={setDuration}
                         handleCurrentTime={setCurrentTime}
-                        trackData={props.trackData}
+                        trackData={songInfo.trackData}
 
                     />
                 </div>
@@ -74,3 +77,6 @@ export default function Footer(props) {
         </div>
     )
 }
+
+
+export default connect(state => ({songInfo : state.MUSIC_CONTENT}))(Footer)

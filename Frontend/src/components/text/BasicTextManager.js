@@ -1,4 +1,4 @@
-import styles from './Styles/BasicTextManager.module.css'
+import styles from './Styles/text-resgular-m.module.css'
  
 
 
