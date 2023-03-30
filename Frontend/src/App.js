@@ -51,15 +51,14 @@ function App() {
         <Container>
           <Routes>
             <Route path='/' element={<Home />}></Route>
-            <Route path='/search' element={<Library />}></Route>
-            <Route path='/library' element={<Search />}></Route>
-            <Route path='/library' element={<Search />}></Route>
+            <Route path='/search' element={<Search />}></Route>
+            <Route path='/library' element={<Library />}></Route>
             <Route path='/liked-songs' element={<LikedSongs />}></Route>
           </Routes>
+          <button onClick={() => searchMusic()}>Botão</button>
         </Container>
-        <Footer img={teste} title="Billie Jean" artist="Alexandr Misko"/>
+        <Footer img={songs.img_src} title={songs.title} artist={songs.artist} trackData={songs.src}/>
       </Router>
-      
     </div>
   );
 }
