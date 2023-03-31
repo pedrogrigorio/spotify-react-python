@@ -1,0 +1,28 @@
+.SeachBox{
+    position: relative;
+    width: 365px;
+    height: 40px;
+}
+.SeachBox svg{
+    position: absolute;
+    top: 9px;
+    left: 13px;
+}
+.SeachBox input{
+    color: #000;
+    padding: 6px 48px;
+    height: 100%;
+    width: 100%;
+    border: 0;
+    border-radius: 500px;
+    text-overflow: ellipsis;
+    line-height: 16px;
+    font-size: 14px;
+    font-family: 'Circular Light';
+}
+
+input::-webkit-input-placeholder {
+    opacity: 1;
+    color: #757575;
+}
+ 

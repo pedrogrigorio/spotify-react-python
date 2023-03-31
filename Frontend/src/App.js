@@ -1,14 +1,14 @@
 import './App.css';
-import Container from './components/layout/Container/Container';
-import Footer from './components/layout/Footer/Footer';
-import SideMenu from './components/layout/SideMenu/SideMenu';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import { useState } from 'react';
+import SideMenu from './components/layout/SideMenu/SideMenu';
+import TopNav from './components/layout/TopNav/TopNav';
+import Container from './components/layout/Container/Container';
+import Footer from './components/layout/Footer/Footer';
 import Home from './pages/Home/Home';
 import Search from './pages/Search/Search';
 import Library from './pages/Library/Library';
 import LikedSongs from './pages/LikedSongs/LikedSongs';
-import teste from './assets/img/teste.jpg'
 
 function App() {
 
@@ -48,6 +48,7 @@ function App() {
     <div className="App">
       <Router>
         <SideMenu />
+        <TopNav />
         <Container>
           <Routes>
             <Route path='/' element={<Home />}></Route>

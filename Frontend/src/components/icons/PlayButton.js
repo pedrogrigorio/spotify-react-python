@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import React from 'react';
 
-const SearchIcon = ({size, active}) => {
+const PlayButton = ({size, active}) => {
 
     //const [active, setActive] = useState(false)
 
@@ -38,4 +38,4 @@ const SearchIcon = ({size, active}) => {
     )
 }
 
-export default SearchIcon
+export default PlayButton
