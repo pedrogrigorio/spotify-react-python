@@ -4,14 +4,14 @@
     position: fixed;
     height: 100%;
     width: 241px;
+    z-index: 11;
     background-color: #000000;
 }
 
 /* Spotify Logo */
 .sidebar img{
     width: 130px;
-    margin: 1.54em 0;
-    margin-left: 1.49em;
+    margin: 25px 0px 24px 24px;
     text-align: center;
 }
 

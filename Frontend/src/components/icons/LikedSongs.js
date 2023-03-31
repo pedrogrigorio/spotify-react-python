@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LikedSongsIcon = ({active, size}) => {
+const LikedSongs = ({active, size}) => {
 
     return(
         <svg width={size} height={size} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,4 +30,4 @@ const LikedSongsIcon = ({active, size}) => {
     )
 }
 
-export default LikedSongsIcon
+export default LikedSongs
