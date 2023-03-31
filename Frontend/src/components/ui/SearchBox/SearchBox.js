@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './SearchBox.module.css';
-// import SearchAPIRequest from '../../backend/SearchEngine'
+import SearchAPIRequest from '../../../services/SearchEngine';
 import Search from '../../icons/Search';
 
 
@@ -31,7 +31,7 @@ export default function SearchBox() {
             onKeyDown={handleKeyDown}
             onKeyUp={handleKeyUp}
            />
-            {/* <SearchAPIRequest searchContent={searchContent} callSearchApi={callSearchApi}/>  */}
+            <SearchAPIRequest searchContent={searchContent} callSearchApi={callSearchApi}/> 
         </div>
     )
 

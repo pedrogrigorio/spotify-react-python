@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react"
+import { connect } from "react-redux"
 import styles from './Footer.module.css'
 import Shuffle from '../../icons/Shuffle'
 import Previous from '../../icons/Previous'
@@ -12,7 +13,7 @@ import VolumeSlider from '../../ui/VolumeSlider/VolumeSlider'
 import PlayerSlider from '../../ui/PlayerSlider/PlayerSlider'
 import Audio from "./Audio"
 
-function PlayerBar(props){
+function Footer({songInfo}){
 
     const audioRef = useRef(null)
     const [isPlaying, setIsPlaying] = useState(false)
@@ -40,11 +41,11 @@ function PlayerBar(props){
         <footer className={styles.playbar_container}>
             <div className={styles.footerLeft}>
                 <div className={styles.imgBox}>
-                    <img src={props.img} alt="Song"/>
+                    <img src={songInfo.img} alt="Song"/>
                 </div>
                 <div className={styles.songDetails}>
-                    <p id={styles.title}>{props.title}</p>
-                    <p id={styles.artist}>{props.artist}</p> 
+                    <p id={styles.title}>{songInfo.title}</p>
+                    <p id={styles.artist}>{songInfo.artist}</p> 
                 </div>
             </div>
 
@@ -68,11 +69,11 @@ function PlayerBar(props){
                     ref={audioRef}
                     handleDuration={setDuration}
                     handleCurrentTime={setCurrentTime}
-                    trackData={props.trackData}
+                    trackData={songInfo.trackData}
                 />
             </div>
         </footer>
     )
 }
 
-export default PlayerBar
+export default connect(state => ({songInfo: state.MUSIC_CONTENT}))(Footer)

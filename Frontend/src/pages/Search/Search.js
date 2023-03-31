@@ -1,21 +1,18 @@
 import { useEffect, useState } from 'react';
-import Topnav from '../TopNave/TopNav'
-import styles from "./Styles/search.module.css";
-import BasicText from '../text/BasicTextManager'
-import MusicCardBox from '../CardContent/MusicCardBox';
 import { connect } from 'react-redux';
+import CardContent from './components/CardContent/CardContent';
+import styles from "./Search.module.css";
 
 
 function Search({SearchInfo}) {
     return ( 
         <div className={styles.SearchPage}>
-            <Topnav />
             <div className={styles.Search}>
-                <BasicText text={'Search Result'}/>
+                <p>Search Result</p>
                 <div className={styles.SearchCardGrid}>
                     {SearchInfo.map((music) => {
                         return (
-                            <MusicCardBox
+                            <CardContent
                                 link={music.link}
                                 title={music.title}
                                 imgurl={music.img}
