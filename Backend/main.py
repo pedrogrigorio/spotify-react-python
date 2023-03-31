@@ -11,7 +11,7 @@ from pytube import YouTube
 from pytube import Search
 from io import BytesIO
 from pydantic import BaseModel
-import random
+
 
 
 
@@ -33,52 +33,53 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+ 
+ 
 
 
-music_playing_now = "https://youtu.be/ENtj0Rew1uM?list=RDENtj0Rew1uM"
+class MusicRequest(BaseModel):
+    link_request : str
 
 @app.get("/")
 async def main():
     return {"message": "Work"}
 
 
-@app.get("/read_music")
-async def music():
+@app.post("/read_music")
+def music(link :MusicRequest):
     buffer = BytesIO()
-    url = YouTube(music_playing_now)
+    url = YouTube(link.link_request)
     url.streams.filter(only_audio=True).order_by("abr").desc().first().stream_to_buffer(buffer)
     buffer.seek(0)
-    return StreamingResponse(buffer,media_type="audio/mp3")
+    return StreamingResponse(buffer,
+                            media_type="audio/mp3",
+                            headers={"Content-Length": str(buffer.getbuffer().nbytes)}
+                            )
 
 
-# Fazer uma verificação no procedimento de ID para auxiliar o react 
-@app.get("/read_title")
-async def get_info_music():
-    url = YouTube(music_playing_now)
-    title    = url.title
-    img      = url.thumbnail_url
-    artist   = url.author
-    return {"title"   : title, 
-            "img"     : img, 
-            "artist"  : artist,
+@app.post("/read_meta_data")
+def get_info_music(link :MusicRequest):
+    url = YouTube(link.link_request)
+    return {"title"   : url.title, 
+            "img"     : url.thumbnail_url, 
+            "artist"  : url.author,
            }
 
 
 
-class Mensage(BaseModel):
+class SearchContent(BaseModel):
     search_content: str
 
 
 # Transformar essa troca de dados para JSON 
 @app.post("/search")  
-async def search_for_music(search : Mensage):
+async def search_for_music(search : SearchContent):
     search_ytb = Search(search.search_content)
     result = []
     for v in search_ytb.results:
         result.append({ "title" : v.title, 
                         "link"  : v.watch_url,
                         "img"   : v.thumbnail_url,       
-                        "key"   : random.randint(1,100000)
                         })
         
     return  result

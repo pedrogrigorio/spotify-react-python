@@ -1,0 +1,21 @@
+.SearchPage{
+    background-color: #131111;
+    color: #f7f4f4;
+    position:absolute;
+    left: 250px;
+    height: 100%;
+    width: 85%;
+    overflow-y:scroll;
+    overflow-x: hidden;
+}
+.Search{
+    padding: 0px 32px;
+    padding-bottom: 32px;
+    margin-bottom: 95px;
+}
+.SearchCardGrid{
+    display: grid;
+    grid-gap: 24px;
+    grid-template-columns: repeat(4, 1fr); /* Define 4 colunas */
+    padding-top: 16px;
+}
