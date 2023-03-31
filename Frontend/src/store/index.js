@@ -30,16 +30,6 @@ function reducer(state = INITIAL_STATE, action) {
         }
     }
 
-    // else if (action.type === 'CLEAR_MUSIC_DATA') {
-    //     return {
-    //         ...state,
-    //         MUSIC_CONTENT: {
-    //         title     : "", 
-    //         artist    : "", 
-    //         img       : null, 
-    //         trackData : null}
-    //     }
-    // }
 
     else if (action.type === 'SET_CONTENT_SEARCH') {
         return {
