@@ -1,8 +1,12 @@
 import React from 'react';
 
-const SearchIcon = ({active, size}) => {
+const Search = ({size, active, searchBox}) => {
 
-    const fill = active ? '#FFF' : '#B3B3B3'
+    let fill = active ? '#FFF' : '#B3B3B3'
+    if(searchBox){
+        fill = 'black'
+    }
+    
     return(
         <div>
             {active ? (
@@ -19,4 +23,4 @@ const SearchIcon = ({active, size}) => {
     )
 }
 
-export default SearchIcon
+export default Search

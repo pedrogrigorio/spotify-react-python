@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LibraryIcon = ({active, size}) => {
+const Library = ({active, size}) => {
 
     const fill = active ? '#FFF' : '#B3B3B3'
     const path = active
@@ -14,4 +14,4 @@ const LibraryIcon = ({active, size}) => {
     )
 }
 
-export default LibraryIcon
+export default Library
