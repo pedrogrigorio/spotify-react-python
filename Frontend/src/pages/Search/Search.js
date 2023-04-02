@@ -34,7 +34,7 @@ function Search({SearchInfo}) {
                 <ul>
                     {SearchInfo.map((song) => {
                         return(
-                            <li key={key}>
+                            <li>
                                 <div className={styles.id}>
                                     <p>1</p>
                                     <div onClick={() => setIsPlaying(!isPlaying)}><Play size={12} active={isPlaying}/></div>
