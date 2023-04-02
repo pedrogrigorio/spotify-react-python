@@ -26,6 +26,12 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Circular Book';
+  src: url('../public/fonts/CircularStd-Book.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 .App {
   width: 100vw;
   height: 100vh;
@@ -34,4 +40,9 @@
 body {
   margin: 0;
   padding: 0;
+}
+
+p {
+  font-size: 14px;
+  font-family: 'Circular Book';
 }
