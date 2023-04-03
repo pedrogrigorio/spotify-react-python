@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { connect } from 'react-redux';
 import { useDispatch } from "react-redux";
-import LinkConst from './LinkConst'
-
+import LinkConst from './LinkConst';
+import * as PlayActions from '../store/actions/play';
 
 function MusicConect({link, request}) {
 
@@ -32,24 +32,12 @@ function MusicConect({link, request}) {
                 then(response => response.blob()).
                 then(blob => {
                     const url = URL.createObjectURL(blob)
-                    dispatch(setDataMusic(data.img,data.artist,data.title,url))
+                    dispatch(PlayActions.setDataMusic(data.img,data.artist,data.title,url))
                 })
             })
         }
     },[request])
 }
-    
-
-function setDataMusic(image, artist, title, trackData) {
-    return { 
-        type : 'SET_MUSIC_DATA',
-        image,
-        artist,
-        title,
-        trackData
-    }
-}
-
 
 // function clearMusicData() {
 //     return { 

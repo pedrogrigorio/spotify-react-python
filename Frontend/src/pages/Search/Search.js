@@ -12,6 +12,16 @@ function Search({SearchInfo}) {
 
     })
 
+    // function toggleSong() {
+    //     return {
+    //         type : 'SET_MUSIC_DATA',
+    //         image,
+    //         artist,
+    //         title,
+    //         trackData
+    //     };
+    // }
+
     return ( 
         <div className={styles.container}>
             <header className={styles.header}>
@@ -74,4 +84,4 @@ function Search({SearchInfo}) {
     )
 }
 
-export default connect(state => ({SearchInfo : state.SEARCH_CONTENT}))(Search)
+export default connect(state => ({SearchInfo : state.search.SEARCH_CONTENT}))(Search)

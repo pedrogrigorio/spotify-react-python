@@ -76,4 +76,4 @@ function Footer({songInfo}){
     )
 }
 
-export default connect(state => ({songInfo: state.MUSIC_CONTENT}))(Footer)
+export default connect(state => ({songInfo: state.play.MUSIC_CONTENT}))(Footer)
