@@ -8,19 +8,6 @@ import CardContent from './components/CardContent/CardContent';
 function Search({SearchInfo}) {
 
     const [isPlaying, setIsPlaying] = useState(false)
-    useEffect(() => {
-
-    })
-
-    // function toggleSong() {
-    //     return {
-    //         type : 'SET_MUSIC_DATA',
-    //         image,
-    //         artist,
-    //         title,
-    //         trackData
-    //     };
-    // }
 
     return ( 
         <div className={styles.container}>
@@ -63,21 +50,6 @@ function Search({SearchInfo}) {
                             </li>
                         )
                     })}
-                    {/* <li>
-                        <div id={styles.id}>
-                            <p>1</p>
-                            <Play size={12} />
-                        </div>
-                        <div>
-                            <img src={teste} alt="cover"/>
-                            <span>
-                                <p id={styles.title}>Billie Jean</p>
-                                <p id={styles.artist}>Alexandr Misko</p>
-                            </span>
-                        </div>
-                        <p>Beyond the Box</p>
-                        <p id={styles.duration}>3:55</p>
-                    </li> */}
                 </ul>
             </div>
         </div>
