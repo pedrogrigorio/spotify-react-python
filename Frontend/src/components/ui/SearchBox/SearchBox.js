@@ -1,17 +1,23 @@
 import { useState } from 'react';
+import { SearchEngine } from "../../../services/SearchEngine";
+import { connect } from 'react-redux';
 import styles from './SearchBox.module.css';
-import SearchAPIRequest from '../../../services/SearchEngine';
 import Search from '../../icons/Search';
+import * as SearchActions from '../../../store/actions/search'
 
 
-export default function SearchBox() {
+function SearchBox({dispatch}) {
 
     const[searchContent, setSearchContent] = useState('')
     const[callSearchApi, setCallSearchApi] = useState(false)
 
-    const handleKeyDown = (event) => {
-        if(event.key === "Enter") {
-            setCallSearchApi(true)
+    async function handleKeyDown(event){
+        if(event.key === "Enter"){
+            const response = await SearchEngine(searchContent)
+            console.log(response.data)
+            response.data.map((song) => {
+                dispatch(SearchActions.setSearchData(song.img, song.link, song.title))
+            })
         }
     }
 
@@ -30,10 +36,11 @@ export default function SearchBox() {
             onChange={(event) => {setSearchContent(event.target.value)}}
             onKeyDown={handleKeyDown}
             onKeyUp={handleKeyUp}
-           />
-            <SearchAPIRequest searchContent={searchContent} callSearchApi={callSearchApi}/> 
+        />
         </div>
     )
 
 }
+
+export default connect()(SearchBox);
 

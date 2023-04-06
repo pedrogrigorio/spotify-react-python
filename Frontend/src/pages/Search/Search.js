@@ -2,12 +2,18 @@ import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Play from '../../components/icons/Play';
 import styles from "./Search.module.css";
-import MusicConect from '../../services/MusicConect';
-import CardContent from './components/CardContent/CardContent';
+import {GetMetadata, GetSong} from '../../services/MusicConect';
+import * as PlayActions from '../../store/actions/play'
 
-function Search({SearchInfo}) {
+function Search({SearchInfo, dispatch}) {
 
-    const [isPlaying, setIsPlaying] = useState(false)
+    async function play(link){
+        const data = await GetMetadata(link)
+        const song = await GetSong(link)
+        console.log(data)
+        console.log(song)
+        dispatch(PlayActions.setDataMusic(data.data.img, data.data.artist, data.data.title, song.audio))
+    }
 
     return ( 
         <div className={styles.container}>
@@ -31,12 +37,10 @@ function Search({SearchInfo}) {
                 <ul>
                     {SearchInfo.map((song) => {
                         return(
-                            <li>
+                            <li key={song.title}>
                                 <div className={styles.id}>
                                     <p>1</p>
-                                    <div onClick={() => setIsPlaying(!isPlaying)}><Play size={12} active={isPlaying}/></div>
-                                    {/* MusicConect request all songs */}
-                                    <MusicConect link={song.link} request={isPlaying}/>
+                                    <div onClick={() => play(song.link)}><Play size={12}/></div>
                                 </div>
                                 <div>
                                     <img src={song.img} alt="cover"/>
