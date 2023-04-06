@@ -12,11 +12,11 @@ import FullScreen from '../../icons/FullScreen'
 import VolumeSlider from '../../ui/VolumeSlider/VolumeSlider'
 import PlayerSlider from '../../ui/PlayerSlider/PlayerSlider'
 import Audio from "./Audio"
+import * as PlayActions from '../../../store/actions/play'
 
-function Footer({songInfo}){
+function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songData}){
 
-    const audioRef = useRef(null)
-    const [isPlaying, setIsPlaying] = useState(false)
+    const audioRef = useRef()
     const [volume, setVolume] = useState(1)
     const [duration, setDuration] = useState(0)
     const [currentTime, setCurrentTime] = useState(0)
@@ -26,26 +26,28 @@ function Footer({songInfo}){
     }
 
     useEffect(() => {
+        clearSettingSong()
         if(isPlaying) {
             audioRef.current.play()
-        } else {
+        }
+        else {
             audioRef.current.pause()
         }
-    }, [audioRef, isPlaying])
+    }, [audioRef, isPlaying, settingSong])
     
     useEffect(() => {
         audioRef.current.volume = volume
-    }, [audioRef,volume])
+    }, [audioRef, volume])
 
     return (
         <footer className={styles.playbar_container}>
             <div className={styles.footerLeft}>
                 <div className={styles.imgBox}>
-                    <img src={songInfo.img} alt="Song"/>
+                    <img src={songData.img} alt="Song"/>
                 </div>
                 <div className={styles.songDetails}>
-                    <p id={styles.title}>{songInfo.title}</p>
-                    <p id={styles.artist}>{songInfo.artist}</p> 
+                    <p id={styles.title}>{songData.title}</p>
+                    <p id={styles.artist}>{songData.artist}</p> 
                 </div>
             </div>
 
@@ -69,11 +71,22 @@ function Footer({songInfo}){
                     ref={audioRef}
                     handleDuration={setDuration}
                     handleCurrentTime={setCurrentTime}
-                    trackData={songInfo.trackData}
+                    trackData={songData.trackData}
                 />
             </div>
         </footer>
     )
 }
 
-export default connect(state => ({songInfo: state.MUSIC_CONTENT}))(Footer)
+const mapStateToProps = state => ({
+    settingSong: state.play.settingSong,
+    isPlaying: state.play.isPlaying,
+    songData: state.play.songData
+})
+
+const mapDispatchToProps = dispatch => ({
+    setIsPlaying: (status) => dispatch(PlayActions.setIsPlaying(status)),
+    clearSettingSong: (bool) => dispatch(PlayActions.clearSettingSong(bool))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Footer)

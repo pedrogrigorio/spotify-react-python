@@ -7,7 +7,7 @@
     display: grid;
     padding: 10px 32px;
     grid-template-columns: 5% 80% 15%;
-    background-color: #212121;
+    background-color: transparent;
 }
 
 .nav_button{
@@ -17,11 +17,10 @@
     padding: 3px 1px 0px 0px;
 }
 
-
 .page_header{
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     padding-left: 15px;
 }
 

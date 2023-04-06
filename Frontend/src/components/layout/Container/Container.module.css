@@ -1,9 +1,12 @@
 .container{
-    width: 1200px;
+    /* justify-content: space-between;
+    flex-wrap: wrap; */
+    border: 10 px solid red;
     display: flex;
-    justify-content: space-between;
-    margin: 0 auto;
-    flex-wrap: wrap;
+    position: fixed;
+    margin-left: 241px;
+    width: calc(100% - 241px);
+    height: 100%;
 }
 
 .min-height{
