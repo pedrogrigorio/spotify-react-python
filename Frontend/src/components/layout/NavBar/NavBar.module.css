@@ -17,11 +17,10 @@
     padding: 3px 1px 0px 0px;
 }
 
-
 .page_header{
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     padding-left: 15px;
 }
 

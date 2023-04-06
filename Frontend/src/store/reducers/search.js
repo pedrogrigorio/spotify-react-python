@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
 
+    isPlaying: false,
     SEARCH_DATA : []
 } 
 

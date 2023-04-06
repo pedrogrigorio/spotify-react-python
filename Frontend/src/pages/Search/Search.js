@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Play from '../../components/icons/Play';
 import styles from "./Search.module.css";
@@ -10,8 +9,6 @@ function Search({searchResult, setSongData}) {
     async function play(link){
         const data = (await getMetadata(link)).data
         const audio = (await getSong(link)).audio
-        console.log(data)
-        console.log(audio)
         setSongData(data.title, data.artist, data.img, audio)
     }
 
@@ -61,7 +58,7 @@ function Search({searchResult, setSongData}) {
 }
 
 const mapStateToProps = state => ({
-    searchResult : state.search.SEARCH_DATA
+    searchResult: state.search.SEARCH_DATA
 })
 
 const mapDispatchToProps = dispatch => ({
