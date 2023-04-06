@@ -12,11 +12,11 @@ import FullScreen from '../../icons/FullScreen'
 import VolumeSlider from '../../ui/VolumeSlider/VolumeSlider'
 import PlayerSlider from '../../ui/PlayerSlider/PlayerSlider'
 import Audio from "./Audio"
+import * as PlayActions from '../../../store/actions/play'
 
-function Footer({songData}){
+function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songData}){
 
-    const audioRef = useRef(null)
-    const [isPlaying, setIsPlaying] = useState(false)
+    const audioRef = useRef()
     const [volume, setVolume] = useState(1)
     const [duration, setDuration] = useState(0)
     const [currentTime, setCurrentTime] = useState(0)
@@ -26,16 +26,18 @@ function Footer({songData}){
     }
 
     useEffect(() => {
+        clearSettingSong()
         if(isPlaying) {
             audioRef.current.play()
-        } else {
+        }
+        else {
             audioRef.current.pause()
         }
-    }, [audioRef, isPlaying])
+    }, [audioRef, isPlaying, settingSong])
     
     useEffect(() => {
         audioRef.current.volume = volume
-    }, [audioRef,volume])
+    }, [audioRef, volume])
 
     return (
         <footer className={styles.playbar_container}>
@@ -77,7 +79,14 @@ function Footer({songData}){
 }
 
 const mapStateToProps = state => ({
-    songData: state.play.SONG_DATA
+    settingSong: state.play.settingSong,
+    isPlaying: state.play.isPlaying,
+    songData: state.play.songData
 })
 
-export default connect(mapStateToProps)(Footer)
+const mapDispatchToProps = dispatch => ({
+    setIsPlaying: (status) => dispatch(PlayActions.setIsPlaying(status)),
+    clearSettingSong: (bool) => dispatch(PlayActions.clearSettingSong(bool))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Footer)

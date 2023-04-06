@@ -1,15 +1,54 @@
-import { connect } from 'react-redux';
-import Play from '../../components/icons/Play';
-import styles from "./Search.module.css";
-import {getMetadata, getSong} from '../../services/pytube';
+import { getMetadata, getSong } from '../../services/pytube'
+import { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
 import * as PlayActions from '../../store/actions/play'
+import Play from '../../components/icons/Play'
+import styles from "./Search.module.css"
 
-function Search({searchResult, setSongData}) {
+function Search({searchResult, setSongData, isPlaying, setIsPlaying}) {
 
-    async function play(link){
-        const data = (await getMetadata(link)).data
-        const audio = (await getSong(link)).audio
-        setSongData(data.title, data.artist, data.img, audio)
+    const initialState = {}
+    const[active, setActive] = useState(initialState)
+    const[ready, setReady] = useState(initialState)
+    const[index, setIndex] = useState()
+
+    useEffect(() => {
+        setIsPlaying(active[index])
+    }, [active])
+
+    useEffect(() => {
+        setActive(state => ({
+            ...initialState,
+            [index]: isPlaying
+        }))
+    }, [isPlaying])
+
+    async function play(link, index){
+        
+        setIndex(index)
+        if(!active[index] && !ready[index]){
+            const data = (await getMetadata(link)).data
+            const audio = (await getSong(link)).audio
+            setSongData(data.title, data.artist, data.img, audio)
+
+            setActive(state => ({
+                ...initialState,
+                [index]: true
+            }))
+            
+            setReady(state => ({
+                ...initialState,
+                [index]: true
+            }))
+
+            setIsPlaying(true)
+        }
+        else{
+            setActive(state => ({
+                ...initialState,
+                [index]: !state[index]
+            }))
+        }
     }
 
     return ( 
@@ -32,12 +71,12 @@ function Search({searchResult, setSongData}) {
             </header>
             <div className={styles.search_result}>
                 <ul>
-                    {searchResult.map((song) => {
+                    {searchResult.map((song, index) => {
                         return(
                             <li key={song.title}>
                                 <div className={styles.id}>
                                     <p>1</p>
-                                    <div onClick={() => play(song.link)}><Play size={12}/></div>
+                                    <div onClick={() => play(song.link, index)}><Play size={12} active={active[index]}/></div>
                                 </div>
                                 <div>
                                     <img src={song.img} alt="cover"/>
@@ -58,11 +97,13 @@ function Search({searchResult, setSongData}) {
 }
 
 const mapStateToProps = state => ({
-    searchResult: state.search.SEARCH_DATA
+    isPlaying: state.play.isPlaying,
+    searchResult: state.search.searchData
 })
 
 const mapDispatchToProps = dispatch => ({
-    setSongData: (title, artist, img, audio) => dispatch(PlayActions.setSongData(title, artist, img, audio))
+    setSongData: (title, artist, img, audio) => dispatch(PlayActions.setSongData(title, artist, img, audio)),
+    setIsPlaying: (status) => dispatch(PlayActions.setIsPlaying(status))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search)

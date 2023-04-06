@@ -1,15 +1,14 @@
 const INITIAL_STATE = {
 
-    isPlaying: false,
-    SEARCH_DATA : []
-} 
+    searchData : []
+}
 
 export default function search(state = INITIAL_STATE, action) {
 
     if (action.type === 'SET_SEARCH_DATA') {
         return {
-            SEARCH_DATA: [
-                ...state.SEARCH_DATA,
+            searchData: [
+                ...state.searchData,
                 {
                     title: action.title,
                     img: action.image,
