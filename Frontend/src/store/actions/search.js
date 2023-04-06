@@ -1,13 +1,13 @@
-export function setSearchData(image, link, title) {
+export function setSearchData(title, image, link) {
     return { 
-        type : 'SET_CONTENT_SEARCH',
+        type : 'SET_SEARCH_DATA',
+        title,
         image,
-        link,
-        title
+        link
     }
 }
 
-export function ClearOldRequests() {
+export function clearOldRequests() {
     return {
         type : 'CLEAR_OLD_REQUESTS'
     }

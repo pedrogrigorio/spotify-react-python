@@ -2,17 +2,17 @@ import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Play from '../../components/icons/Play';
 import styles from "./Search.module.css";
-import {GetMetadata, GetSong} from '../../services/MusicConect';
+import {getMetadata, getSong} from '../../services/pytube';
 import * as PlayActions from '../../store/actions/play'
 
-function Search({SearchInfo, dispatch}) {
+function Search({searchResult, setSongData}) {
 
     async function play(link){
-        const data = await GetMetadata(link)
-        const song = await GetSong(link)
+        const data = (await getMetadata(link)).data
+        const audio = (await getSong(link)).audio
         console.log(data)
-        console.log(song)
-        dispatch(PlayActions.setDataMusic(data.data.img, data.data.artist, data.data.title, song.audio))
+        console.log(audio)
+        setSongData(data.title, data.artist, data.img, audio)
     }
 
     return ( 
@@ -35,7 +35,7 @@ function Search({SearchInfo, dispatch}) {
             </header>
             <div className={styles.search_result}>
                 <ul>
-                    {SearchInfo.map((song) => {
+                    {searchResult.map((song) => {
                         return(
                             <li key={song.title}>
                                 <div className={styles.id}>
@@ -60,4 +60,12 @@ function Search({SearchInfo, dispatch}) {
     )
 }
 
-export default connect(state => ({SearchInfo : state.search.SEARCH_CONTENT}))(Search)
+const mapStateToProps = state => ({
+    searchResult : state.search.SEARCH_DATA
+})
+
+const mapDispatchToProps = dispatch => ({
+    setSongData: (title, artist, img, audio) => dispatch(PlayActions.setSongData(title, artist, img, audio))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search)

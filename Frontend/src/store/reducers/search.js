@@ -1,75 +1,26 @@
-/*const INITIAL_STATE = {
-
-    MUSIC_CONTENT : {
-    title     : "", 
-    artist    : "", 
-    img       : "", 
-    trackData : ""
-    },
-
-    SEARCH_CONTENT : []
-} */
-
 const INITIAL_STATE = {
 
-    SEARCH_CONTENT : []
+    SEARCH_DATA : []
 } 
 
 export default function search(state = INITIAL_STATE, action) {
 
-    if (action.type === 'SET_CONTENT_SEARCH') {
+    if (action.type === 'SET_SEARCH_DATA') {
         return {
-            SEARCH_CONTENT: [
-                ...state.SEARCH_CONTENT,
+            SEARCH_DATA: [
+                ...state.SEARCH_DATA,
                 {
                     title: action.title,
-                    link: action.link,
-                    img: action.image
+                    img: action.image,
+                    link: action.link
                 }
             ]
         }
     }
     
     else if (action.type === 'CLEAR_OLD_REQUESTS') {
-        return {
-            SEARCH_CONTENT : []
-        }
+        return INITIAL_STATE
     }
 
-    /*
-    if (action.type === 'SET_MUSIC_DATA') {
-        return {
-            ...state,
-            MUSIC_CONTENT: {
-                title : action.title, 
-                artist : action.artist,
-                img : action.image, 
-                trackData : action.trackData
-            }
-        }
-    }
-    
-    else if (action.type === 'SET_CONTENT_SEARCH') {
-        return {
-            ...state,
-            SEARCH_CONTENT: [
-                ...state.SEARCH_CONTENT,
-                {
-                    title: action.title,
-                    link: action.link,
-                    img: action.image
-                }
-            ]
-        }
-    }
-    
-    else if (action.type === 'CLEAR_OLD_REQUESTS') {
-        return {
-            ...state,
-            SEARCH_CONTENT : []
-        }
-    }
-    */
-    
     return state 
 }

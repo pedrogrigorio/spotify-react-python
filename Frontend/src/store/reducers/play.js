@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
 
-    MUSIC_CONTENT : {
+    SONG_DATA : {
     title     : "", 
     artist    : "", 
     img       : "", 
@@ -11,11 +11,9 @@ const INITIAL_STATE = {
 
 export default function play(state = INITIAL_STATE, action) {
 
-    console.log("teste2")
-    if (action.type === 'SET_MUSIC_DATA') {
-        console.log("setei a musica")
+    if (action.type === 'SET_SONG_DATA') {
         return {
-            MUSIC_CONTENT: {
+            SONG_DATA: {
                 title : action.title, 
                 artist : action.artist,
                 img : action.image, 

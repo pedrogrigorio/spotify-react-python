@@ -1,9 +1,9 @@
-export function setDataMusic(image, artist, title, trackData) {
+export function setSongData(title, artist, image, trackData) {
     return { 
-        type : 'SET_MUSIC_DATA',
-        image,
-        artist,
+        type : 'SET_SONG_DATA',
         title,
+        artist,
+        image,
         trackData
     }
 }

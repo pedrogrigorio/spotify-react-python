@@ -13,7 +13,7 @@ import VolumeSlider from '../../ui/VolumeSlider/VolumeSlider'
 import PlayerSlider from '../../ui/PlayerSlider/PlayerSlider'
 import Audio from "./Audio"
 
-function Footer({songInfo}){
+function Footer({songData}){
 
     const audioRef = useRef(null)
     const [isPlaying, setIsPlaying] = useState(false)
@@ -41,11 +41,11 @@ function Footer({songInfo}){
         <footer className={styles.playbar_container}>
             <div className={styles.footerLeft}>
                 <div className={styles.imgBox}>
-                    <img src={songInfo.img} alt="Song"/>
+                    <img src={songData.img} alt="Song"/>
                 </div>
                 <div className={styles.songDetails}>
-                    <p id={styles.title}>{songInfo.title}</p>
-                    <p id={styles.artist}>{songInfo.artist}</p> 
+                    <p id={styles.title}>{songData.title}</p>
+                    <p id={styles.artist}>{songData.artist}</p> 
                 </div>
             </div>
 
@@ -69,11 +69,15 @@ function Footer({songInfo}){
                     ref={audioRef}
                     handleDuration={setDuration}
                     handleCurrentTime={setCurrentTime}
-                    trackData={songInfo.trackData}
+                    trackData={songData.trackData}
                 />
             </div>
         </footer>
     )
 }
 
-export default connect(state => ({songInfo: state.play.MUSIC_CONTENT}))(Footer)
+const mapStateToProps = state => ({
+    songData: state.play.SONG_DATA
+})
+
+export default connect(mapStateToProps)(Footer)
