@@ -1,15 +1,9 @@
 .container{
-    /* justify-content: space-between;
-    flex-wrap: wrap; */
-    border: 10 px solid red;
-    display: flex;
-    position: fixed;
-    margin-left: 241px;
-    width: calc(100% - 241px);
-    height: 100%;
+    grid-area: c;
+    overflow: auto;
 }
 
-.min-height{
+/* .min-height{
     min-height: 75vh;
 }
 
@@ -20,4 +14,4 @@
 .column{
     flex-direction: column;
     justify-content: flex-start;
-}
+} */

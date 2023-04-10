@@ -1,10 +1,7 @@
 /* BG */
 
 .sidebar{
-    position: fixed;
-    height: 100%;
-    width: 241px;
-    z-index: 11;
+    grid-area: s;
     background-color: #000000;
 }
 
