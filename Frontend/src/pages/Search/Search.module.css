@@ -160,6 +160,7 @@
 
 .search_result ul li span{
     margin-left: 5px;
+    overflow: hidden;
 }
 
 .search_result ul li span p#title{
@@ -168,6 +169,9 @@
     color: white;
     font-size: 16px;
     font-family: 'Circular Medium';
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .search_result ul li span p#artist{
