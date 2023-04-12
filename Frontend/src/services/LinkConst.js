@@ -1,5 +1,5 @@
 const readMusic = 'http://127.0.0.1:8000/read_music'
 const readMetaData = 'http://127.0.0.1:8000/read_meta_data'
-const SearchContent = 'http://127.0.0.1:8000/search'
+const SearchContent = 'http://127.0.0.1:8000/search_music'
 
 export default {readMusic,readMetaData,SearchContent}

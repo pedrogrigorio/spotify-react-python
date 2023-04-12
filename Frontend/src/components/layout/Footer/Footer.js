@@ -13,7 +13,7 @@ import VolumeSlider from '../../ui/VolumeSlider/VolumeSlider'
 import PlayerSlider from '../../ui/PlayerSlider/PlayerSlider'
 import Audio from "./Audio"
 
-function Footer({songInfo}){
+function Footer({songInfo, songTrack}){
 
     const audioRef = useRef(null)
     const [isPlaying, setIsPlaying] = useState(false)
@@ -69,11 +69,21 @@ function Footer({songInfo}){
                     ref={audioRef}
                     handleDuration={setDuration}
                     handleCurrentTime={setCurrentTime}
-                    trackData={songInfo.trackData}
+                    trackData={songTrack.trackData}
                 />
             </div>
         </footer>
     )
 }
 
-export default connect(state => ({songInfo: state.MUSIC_CONTENT}))(Footer)
+// export default connect(state => ({songInfo: state.play.MUSIC_META_DATA}, {songTrack: state.play.MUSIC_DATA}))(Footer)
+
+const mapStateToProps = state => {
+    return {
+        songInfo: state.play.MUSIC_META_DATA,
+        songTrack: state.play.MUSIC_DATA
+    }
+}
+
+export default connect(mapStateToProps)(Footer)
+  
