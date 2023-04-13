@@ -40,14 +40,14 @@ class ApiRequests():
             data_package.append(data)
             await asyncio.sleep(0.1)
 
-        yield data_package
-        await asyncio.gather(*[tasks])
+        await asyncio.gather(*tasks)
+        return data_package
     
     async def set_storing_cache(self, title : str, artist : str):
         self.music_index += 1
         self.redis_client.set(self.music_index,f"{title} {artist}")
         if (self.music_index <=3): 
-            asyncio.gather(self.music_storing_cache())
+            await self.music_storing_cache()
          
     async def music_storing_cache(self) -> None:
         buffer = BytesIO()

@@ -4,7 +4,7 @@ export async function searchEngine(searchContent){
 
     let data
 
-    await api.post('/search', {search_content: searchContent})
+    await api.post('/search_music', {search_content: searchContent})
     .then(response => {
         data = response.data
         console.log(data)
