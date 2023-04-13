@@ -1,12 +1,9 @@
 .container{
-    width: 1200px;
-    display: flex;
-    justify-content: space-between;
-    margin: 0 auto;
-    flex-wrap: wrap;
+    grid-area: c;
+    overflow: auto;
 }
 
-.min-height{
+/* .min-height{
     min-height: 75vh;
 }
 
@@ -17,4 +14,4 @@
 .column{
     flex-direction: column;
     justify-content: flex-start;
-}
+} */

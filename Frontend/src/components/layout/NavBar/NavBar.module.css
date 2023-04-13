@@ -1,13 +1,9 @@
 .navbar{
-    position: fixed;
-    height: 64px;
-    width: calc(100% - 241px);
-    right: 0;
-    z-index: 10;
-    display: grid;
+    grid-area: n;
+    background-color: black; 
     padding: 10px 32px;
+    display: grid;
     grid-template-columns: 5% 80% 15%;
-    background-color: #212121;
 }
 
 .nav_button{
@@ -17,11 +13,10 @@
     padding: 3px 1px 0px 0px;
 }
 
-
 .page_header{
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     padding-left: 15px;
 }
 

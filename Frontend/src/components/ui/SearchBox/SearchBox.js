@@ -1,23 +1,21 @@
-import { useState } from 'react';
-import styles from './SearchBox.module.css';
-import SearchAPIRequest from '../../../services/SearchEngine';
-import Search from '../../icons/Search';
+import { useState } from 'react'
+import { connect } from 'react-redux'
+import { searchEngine } from "../../../services/pytube"
+import * as SearchActions from '../../../store/actions/search'
+import Search from '../../icons/Search'
+import styles from './SearchBox.module.css'
 
-
-export default function SearchBox() {
+function SearchBox({setSearchData, clearOldRequests}) {
 
     const[searchContent, setSearchContent] = useState('')
-    const[callSearchApi, setCallSearchApi] = useState(false)
 
-    const handleKeyDown = (event) => {
-        if(event.key === "Enter") {
-            setCallSearchApi(true)
-        }
-    }
-
-    const handleKeyUp = (event) => {
-        if(event.key === "Enter") {
-            setCallSearchApi(false)
+    async function handleKeyDown(event){
+        if(event.key === "Enter"){
+            clearOldRequests()
+            const data = (await searchEngine(searchContent)).data
+            data.map((song) => {
+                setSearchData(song.title, song.img, song.duration,song.artist,song.album)
+            })
         }
     }
 
@@ -29,11 +27,15 @@ export default function SearchBox() {
             maxLength="80" 
             onChange={(event) => {setSearchContent(event.target.value)}}
             onKeyDown={handleKeyDown}
-            onKeyUp={handleKeyUp}
-           />
-            <SearchAPIRequest searchContent={searchContent} callSearchApi={callSearchApi}/> 
+        />
         </div>
     )
-
 }
+
+const mapDispatchToProps = dispatch => ({
+    setSearchData: (title, img, link) => dispatch(SearchActions.setSearchData(title, img, link)),
+    clearOldRequests: () => dispatch(SearchActions.clearOldRequests())
+})
+
+export default connect(null, mapDispatchToProps)(SearchBox);
 

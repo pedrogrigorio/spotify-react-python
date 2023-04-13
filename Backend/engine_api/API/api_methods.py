@@ -5,6 +5,7 @@ from pytube import exceptions
 import redis
 import json
 from io import BytesIO
+import asyncio
 
  
 
@@ -21,33 +22,32 @@ class ApiRequests():
         return {"message": "Up and running"}
     
     
-    def search_engine(self, search : str) -> json:
+    async def search_engine(self, search : str) -> json:
         results = self.client.search(search)
-        self.index = 0
         self.clear_redis_cache()
         data_package = []
+        tasks = []
         for result in results:
-            self.index +=1
             data = { 
                 "title"     : result.title, 
                 "duration"  : result.duration,
                 "cover"     : result.album.cover,
                 "artist"    : result.artist.name, 
                 "album"     : result.album.title,
-                "index"     : self.index
             }
-            self.set_storing_cache(result.title, result.artist.name)
-
+            task = asyncio.create_task(self.set_storing_cache(result.title, result.artist.name))
+            tasks.append(task)
             data_package.append(data)
+            await asyncio.sleep(0.1)
 
-        return data_package
+        yield data_package
+        await asyncio.gather(*[tasks])
     
-    def set_storing_cache(self, title : str, artist : str):
+    async def set_storing_cache(self, title : str, artist : str):
         self.music_index += 1
         self.redis_client.set(self.music_index,f"{title} {artist}")
         if (self.music_index <=3): 
-            self.music_storing_cache()
-
+            asyncio.gather(self.music_storing_cache())
          
     async def music_storing_cache(self) -> None:
         buffer = BytesIO()
@@ -67,6 +67,7 @@ class ApiRequests():
     
     def get_music_by_id(self, music_id : int) -> BytesIO:
         return BytesIO(self.redis_client.get(f"{music_id} + dw"))
+    
     
     def clear_redis_cache(self) -> None:
         self.music_index = 0 

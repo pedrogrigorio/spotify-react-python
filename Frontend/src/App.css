@@ -26,12 +26,28 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Circular Book';
+  src: url('../public/fonts/CircularStd-Book.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .App {
   width: 100vw;
   height: 100vh;
+  display: grid;
+  grid-template-columns: 241px 1fr;
+  grid-template-rows: 64px calc(100vh - 154px) 90px;
+  grid-template-areas: "s n" "s c" "f f";
 }
 
 body {
   margin: 0;
   padding: 0;
+}
+
+p {
+  font-size: 14px;
+  font-family: 'Circular Book';
 }

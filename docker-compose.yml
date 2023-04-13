@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  frontend:
+    build: ./frontend
+    command: npm run start-watch
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/usr/app
+  
+  backend:
+    build: ./backend
+    command: uvicorn main:app --reload --host 0.0.0.0
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/usr/app
+
+  redis:
+    image: redis
+    volumes:
+      - ./data:/data
+    ports:
+      - 6379:6379

@@ -1,25 +1,22 @@
 const INITIAL_STATE = {
 
-    MUSIC_DATA : { 
-        trackData : null
-    },
-
-    MUSIC_META_DATA : {
-    title     : "", 
-    artist    : "", 
-    img       : null, 
-    },
-
-
-
+    isPlaying: false,
+    settingSong: false,
+    songData : {trackData : null},
+    songMetaData : {
+        title     : "", 
+        artist    : "", 
+        img       : "", 
+    }
 } 
 
 export default function play(state = INITIAL_STATE, action) {
 
-    if (action.type === 'SET_MUSIC_META_DATA') {
+    if (action.type === 'SET_SONG_META_DATA') {
         return {
-            ...state, 
-            MUSIC_META_DATA: {
+            ...state,
+            settingSong: true,
+            songMetaData: {
                 title : action.title, 
                 artist : action.artist,
                 img : action.image, 
@@ -27,14 +24,28 @@ export default function play(state = INITIAL_STATE, action) {
         }
     }
 
-    else if (action.type === 'SET_MUSIC_DATA') {
+    else if (action.type === 'SET_SONG_TRACK') {
         return {
-            ...state, 
-            MUSIC_DATA: {
+            ...state,
+            songData: {
                 trackData : action.trackData
             }
         }
     }
     
+    else if (action.type === 'SET_IS_PLAYING') {
+        return {
+            ...state,
+            isPlaying: action.status,
+        }
+    }
+
+    else if (action.type === 'CLEAR_SETTING_SONG') {
+        return {
+            ...state,
+            settingSong: false
+        }
+    }
+
     return state 
 }

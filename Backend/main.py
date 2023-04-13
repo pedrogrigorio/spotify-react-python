@@ -8,6 +8,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 import request_models
+import asyncio
 from engine_api import api_requests
 
 app = FastAPI()
@@ -37,7 +38,8 @@ async def get_status_api():
 
 @app.post('/search_music')
 def get_search_content(search : request_models.SearchContent):
-    return api_requests.search_engine(search.search_content)
+    return asyncio.run(api_requests.search_engine(search.search_content))
+    # return api_requests.search_engine(search.search_content)
 
 
 @app.post('/read_music')

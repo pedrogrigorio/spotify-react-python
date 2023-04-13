@@ -1,9 +1,5 @@
 .playbar_container{
-    position: fixed;
-    height: 90px;
-    width: 100%;
-    bottom: 0;
-    z-index: 12;
+    grid-area: f;
     display: grid;
     grid-template-columns: 30% 40% 30%;
     background-color: #181818;

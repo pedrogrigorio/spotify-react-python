@@ -1,16 +1,15 @@
-export function setSearchData(title,artist,cover,index,duration,album) {
+export function setSearchData(title, image, duration, artist, album) {
     return { 
-        type : 'SET_CONTENT_SEARCH',
+        type : 'SET_SEARCH_DATA',
         title,
-        artist,
-        cover,
-        index,
+        image,
         duration,
-        album
+        artist,
+        album,
     }
 }
 
-export function ClearOldRequests() {
+export function clearOldRequests() {
     return {
         type : 'CLEAR_OLD_REQUESTS'
     }

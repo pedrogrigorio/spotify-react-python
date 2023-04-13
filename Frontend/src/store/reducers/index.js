@@ -4,5 +4,5 @@ import play from './play';
 
 export default combineReducers({
     search,
-    play
+    play,
 })

@@ -1,34 +1,28 @@
-const INITIAL_STATE = { 
-    SEARCH_CONTENT : []
+const INITIAL_STATE = {
+
+    searchData : []
 }
-
-
 
 export default function search(state = INITIAL_STATE, action) {
 
-    if (action.type === 'SET_CONTENT_SEARCH') {
+    if (action.type === 'SET_SEARCH_DATA') {
         return {
-            SEARCH_CONTENT: [
-                ...state.SEARCH_CONTENT,
+            searchData: [
+                ...state.searchData,
                 {
                     title: action.title,
-                    artist: action.artist,
-                    img: action.cover,
-                    index: action.index,
+                    img: action.image,
                     duration: action.duration,
-                    album : action.album
+                    artist: action.artist,
+                    album: action.album,
                 }
             ]
         }
     }
     
     else if (action.type === 'CLEAR_OLD_REQUESTS') {
-        return {
-            SEARCH_CONTENT : []
-        }
+        return INITIAL_STATE
     }
 
-
     return state 
-
 }

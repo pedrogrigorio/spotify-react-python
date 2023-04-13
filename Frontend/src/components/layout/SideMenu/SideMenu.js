@@ -15,7 +15,8 @@ function Sidebar(){
                             key={key} 
                             className={styles.row} 
                             id={window.location.pathname == val.link ? `${styles.active}` : ""}
-                            onClick={() => {window.location.pathname = val.link}}>
+                            onClick={() => {window.location.pathname = val.link}}
+                        >
                             <div id={styles.icon}>{val.icon}</div>
                             <div id={styles.title}>{val.title}</div>
                         </li>
