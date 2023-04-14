@@ -1,205 +1,313 @@
 /*
-*   Page Background
+*   0 - Page Background
 *---------------------------------------*/
 
-.container{
+.container {
     background-color: #121212;
     height: 100%;
     overflow: auto;
-    /* 
-    color: #f7f4f4;
-    overflow-y:scroll;
-    overflow-x: hidden; 
-    */
+    padding-left: 2px;
 }
 
 /*
-*   Header
+*   1 - Categories
 *---------------------------------------*/
 
-.header{
+.categories_container {
+    display: flex;
     width: 100%;
-    height: 85px;
-    display: grid;
-    grid-template-rows: 55% 45%;
+    height: 48px;
+    padding-top: 7px;
 }
 
-/* Categories */
-
-.category{
+.categories {
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding-left: 34px;
-    background-color: #121212;
+    width: 100%;
+    height: 32px;
+    padding: 0px 32px 0px 32px;
 }
 
-.category div{
-    width: auto;
-    height: auto;
-    display: flex;
-    padding: 9px 12px 6px;
+.categories button {
     margin-right: 12px;
+    cursor: pointer;
+    border: none;
     border-radius: 40px;
-    align-items: center;
     color: white;
     background-color: #232323;
 }
 
-.category div:hover{
-    cursor: pointer;
+.categories button span {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    padding: 4px 12px;
 }
 
-.category div#songs{
+.categories #highlight {
     color: black;
     background-color: white;
 }
 
-/* Song list header */
-
-.song_info{
-    padding-left: 34px;
-    padding-right: 34px;
-    color: #b3b3b3;
-    background-color: #181818;
-    border-bottom: 1px solid #252525;
-    display: grid;
-    align-items: center;
-    grid-template-columns: 2% 55% 38% 5%;
+/* .category div#forward{
+    position: absolute;
+    right: 0;
+    margin: 0;
+    margin-right: 10px;
+    padding: 0;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
 }
 
-.song_info p{
-    padding-top: 2px;
-    padding-left: 12px;
+div#forward svg{
+    margin-left: 1px;
+} */
+
+
+/* ================================================
+*   2 - Search Result 
+*================================================== */
+
+/* Container */
+
+.search_result_container {
+    width: 100%;
+    height: calc(100% - 48px);
+    padding: 0px 32px;
+}
+
+/* ------------------------------------------------
+*   2.1 - List Header
+*-------------------------------------------------- */
+
+.list_header {
+    width: 100%;
+    height: 36px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid hsla(0,0%,100%,.1);
+}
+
+.grid {
+    display: grid;
+    width: 100%;
     height: 100%;
+    padding: 0px 16px;
+    grid-template-columns: 16px 4fr 2fr minmax(120px, 1fr);
+    grid-template-areas: "index title title duration";
+    grid-gap: 16px;
+}
+
+.grid div {
     display: flex;
     align-items: center;
-}
-
-.song_info p#id{
-    font-size: 17px;
-    padding-top: 0;
-    padding-right: 1px;
-    justify-content: end;
-}
-
-/*
-*   Search Result
-*---------------------------------------*/
-
-.search_result{
-    width: 100%;
-}
-
-.search_result ul{
     color: #b3b3b3;
-    padding: 19px 34px 0px 35px;
+    font-family: 'Circular Light';
 }
 
-/* Row */
+.grid .index {
+    font-size: 16px;
+    justify-content: center;
+    grid-area: index;
+}
 
-.search_result ul li{
+.grid .title {
+    grid-area: title;
+}
+
+.grid .album {
+    grid-area: album;
+}
+
+.grid .duration {
+    justify-self: end;
+    grid-area: duration;
+}
+
+.grid .duration svg {
+    margin-right: 32px;
+}
+
+/* ------------------------------------------------
+*   2.2 - Song List
+*-------------------------------------------------- */
+
+.list_item {
+    width: 100%;
     height: 56px;
+    padding: 0px 16px;
     display: grid;
-    grid-template-columns: 2% 55% 38% 5%;
+    grid-template-columns: 16px 4fr 2fr minmax(120px, 1fr);
+    grid-template-areas: "song_index song_details song_details song_duration";
+    grid-gap: 16px;
 }
 
-.search_result ul li:hover{
+.list_item:hover {
     background-color: #2a2a2a;
     border-radius: 4px;
 }
-
-/* ID and Title */
-
-.search_result ul li div{
-    display: flex;
-    align-items: center;
-    padding-left: 8px;
-    padding-bottom: 4px;
+.list_item div {
+    margin-top: 2px;
+    /* border: 1px solid white; */
 }
 
-/* ID */
+/* 
+*   2.2.1 - Index
+*-------------------------------------------------- */
 
-.search_result ul li .id{
+.song_index {
     display: flex;
     align-items: center;
+    justify-content: center;
+    grid-area: song_index;
+    color: white;
 }
 
-.search_result ul li .id p{
+.song_index div {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.song_index div span {
+    display: inline-block;
     font-size: 16px;
-    padding-right: 22px;
-    padding-bottom: 0px;
-    display: flex;
+    font-family: 'Circular Book';
 }
 
-.search_result ul li:hover .id p{
+.song_index div button,
+.list_item:hover .song_index div span {
     display: none;
 }
 
-.search_result ul li .id div{
-    padding: 0;
+.list_item:hover .song_index div button {
+    display: inline-block;
 }
 
-.search_result ul li:hover .id div div{
-    display: none;
-}
+/* 
+*   2.2.2 - Details
+*-------------------------------------------------- */
 
-.search_result ul li:hover .id div div{
+.song_details {
     display: flex;
-    padding-left: 9px;
-    
+    align-items: center;
+    grid-area: song_details;
 }
 
-/* Title */
-
-.search_result ul li img{
+.song_details img {
     width: 40px;
     height: 40px;
-    margin-left: 7px;
+    margin-right: 16px;
 }
 
-.search_result ul li span{
-    margin-left: 5px;
-    overflow: hidden;
+.song_details div {
+    display: grid;
+    align-items: center;
+    grid-template-rows: auto auto;
+    grid-template-areas: "title" "artist";
+    font-family: 'Circular Book';
+    height: 100%;
 }
 
-.search_result ul li span p#title{
-    position: relative;
-    bottom: 0px;
-    color: white;
+.song_details #title {
+    line-height: 26px;
     font-size: 16px;
-    font-family: 'Circular Medium';
+    grid-area: title;
+    color: white;
+
+    /* overflow text on a ellipsis */
     text-overflow: ellipsis;
     overflow: hidden;
+    white-space: initial;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.song_details #artist {
+    line-height: 20px;
+    grid-area: artist;
+    color: #b3b3b3;
     white-space: nowrap;
+
+    /* overflow text on a ellipsis */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: initial;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
-.search_result ul li span p#artist{
-    position: relative;
-    top: 5px;
+/* 
+*   2.2.3 - Album
+*-------------------------------------------------- */
+
+.song_album {
+    display: flex;
+    align-items: center;
+    color: #b3b3b3;
+    white-space: nowrap;
+    grid-area: song_album;
 }
 
-/* Album*/
+/* 
+*   2.2.4 - Duration
+*-------------------------------------------------- */
 
-.search_result ul li p{
-    padding-left: 11px;
-    padding-bottom: 2px;
+.song_duration {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    color: #b3b3b3;
+    grid-area: song_duration;
+}
+
+.song_duration #like,
+.song_duration #options {
+    opacity: 0;
     height: 100%;
     display: flex;
     align-items: center;
 }
 
-/* Time */
-
-.search_result ul li p#duration{
-    font-size: 15px;
-    padding-bottom: 2px;
-    padding-left: 4px;
+.song_duration #like {
+    margin-right: 16px;
 }
 
-.SearchCardGrid{
-    display: grid;
-    grid-gap: 24px;
-    grid-template-columns: repeat(4, 1fr); /* Define 4 colunas */
-    padding-top: 16px;
+.song_duration #time {
+    width: 5ch;
+    height: 100%;
+    margin-right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.song_duration #like,
+.song_duration #options {
+    opacity: 0;
+}
+
+.list_item:hover .song_duration #like,
+.list_item:hover .song_duration #options {
+    opacity: 1;
+}
+
+/* 
+*   2.2.5 - Media Queries
+*-------------------------------------------------- */
+
+@media (min-width: 777px) {
+    .grid {
+        grid-template-columns: 16px 4fr 2fr minmax(120px, 1fr);
+        grid-template-areas: "index title album duration";
+    }
+
+    .list_item {
+        grid-template-columns: 16px 4fr 2fr minmax(120px, 1fr);
+    grid-template-areas: "song_index song_details song_album song_duration";
+    }
 }

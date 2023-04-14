@@ -51,3 +51,12 @@ p {
   font-size: 14px;
   font-family: 'Circular Book';
 }
+
+button {
+  all: unset;
+}
+
+span {
+  font-size: 14px;
+  font-family: 'Circular Book';
+}

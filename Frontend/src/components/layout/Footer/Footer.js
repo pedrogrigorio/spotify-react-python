@@ -43,12 +43,14 @@ function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songDat
     return (
         <footer className={styles.playbar_container}>
             <div className={styles.footerLeft}>
-                <img src={songData.img} alt="Song"/>
-                <div className={styles.songDetails}>
-                    <p id={styles.title}>{songData.title}</p>
-                    <p id={styles.artist}>{songData.artist}</p> 
-                </div>
-                <div id={styles.like}><Like size={20}/></div>
+                {songData.title != "" && <>
+                    <img src={songData.img} alt="Song"/>
+                    <div className={styles.songDetails}>
+                        <p id={styles.title}>{songData.title}</p>
+                        <p id={styles.artist}>{songData.artist}</p> 
+                    </div>
+                    <div id={styles.like}><Like size={20}/></div>
+                </>}
             </div>
 
             <div className={styles.footerMid}>

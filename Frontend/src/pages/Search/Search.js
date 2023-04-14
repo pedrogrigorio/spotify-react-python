@@ -4,6 +4,11 @@ import { connect } from 'react-redux'
 import * as PlayActions from '../../store/actions/play'
 import Play from '../../components/icons/Play'
 import styles from "./Search.module.css"
+import Duration from '../../components/icons/Duration'
+import Like from '../../components/icons/Like'
+import Options from '../../components/icons/Options'
+import Forward from '../../components/icons/Forward'
+import teste from '../../assets/img/teste.jpg'
 
 function Search({searchResult, setSongData, isPlaying, setIsPlaying}) {
 
@@ -51,42 +56,80 @@ function Search({searchResult, setSongData, isPlaying, setIsPlaying}) {
         }
     }
 
+    const[width, setWidth] = useState(window.innerWidth)
+
+    useEffect(() => {
+        window.addEventListener('resize', () => setWidth(window.innerWidth));
+    }, [])
+
     return ( 
         <div className={styles.container}>
-            <header className={styles.header}>
-                <div className={styles.category}>
-                    <div><p>Tudo</p></div>
-                    <div id={styles.songs}><p>Músicas</p></div>
-                    <div><p>Álbuns</p></div>
-                    <div><p>Artistas</p></div>
-                    <div><p>Playlists</p></div>
-                    <div><p>Podcasts e programas</p></div>
+            <div className={styles.categories_container}>
+                <div className={styles.categories}>
+                    <button>
+                        <span>Tudo</span>
+                    </button>
+                    <button id={styles.highlight}>
+                        <span>Músicas</span>
+                    </button>
+                    <button>
+                        <span>Álbuns</span>
+                    </button>
+                    <button>
+                        <span>Artistas</span>
+                    </button>
+                    <button>
+                        <span>Playlists</span>
+                    </button>
+                    <button>
+                        <span>Podcasts e programas</span>
+                    </button>
                 </div>
-                <div className={styles.song_info}>
-                    <p id={styles.id}>#</p>
-                    <p>Título</p>
-                    <p id={styles.album}>Álbum</p>
-                    <div>Icon</div>
+            </div>
+            <div className={styles.search_result_container}>
+                <div className={styles.list_header}>
+                    <div className={styles.grid}>
+                        <div className={styles.index}>#</div>
+                        <div className={styles.title}>
+                            <span>Título</span>
+                        </div>
+                        {width > 776 && (
+                            <div className={styles.album}>
+                                <span>Álbum</span>
+                            </div>
+                        )}
+                        <div className={styles.duration}>
+                            <span><Duration size='16' /></span>
+                        </div>
+                    </div>
                 </div>
-            </header>
-            <div className={styles.search_result}>
-                <ul>
+                <ul className={styles.song_list}>
                     {searchResult.map((song, index) => {
                         return(
-                            <li key={song.title}>
-                                <div className={styles.id}>
-                                    <p>1</p>
-                                    <div onClick={() => play(song.link, index)}><Play size={12} active={active[index]}/></div>
+                            <li className={styles.list_item}>
+                                <div className={styles.song_index}>
+                                    <div>
+                                        <span>{index+1}</span>
+                                        <button onClick={() => play(song.link, index)}><Play size='12'/></button>
+                                    </div>
                                 </div>
-                                <div>
-                                    <img src={song.img} alt="cover"/>
-                                    <span>
-                                        <p id={styles.title}>{song.title}</p>
-                                        <p id={styles.artist}>Alexandr Misko</p>
-                                    </span>
+                                <div className={styles.song_details}>
+                                    <img src={song.img} alt='cover'/>
+                                    <div>
+                                        <div id={styles.title}>{song.title}</div>
+                                        <span id={styles.artist}>Alexandr Misko</span>
+                                    </div>
                                 </div>
-                                <p>Beyond the Box</p>
-                                <p id={styles.duration}>3:55</p>
+                                {width > 776 && (
+                                    <div className={styles.song_album}>
+                                        <span>Beyond the Box</span>
+                                    </div>
+                                )}
+                                <div className={styles.song_duration}>
+                                    <button id={styles.like}><Like size='18'/></button>
+                                    <span id={styles.time}>3:55</span>
+                                    <button id={styles.options}><Options size='18'/></button>
+                                </div>
                             </li>
                         )
                     })}
