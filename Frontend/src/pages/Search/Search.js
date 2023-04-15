@@ -76,8 +76,8 @@ function Search({searchResult, setSongMetaData, setSongTrackData, isPlaying, set
                         return(
                             <li key={index}>
                                 <div className={styles.id}>
-                                    <p>{index}</p>
-                                    <div onClick={() => play(index, song.title, song.artist, song.img)}><Play size={12} active={active[index]}/></div>
+                                    <p>{index+1}</p>
+                                    <div onClick={() => play(index+1, song.title, song.artist, song.img)}><Play size={12} active={active[index]}/></div>
                                 </div>
                                 <div>
                                     <img src={song.img} alt="cover"/>

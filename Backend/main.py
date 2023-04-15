@@ -38,12 +38,12 @@ async def get_status_api():
 
 @app.post('/search_music')
 def get_search_content(search : request_models.SearchContent):
-    return asyncio.run(api_requests.search_engine(search.search_content))
+    return api_requests.search_engine(search.search_content)
   
 
 
 @app.post('/read_music')
-async def get_music_bytes(search : request_models.MusicRequest):
+def get_music_bytes(search : request_models.MusicRequest):
     return StreamingResponse(api_requests.get_music_by_id(search.index_request), media_type="audio/mp3")
 
   
