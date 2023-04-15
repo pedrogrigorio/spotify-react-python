@@ -56,6 +56,9 @@ button {
   all: unset;
 }
 
+a {
+  all: unset;
+}
 span {
   font-size: 14px;
   font-family: 'Circular Book';
