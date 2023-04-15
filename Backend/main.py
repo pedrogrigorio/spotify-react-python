@@ -4,16 +4,12 @@
 
 """
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI  
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
-from pytube import YouTube
-from pytube import Search
-from io import BytesIO
-from pydantic import BaseModel
-
-
-
+import request_models
+import asyncio
+from engine_api import api_requests
 
 app = FastAPI()
 
@@ -35,51 +31,19 @@ app.add_middleware(
 )
  
  
+@app.get('/status')
+async def get_status_api():
+    return api_requests.api_is_works()
 
 
-class MusicRequest(BaseModel):
-    link_request : str
-
-@app.get("/")
-async def main():
-    return {"message": "Work"}
+@app.post('/search_music')
+def get_search_content(search : request_models.SearchContent):
+    return api_requests.search_engine(search.search_content)
+  
 
 
-@app.post("/read_music")
-def music(link :MusicRequest):
-    buffer = BytesIO()
-    url = YouTube(link.link_request)
-    url.streams.filter(only_audio=True).order_by("abr").desc().first().stream_to_buffer(buffer)
-    buffer.seek(0)
-    return StreamingResponse(buffer,
-                            media_type="audio/mp3",
-                            headers={"Content-Length": str(buffer.getbuffer().nbytes)}
-                            )
+@app.post('/read_music')
+def get_music_bytes(search : request_models.MusicRequest):
+    return StreamingResponse(api_requests.get_music_by_id(search.index_request), media_type="audio/mp3")
 
-
-@app.post("/read_meta_data")
-def get_info_music(link :MusicRequest):
-    url = YouTube(link.link_request)
-    return {"title"   : url.title, 
-            "img"     : url.thumbnail_url, 
-            "artist"  : url.author,
-           }
-
-
-
-class SearchContent(BaseModel):
-    search_content: str
-
-
-# Transformar essa troca de dados para JSON 
-@app.post("/search")  
-async def search_for_music(search : SearchContent):
-    search_ytb = Search(search.search_content)
-    result = []
-    for v in search_ytb.results:
-        result.append({ "title" : v.title, 
-                        "link"  : v.watch_url,
-                        "img"   : v.thumbnail_url,       
-                        })
-        
-    return  result
+  

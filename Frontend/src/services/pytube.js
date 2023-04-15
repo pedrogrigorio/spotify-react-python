@@ -4,7 +4,7 @@ export async function searchEngine(searchContent){
 
     let data
 
-    await api.post('/search', {search_content: searchContent})
+    await api.post('/search_music', {search_content: searchContent})
     .then(response => {
         data = response.data
         console.log(data)
@@ -12,25 +12,25 @@ export async function searchEngine(searchContent){
 
     return { data }
 }
-
-export async function getMetadata(link){
+// Deprecated 
+// export async function getMetadata(link){
     
-    let data
+//     let data
 
-    await api.post('/read_meta_data', {link_request: link})
-    .then(response => {
-        data = response.data
-        console.log(data)
-    })
+//     await api.post('/read_meta_data', {link_request: link})
+//     .then(response => {
+//         data = response.data
+//         console.log(data)
+//     })
 
-    return { data }
-}
+//     return { data }
+// }
 
-export async function getSong(link){
+export async function getSong(index){
 
     let audio
 
-    await api.post('/read_music', {link_request: link}, {responseType: 'blob'})
+    await api.post('/read_music', {index_request: index}, {responseType: 'blob'})
     .then(response => {
         audio = URL.createObjectURL(response.data)
         console.log(audio)

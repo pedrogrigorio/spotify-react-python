@@ -5,7 +5,7 @@ import * as PlayActions from '../../store/actions/play'
 import Play from '../../components/icons/Play'
 import styles from "./Search.module.css"
 
-function Search({searchResult, setSongData, isPlaying, setIsPlaying}) {
+function Search({searchResult, setSongMetaData, setSongTrackData, isPlaying, setIsPlaying}) {
 
     const initialState = {}
     const[active, setActive] = useState(initialState)
@@ -23,13 +23,14 @@ function Search({searchResult, setSongData, isPlaying, setIsPlaying}) {
         }))
     }, [isPlaying])
 
-    async function play(link, index){
+    async function play(index,title,artist,img){
         
         setIndex(index)
         if(!active[index] && !ready[index]){
-            const data = (await getMetadata(link)).data
-            const audio = (await getSong(link)).audio
-            setSongData(data.title, data.artist, data.img, audio)
+            // const data = (await getMetadata(link)).data
+            const audio = (await getSong(index)).audio
+            setSongTrackData(audio)
+            setSongMetaData(title, artist, img)
 
             setActive(state => ({
                 ...initialState,
@@ -73,20 +74,20 @@ function Search({searchResult, setSongData, isPlaying, setIsPlaying}) {
                 <ul>
                     {searchResult.map((song, index) => {
                         return(
-                            <li key={song.title}>
+                            <li key={index}>
                                 <div className={styles.id}>
-                                    <p>1</p>
-                                    <div onClick={() => play(song.link, index)}><Play size={12} active={active[index]}/></div>
+                                    <p>{index+1}</p>
+                                    <div onClick={() => play(index+1, song.title, song.artist, song.img)}><Play size={12} active={active[index]}/></div>
                                 </div>
                                 <div>
                                     <img src={song.img} alt="cover"/>
                                     <span>
                                         <p id={styles.title}>{song.title}</p>
-                                        <p id={styles.artist}>Alexandr Misko</p>
+                                        <p id={styles.artist}>{song.artist}</p>
                                     </span>
                                 </div>
-                                <p>Beyond the Box</p>
-                                <p id={styles.duration}>3:55</p>
+                                <p>{song.album}</p>
+                                <p id={styles.duration}>{song.duration}</p>
                             </li>
                         )
                     })}
@@ -102,7 +103,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    setSongData: (title, artist, img, audio) => dispatch(PlayActions.setSongData(title, artist, img, audio)),
+    setSongMetaData: (title, artist, img) => dispatch(PlayActions.setSongMetaData(title, artist, img)),
+    setSongTrackData:(trackData) => dispatch(PlayActions.setSongTrackData(trackData)),
     setIsPlaying: (status) => dispatch(PlayActions.setIsPlaying(status))
 })
 
