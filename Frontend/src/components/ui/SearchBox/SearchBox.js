@@ -14,7 +14,7 @@ function SearchBox({setSearchData, clearOldRequests}) {
             clearOldRequests()
             const data = (await searchEngine(searchContent)).data
             data.map((song) => {
-                setSearchData(song.title, song.img, song.link)
+                setSearchData(song.title, song.cover, song.duration, song.artist, song.album)
             })
         }
     }
@@ -33,7 +33,7 @@ function SearchBox({setSearchData, clearOldRequests}) {
 }
 
 const mapDispatchToProps = dispatch => ({
-    setSearchData: (title, img, link) => dispatch(SearchActions.setSearchData(title, img, link)),
+    setSearchData: (title, img, duration, artist, album) => dispatch(SearchActions.setSearchData(title, img, duration, artist, album)),
     clearOldRequests: () => dispatch(SearchActions.clearOldRequests())
 })
 

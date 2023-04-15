@@ -8,6 +8,7 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend:/usr/app
+      - ./frontend/node_modules:/usr/app/node_modules
   
   backend:
     build: ./backend
@@ -16,3 +17,10 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/usr/app
+
+  redis:
+    image: redis
+    volumes:
+      - ./data:/data
+    ports:
+      - 6379:6379

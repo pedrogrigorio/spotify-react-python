@@ -41,7 +41,6 @@
 } */
 
 .songDetails #title {
-    border: 1px solid white;
     position: relative;
     max-width: 400px;
     top: 1px;

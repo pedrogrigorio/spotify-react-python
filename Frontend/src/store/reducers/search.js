@@ -12,7 +12,9 @@ export default function search(state = INITIAL_STATE, action) {
                 {
                     title: action.title,
                     img: action.image,
-                    link: action.link
+                    duration: action.duration,
+                    artist: action.artist,
+                    album: action.album,
                 }
             ]
         }

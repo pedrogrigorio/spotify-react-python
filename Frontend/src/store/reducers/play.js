@@ -2,24 +2,32 @@ const INITIAL_STATE = {
 
     isPlaying: false,
     settingSong: false,
-    songData : {
+    songData : {trackData : null},
+    songMetaData : {
         title     : "", 
         artist    : "", 
         img       : "", 
-        trackData : ""
     }
 } 
 
 export default function play(state = INITIAL_STATE, action) {
 
-    if (action.type === 'SET_SONG_DATA') {
+    if (action.type === 'SET_SONG_META_DATA') {
         return {
             ...state,
             settingSong: true,
-            songData: {
+            songMetaData: {
                 title : action.title, 
                 artist : action.artist,
                 img : action.image, 
+            }
+        }
+    }
+
+    else if (action.type === 'SET_SONG_TRACK') {
+        return {
+            ...state,
+            songData: {
                 trackData : action.trackData
             }
         }

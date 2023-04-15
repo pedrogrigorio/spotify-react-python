@@ -7,10 +7,9 @@ import styles from "./Search.module.css"
 import Duration from '../../components/icons/Duration'
 import Like from '../../components/icons/Like'
 import Options from '../../components/icons/Options'
-import Forward from '../../components/icons/Forward'
-import teste from '../../assets/img/teste.jpg'
+import convertTime from '../../helpers/convertTime'
 
-function Search({searchResult, setSongData, isPlaying, setIsPlaying}) {
+function Search({searchResult, setSongMetaData, setSongTrackData, isPlaying, setIsPlaying}) {
 
     const initialState = {}
     const[active, setActive] = useState(initialState)
@@ -28,13 +27,14 @@ function Search({searchResult, setSongData, isPlaying, setIsPlaying}) {
         }))
     }, [isPlaying])
 
-    async function play(link, index){
+    async function play(index,title,artist,img){
         
         setIndex(index)
         if(!active[index] && !ready[index]){
-            const data = (await getMetadata(link)).data
-            const audio = (await getSong(link)).audio
-            setSongData(data.title, data.artist, data.img, audio)
+            // const data = (await getMetadata(link)).data
+            const audio = (await getSong(index)).audio
+            setSongTrackData(audio)
+            setSongMetaData(title, artist, img)
 
             setActive(state => ({
                 ...initialState,
@@ -110,24 +110,24 @@ function Search({searchResult, setSongData, isPlaying, setIsPlaying}) {
                                 <div className={styles.song_index}>
                                     <div>
                                         <span>{index+1}</span>
-                                        <button onClick={() => play(song.link, index)}><Play size='12'/></button>
+                                        <button onClick={() => play(index+1, song.title, song.artist, song.img)}><Play size='12' active={active[index+1]}/></button>
                                     </div>
                                 </div>
                                 <div className={styles.song_details}>
                                     <img src={song.img} alt='cover'/>
                                     <div>
                                         <div id={styles.title}>{song.title}</div>
-                                        <span id={styles.artist}>Alexandr Misko</span>
+                                        <span id={styles.artist}>{song.artist}</span>
                                     </div>
                                 </div>
                                 {width > 776 && (
                                     <div className={styles.song_album}>
-                                        <span>Beyond the Box</span>
+                                        <span>{song.album}</span>
                                     </div>
                                 )}
                                 <div className={styles.song_duration}>
                                     <button id={styles.like}><Like size='18'/></button>
-                                    <span id={styles.time}>3:55</span>
+                                    <span id={styles.time}>{convertTime(song.duration)}</span>
                                     <button id={styles.options}><Options size='18'/></button>
                                 </div>
                             </li>
@@ -145,7 +145,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    setSongData: (title, artist, img, audio) => dispatch(PlayActions.setSongData(title, artist, img, audio)),
+    setSongMetaData: (title, artist, img) => dispatch(PlayActions.setSongMetaData(title, artist, img)),
+    setSongTrackData:(trackData) => dispatch(PlayActions.setSongTrackData(trackData)),
     setIsPlaying: (status) => dispatch(PlayActions.setIsPlaying(status))
 })
 

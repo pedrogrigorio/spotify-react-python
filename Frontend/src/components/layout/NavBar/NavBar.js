@@ -30,7 +30,7 @@ export default function NavBar(props) {
                     <div className={styles.figure_container}>
                         <div><User size='16'/></div>
                     </div>
-                    <span>Pedro Grigorio</span>
+                    <span>Usuário</span>
                     <div className={styles.arrow_down}>
                         <ArrowDown size='16'/>
                     </div>

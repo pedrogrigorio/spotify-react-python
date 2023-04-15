@@ -1,9 +1,15 @@
-export function setSongData(title, artist, image, trackData) {
+export function setSongMetaData(title, artist, image) {
     return { 
-        type : 'SET_SONG_DATA',
+        type : 'SET_SONG_META_DATA',
         title,
         artist,
         image,
+    }
+}
+
+export function setSongTrackData(trackData) {
+    return { 
+        type : 'SET_SONG_TRACK',
         trackData
     }
 }
