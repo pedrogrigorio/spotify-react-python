@@ -22,3 +22,6 @@
 /frontend/yarn-debug.log*
 /frontend/yarn-error.log*
 /Backend/__pycache__
+/Backend/engine_api/__pycache__
+/Backend/engine_api/API/__pycache__
+/data
