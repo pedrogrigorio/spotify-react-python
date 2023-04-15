@@ -1,12 +1,11 @@
 import styles from './SideMenu.module.css'
 import {SidebarData} from './SideMenuData'
-import {SidebarData2} from './SideMenuData2'
 import spotify_menu_logo from '../../../assets/img/spotify_menu_logo.png'
 import {BsPlusSquareFill} from 'react-icons/bs'
 import LikedSongs from '../../icons/LikedSongs'
 import DownloadApp from '../../icons/DownloadApp'
 
-function Sidebar(){
+function SideMenu(){
 
     return (
         <nav className={styles.sidemenu}>
@@ -64,28 +63,12 @@ function Sidebar(){
                         </div>
                     </div>
                 </div>
-                {/*
-                <ul className={styles.sidebar_list2}>
-                    {SidebarData2.map((val,key) => {
-                        return(
-                            <li 
-                                key={key} 
-                                className={styles.row} 
-                                id={window.location.pathname == val.link ? `${styles.active}` : ""}
-                                onClick={() => {window.location.pathname = val.link}}>
-                                <div id={styles.icon}>{val.icon}</div>
-                                <div id={styles.title}>{val.title}</div>
-                            </li>
-                        );
-                    })}
-                </ul>
-                <hr id={styles.horizontal_line}/> */}
             </div>
             <div className={styles.layout_resizer}>
-
+                <input></input>
             </div>
         </nav>
     )
 }
 
-export default Sidebar
+export default SideMenu

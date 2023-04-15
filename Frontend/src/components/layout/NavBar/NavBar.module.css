@@ -1,3 +1,7 @@
+/* ================================================
+*   0 - Container
+*================================================== */
+
 .navbar {
     grid-area: n;
     background-color: #121212; 
@@ -11,6 +15,15 @@
     justify-content: space-between;
     gap: 16px;
 }
+
+@media (max-width: 1023px) {
+    .navbar header {
+        padding: 16px;
+    }
+}
+/* ================================================
+*   1 - Navigation Controls
+*================================================== */
 
 .nav_control {
     display: flex;
@@ -27,6 +40,10 @@
     justify-content: center;
 }
 
+/* ================================================
+*   2 - Page Top Bar Content
+*================================================== */
+
 .page_top_bar_content {
     flex-grow: 1;
 }
@@ -36,8 +53,12 @@
     align-items: center;
 }
 
+/* ================================================
+*   3 - User
+*================================================== */
+
 .user {
-    height: 32px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -65,4 +86,16 @@
 
 .user span {
     color: white;
+    white-space: nowrap;
+}
+
+.user .arrow_down svg {
+    margin-inline-end: 6px;
+}
+
+@media (max-width: 872px) {
+    .user span,
+    .user .arrow_down {
+        display: none;
+    }
 }

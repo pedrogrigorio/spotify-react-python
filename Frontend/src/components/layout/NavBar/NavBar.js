@@ -19,11 +19,11 @@ export default function NavBar(props) {
             <header>
                 <div className={styles.nav_control}>
                     <button><Backward size='16'/></button>
-                    <button><Forward size='16'/></button>
+                    {width > 1023 && <button><Forward size='16'/></button>}
                 </div>
                 <div className={styles.page_top_bar_content}>
                     <div>
-                        <SearchBox/>
+                        {window.location.pathname == "/search" && <SearchBox/>}
                     </div>
                 </div>
                 <button className={styles.user}>
@@ -31,7 +31,9 @@ export default function NavBar(props) {
                         <div><User size='16'/></div>
                     </div>
                     <span>Pedro Grigorio</span>
-                    <ArrowDown size='16'/>
+                    <div className={styles.arrow_down}>
+                        <ArrowDown size='16'/>
+                    </div>
                 </button>
             </header>
         </nav>

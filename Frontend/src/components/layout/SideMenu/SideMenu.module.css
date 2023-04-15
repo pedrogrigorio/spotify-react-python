@@ -5,6 +5,7 @@
 .sidemenu {
     grid-area: s;
     background-color: #000000;
+    display: flex;
 }
 
 .principal {
@@ -251,4 +252,19 @@
     opacity: 1;
     color: white;
     transition: .2s;
+}
+
+/* ================================================
+*   4 - Resizer
+*================================================== */
+
+.layout_resizer {
+    position: relative;
+    height: 100%;
+    width: 9px;
+    right: -4.5px;
+    inset-inline-end: -4.5px;
+    background: linear-gradient(hsla(0,0%,100%,.3),hsla(0,0%,100%,.3)) no-repeat 50%/1px 100%;
+    opacity: 0;
+    cursor: col-resize;
 }
