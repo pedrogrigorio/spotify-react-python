@@ -1,15 +1,15 @@
 .progressBar{
 	display: flex;
     align-items: center;
-	position: relative;
+    position: relative;
 }
 .range__slider {
 	-webkit-appearance: none;
     appearance: none;
 	background-color: #535353;
 	height: 4px;
+    width: 100%;
 	overflow: hidden;
-	width: 626px;
 	border-radius: 2px;
 }
 .spanThumb{
@@ -27,7 +27,6 @@
 }
 .range__slider::-webkit-slider-thumb {
 	-webkit-appearance: none;
-	position: relative;
 	z-index: 9;
 	background: #b3b3b3;
 	border-radius: 50%;
@@ -71,48 +70,3 @@
     background: #1db954 !important;
     opacity: 1 !important;
 }
-
-/*.slider{
-    -webkit-appearance: none;
-    appearance: none;
-    width: 626px;
-    height: 4px;
-    border-radius: 5px;
-    background: #5e5e5e;
-    outline: none;
-    opacity: 1;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-}
-
-.slider::-webkit-slider-thumb{
-    -webkit-appearance: none;
-    height: 12px;
-    width: 12px;
-    background: white;
-    border-radius: 100%;
-    cursor: pointer;
-}
-
-.slider::-moz-range-progress{
-    background: white;
-}
-
-.timer_start{
-    position: relative;
-    bottom: 1px;
-    left: -7px;
-    color: #979797;
-    font-size: 12px;
-    font-family: "Circular Medium";
-}
-  
-.timer_end{
-    position: relative;
-    bottom: 1px;
-    left: 7px;
-    color: #979797;
-    font-size: 12px;
-    font-family: "Circular Medium";
-}
-*/

@@ -29,13 +29,14 @@ export default function Slider(props) {
     return (
         <div className={styles.progressBar}>
             <input ref={inputRef}
-            type="range" 
-            onChange={InputChange} 
-            className={styles.range__slider} 
-            min={props.minvalue}
-            max={props.maxvalue}
-            step="0.01"
-            value={props.value}/>
+                type="range" 
+                onChange={InputChange} 
+                className={styles.range__slider} 
+                min={props.minvalue}
+                max={props.maxvalue}
+                step="0.01"
+                value={props.value}
+            />
 
             <span className={styles.spanThumb}
                 style={{left:`${(decimalValue * inputRefWidth) - 3}px`}}

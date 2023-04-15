@@ -21,7 +21,7 @@ function SearchBox({setSearchData, clearOldRequests}) {
 
     return (
         <div className={styles.SeachBox}>
-            <Search size={22} searchBox={true} />
+            <Search size={24} searchBox={true} />
             <input 
             placeholder="O que você quer ouvir?" 
             maxLength="80" 

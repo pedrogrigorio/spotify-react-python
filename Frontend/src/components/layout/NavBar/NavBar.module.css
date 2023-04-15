@@ -1,25 +1,101 @@
-.navbar{
+/* ================================================
+*   0 - Container
+*================================================== */
+
+.navbar {
     grid-area: n;
-    background-color: black; 
-    padding: 10px 32px;
-    display: grid;
-    grid-template-columns: 5% 80% 15%;
+    background-color: #121212; 
 }
 
-.nav_button{
+.navbar header {
+    height: 64px;
+    padding: 16px 32px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 3px 1px 0px 0px;
+    gap: 16px;
 }
 
-.page_header{
+@media (max-width: 1023px) {
+    .navbar header {
+        padding: 16px;
+    }
+}
+/* ================================================
+*   1 - Navigation Controls
+*================================================== */
+
+.nav_control {
+    display: flex;
+    gap: 16px;
+}
+
+.nav_control button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,.7);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ================================================
+*   2 - Page Top Bar Content
+*================================================== */
+
+.page_top_bar_content {
+    flex-grow: 1;
+}
+
+.page_top_bar_content div {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    padding-left: 15px;
 }
 
-.profile{
-    border: 1px solid white;
+/* ================================================
+*   3 - User
+*================================================== */
+
+.user {
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 2px;
+    border-radius: 23px;
+    background-color: rgba(0,0,0,.7);
+}
+
+.figure_container {
+    width: 28px;
+    height: 28px;
+}
+
+.figure_container div {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    padding-bottom: 2px;
+    background-color: #535353;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user span {
+    color: white;
+    white-space: nowrap;
+}
+
+.user .arrow_down svg {
+    margin-inline-end: 6px;
+}
+
+@media (max-width: 872px) {
+    .user span,
+    .user .arrow_down {
+        display: none;
+    }
 }

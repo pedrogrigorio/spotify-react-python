@@ -1,126 +1,270 @@
-/* BG */
+/* ================================================
+*   0 - Container
+*================================================== */
 
-.sidebar{
+.sidemenu {
     grid-area: s;
     background-color: #000000;
-}
-
-/* Spotify Logo */
-.sidebar img{
-    width: 130px;
-    margin: 25px 0px 24px 24px;
-    text-align: center;
-}
-
-/*
-* List 1 - Home, Search and Your Library
-*---------------------------------------*/
-
-.sidebar_list{
-    position: relative;
-    height: auto;
-    width: 100%;
-    padding: 0;
-    top: -2px;
-}
-
-/* Item list position */
-.row{
-    width: 100%;
-    height: 40px;
-    margin-left: 18px;
     display: flex;
-    list-style-type: none;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    color: #8BB3B3;
 }
 
-/* Icon and title adjustment */
-
-.sidebar_list .row #icon{
-    flex: 10%;
-    display: grid;
-    place-items: center;
-    height: 22px;
-    margin-right: 11px;
-}
-
-.sidebar_list .row #title{
-    flex: 75%;
-    font-family: 'Circular Bold', Georgia, sans-serif;
-    font-size: 14px;
-    margin-right: 3px;
-}
-
-/* Animation */
-
-.sidebar_list #active{
-    color: white;
-}
-
-.row:hover{
-    cursor: pointer;
-    color: #FFF;
-}
-
-/*
-* List 2 - Create playlist and Liked Songs 
-*------------------------------------------*/
-
-.sidebar_list2{
-    position: relative;
-    height: auto;
+.principal {
     width: 100%;
-    padding: 0;
-    top: 23px;
+    height: 100%;
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Icon and title adjustment */
+/* ================================================
+*   1 - Logo
+*================================================== */
 
-.sidebar_list2 .row #icon{
-    flex: 10%;
-    display: grid;
-    place-items: center;
-    height: 22px;
-    margin-right: 11px;
-    margin-bottom: 4px;
-    font-size: 24px;
+.logo {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;  
 }
 
-.sidebar_list2 .row #title{
-    flex: 75%;
-    font-family: 'Circular Bold', Georgia, sans-serif;
-    font-size: 14px;
-    margin-right: 3px;
-    margin-bottom: 1px;
+.logo a {
+    width: 100%;
+    height: 47.6px;
+    padding: 0 24px;
+    margin-bottom: 18px;
+    cursor: pointer;
 }
 
-/* Animation */
-
-.sidebar_list2 .row:hover div#icon{
-    filter: brightness(150%)
+.logo img {
+    width: 131px;
+    height: 40px;
 }
 
-.sidebar_list2 .row#active div#icon{
-    filter: brightness(150%)
+/* ================================================
+*   2 - Pages List
+*================================================== */
+
+.pages_list {
+    list-style: none;
 }
 
-.sidebar_list2 #active{
+.pages_list li {
+    padding: 0 8px;
+}
+
+.pages_list li a {
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+}
+
+.pages_list li a span {
+    color: #b3b3b3;
+}
+
+.pages_list li a:hover span {
+    color: white;
+    transition: .2s;
+}
+
+.pages_list li#active a span {
     color: white;
 }
 
+/* ================================================
+*   3 - Playlists Root Container
+*================================================== */
 
-/*
-* Horizontal Line
-*----------------*/
+.playlists_root_container {
+    width: 100%;
+    height: 100%;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+}
 
-#horizontal_line{
+.playlists_root_container .content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ------------------------------------------------
+*   3.1 - Create Playlist
+*-------------------------------------------------- */
+
+.create_playlist {
+    width: 100%;
+    display: flex;
+}
+
+.create_playlist button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 8px 24px;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.create_playlist button:hover {
+    opacity: 1;
+    transition: .2s;
+}
+
+.create_playlist button span {
+    color: white;
+}
+
+.create_playlist button div {
+    height: 24px;
+    font-size: 24px;
+    color: white;
+    margin-right: 16px;
+}
+
+/* ------------------------------------------------
+*   3.2 - Liked Songs
+*-------------------------------------------------- */
+
+.liked_songs {
+    width: 100%;
+    display: flex;
+}
+
+.liked_songs button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 8px 24px;
+    cursor: pointer;
+}
+
+.liked_songs button span {
+    color: white;
+    opacity: 0.7;
+}
+
+.liked_songs button div {
+    height: 24px;
+    font-size: 24px;
+    color: white;
+    margin-right: 16px;
+}
+
+.liked_songs button:hover,
+.liked_songs button:hover span,
+.liked_songs button#active,
+.liked_songs button#active span {
+    opacity: 1;
+    filter: brightness(150%);
+    transition: .2s;
+}
+
+/* ------------------------------------------------
+*   3.3 - Horizontal Line
+*-------------------------------------------------- */
+
+.horizontal_line {
     position: relative;
-    top: 30px;
-    left: 24px;
-    width: 192px;
-    border: 0;
-    border-top: 1px solid #222222;
+}
+.horizontal_line hr {
+    height: 1px;
+    margin: 8px 24px 0 24px;
+    border: none;
+    background-color: #282828;
+}
+
+.horizontal_line div {
+    height: 16px;
+    bottom: -16px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,.7), transparent);
+}
+
+/* ------------------------------------------------
+*   3.4 - Playlists
+*-------------------------------------------------- */
+
+.playlists_container {
+    height: 100%;
+}
+
+.playlists_container div {
+    height: 100%;
+    padding: 8px 0;
+    cursor: default;
+}
+
+.playlists {
+    list-style: none;
+}
+
+.playlists li {
+    color: #b3b3b3;
+    padding: 0px 24px;
+    font-size: 13px;
+    line-height: 32px;
+    font-family: 'Circular Book';
+}
+
+.playlists li:hover {
+    color: white;
+}
+
+/* ------------------------------------------------
+*   3.4 - Install app
+*-------------------------------------------------- */
+
+.install_app {
+    width: 100%;
+}
+
+.install_app div {
+    padding: 0 8px;
+}
+
+.install_app a {
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.install_app span {
+    color: #b3b3b3;
+}
+
+.install_app svg {
+    opacity: .7
+}
+
+.install_app a:hover svg,
+.install_app a:hover span {
+    opacity: 1;
+    color: white;
+    transition: .2s;
+}
+
+/* ================================================
+*   4 - Resizer
+*================================================== */
+
+.layout_resizer {
+    position: relative;
+    height: 100%;
+    width: 9px;
+    right: -4.5px;
+    inset-inline-end: -4.5px;
+    background: linear-gradient(hsla(0,0%,100%,.3),hsla(0,0%,100%,.3)) no-repeat 50%/1px 100%;
+    opacity: 0;
+    cursor: col-resize;
 }

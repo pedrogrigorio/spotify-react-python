@@ -12,9 +12,10 @@ import FullScreen from '../../icons/FullScreen'
 import VolumeSlider from '../../ui/VolumeSlider/VolumeSlider'
 import PlayerSlider from '../../ui/PlayerSlider/PlayerSlider'
 import Audio from "./Audio"
+import Like from "../../icons/Like"
 import * as PlayActions from '../../../store/actions/play'
 
-function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songData}){
+function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songData, songMetaData}){
 
     const audioRef = useRef()
     const [volume, setVolume] = useState(1)
@@ -42,13 +43,14 @@ function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songDat
     return (
         <footer className={styles.playbar_container}>
             <div className={styles.footerLeft}>
-                <div className={styles.imgBox}>
-                    <img src={songData.img} alt="Song"/>
-                </div>
-                <div className={styles.songDetails}>
-                    <p id={styles.title}>{songData.title}</p>
-                    <p id={styles.artist}>{songData.artist}</p> 
-                </div>
+                {songMetaData.title != "" && <>
+                    <img src={songMetaData.img} alt="Song"/>
+                    <div className={styles.songDetails}>
+                        <p id={styles.title}>{songMetaData.title}</p>
+                        <p id={styles.artist}>{songMetaData.artist}</p> 
+                    </div>
+                    <div id={styles.like}><Like size={20}/></div>
+                </>}
             </div>
 
             <div className={styles.footerMid}>
@@ -81,7 +83,8 @@ function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songDat
 const mapStateToProps = state => ({
     settingSong: state.play.settingSong,
     isPlaying: state.play.isPlaying,
-    songData: state.play.songData
+    songData: state.play.songData,
+    songMetaData: state.play.songMetaData
 })
 
 const mapDispatchToProps = dispatch => ({
