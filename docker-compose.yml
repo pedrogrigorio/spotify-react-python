@@ -7,8 +7,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend:/usr/app
-      - ./frontend/node_modules:/usr/app/node_modules
+      - ./frontend:/user/app
+      - /user/app/node_modules
   
   backend:
     build: ./backend
