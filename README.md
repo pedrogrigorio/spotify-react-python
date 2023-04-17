@@ -4,7 +4,7 @@
 </h1>
 
 <h1 align='center'>
-    <img src='frontend\src\assets\readme\search.gif' />
+    <img src='https://i.imgur.com/RHcxAfk.gif' />
 </h1>
 
 ## 📕 About
