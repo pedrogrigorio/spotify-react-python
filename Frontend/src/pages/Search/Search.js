@@ -8,6 +8,7 @@ import Duration from '../../components/icons/Duration'
 import Like from '../../components/icons/Like'
 import Options from '../../components/icons/Options'
 import convertTime from '../../helpers/convertTime'
+import equalizer from '../../assets/gif/equalizer.gif'
 
 function Search({searchResult, setSongMetaData, setSongTrackData, isPlaying, setIsPlaying}) {
 
@@ -108,15 +109,16 @@ function Search({searchResult, setSongMetaData, setSongTrackData, isPlaying, set
                         return(
                             <li className={styles.list_item}>
                                 <div className={styles.song_index}>
-                                    <div>
-                                        <span>{index+1}</span>
+                                    <div id={active[index+1] ? `${styles.active}` : ""}>
+                                        <span id={ready[index+1] ? `${styles.active}` : ""}>{index+1}</span>
+                                        <img src={equalizer} width='14' height='20'></img>
                                         <button onClick={() => play(index+1, song.title, song.artist, song.img)}><Play size='12' active={active[index+1]}/></button>
                                     </div>
                                 </div>
                                 <div className={styles.song_details}>
                                     <img src={song.img} alt='cover'/>
                                     <div>
-                                        <div id={styles.title}>{song.title}</div>
+                                        <div className={styles.title} id={ready[index+1] ? `${styles.active}` : ""}>{song.title}</div>
                                         <span id={styles.artist}>{song.artist}</span>
                                     </div>
                                 </div>
