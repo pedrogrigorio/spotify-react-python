@@ -177,6 +177,10 @@ div#forward svg{
     font-family: 'Circular Book';
 }
 
+.song_index div span#active {
+    color: #1DB954;
+}
+
 .song_index div button,
 .list_item:hover .song_index div span {
     display: none;
@@ -184,6 +188,22 @@ div#forward svg{
 
 .list_item:hover .song_index div button {
     display: inline-block;
+}
+
+.song_index div img {
+    display: none;
+    position: relative;
+    top: -3px;
+    filter: invert(46%) sepia(94%) saturate(403%) hue-rotate(88deg) brightness(103%) contrast(91%);
+}
+
+.song_index div#active img {
+    display: inline-block;
+}
+
+.song_index div#active span,
+.list_item:hover .song_index div#active img {
+    display: none;
 }
 
 /* 
@@ -211,7 +231,7 @@ div#forward svg{
     height: 100%;
 }
 
-.song_details #title {
+.song_details .title {
     line-height: 26px;
     font-size: 16px;
     grid-area: title;
@@ -224,6 +244,10 @@ div#forward svg{
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
+}
+
+.title#active {
+    color: #1DB954;
 }
 
 .song_details #artist {
