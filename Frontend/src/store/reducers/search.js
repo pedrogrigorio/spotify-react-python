@@ -1,22 +1,14 @@
 const INITIAL_STATE = {
 
-    searchData : []
+    searchData: []
 }
 
 export default function search(state = INITIAL_STATE, action) {
+    // console.log(state);
 
     if (action.type === 'SET_SEARCH_DATA') {
         return {
-            searchData: [
-                ...state.searchData,
-                {
-                    title: action.title,
-                    img: action.image,
-                    duration: action.duration,
-                    artist: action.artist,
-                    album: action.album,
-                }
-            ]
+            searchData: action.data
         }
     }
     

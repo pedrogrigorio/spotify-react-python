@@ -13,9 +13,7 @@ function SearchBox({setSearchData, clearOldRequests}) {
         if(event.key === "Enter"){
             clearOldRequests()
             const data = (await searchEngine(searchContent)).data
-            data.map((song) => {
-                setSearchData(song.title, song.cover, song.duration, song.artist, song.album)
-            })
+            setSearchData(data)
         }
     }
 

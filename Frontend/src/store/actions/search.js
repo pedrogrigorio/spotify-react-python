@@ -1,11 +1,7 @@
-export function setSearchData(title, image, duration, artist, album) {
-    return { 
-        type : 'SET_SEARCH_DATA',
-        title,
-        image,
-        duration,
-        artist,
-        album,
+export function setSearchData(data) {
+    return {
+        type: 'SET_SEARCH_DATA',
+        data
     }
 }
 

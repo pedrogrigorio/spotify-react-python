@@ -1,7 +1,8 @@
 import './App.css';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import { Provider } from 'react-redux';
-import store from './store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store';
 import SideMenu from './components/layout/SideMenu/SideMenu';
 import NavBar from './components/layout/NavBar/NavBar';
 import Container from './components/layout/Container/Container';
@@ -18,17 +19,19 @@ function App() {
     <div className="App">
       <Router>
         <Provider store={store}>
-          <SideMenu />
-          <NavBar />
-          <Container>
-            <Routes>
-              <Route path='/' element={<Home />}></Route>
-              <Route path='/search' element={<Search />}></Route>
-              <Route path='/library' element={<Library />}></Route>
-              <Route path='/liked-songs' element={<LikedSongs />}></Route>
-            </Routes>
-          </Container>
-          <Footer />
+          <PersistGate loading={null} persistor={persistor}>
+            <SideMenu />
+            <NavBar />
+            <Container>
+              <Routes>
+                <Route path='/' element={<Home />}></Route>
+                <Route path='/search' element={<Search />}></Route>
+                <Route path='/library' element={<Library />}></Route>
+                <Route path='/liked-songs' element={<LikedSongs />}></Route>
+              </Routes>
+            </Container>
+            <Footer />
+          </PersistGate>
         </Provider>
       </Router>
     </div>

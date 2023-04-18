@@ -28,6 +28,7 @@ function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songDat
 
     useEffect(() => {
         clearSettingSong()
+        console.log("test")
         if(isPlaying) {
             audioRef.current.play()
         }

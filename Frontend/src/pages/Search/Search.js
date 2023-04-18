@@ -17,6 +17,14 @@ function Search({searchResult, setSongMetaData, setSongTrackData, isPlaying, set
     const[ready, setReady] = useState(initialState)
     const[index, setIndex] = useState()
 
+    // useEffect(() => {
+    //     console.log(searchResult)
+    // }, [])
+
+    // useEffect(() => {
+    //     console.log(searchResult)
+    // }, [searchResult])
+
     useEffect(() => {
         setIsPlaying(active[index])
     }, [active])
@@ -26,13 +34,13 @@ function Search({searchResult, setSongMetaData, setSongTrackData, isPlaying, set
             ...initialState,
             [index]: isPlaying
         }))
+        console.log(searchResult)
     }, [isPlaying])
 
     async function play(index,title,artist,img){
         
         setIndex(index)
         if(!active[index] && !ready[index]){
-            // const data = (await getMetadata(link)).data
             const audio = (await getSong(index)).audio
             setSongTrackData(audio)
             setSongMetaData(title, artist, img)
@@ -107,16 +115,16 @@ function Search({searchResult, setSongMetaData, setSongTrackData, isPlaying, set
                 <ul className={styles.song_list}>
                     {searchResult.map((song, index) => {
                         return(
-                            <li className={styles.list_item}>
+                            <li className={styles.list_item} key={index}>
                                 <div className={styles.song_index}>
                                     <div id={active[index+1] ? `${styles.active}` : ""}>
                                         <span id={ready[index+1] ? `${styles.active}` : ""}>{index+1}</span>
                                         <img src={equalizer} width='14' height='20'></img>
-                                        <button onClick={() => play(index+1, song.title, song.artist, song.img)}><Play size='12' active={active[index+1]}/></button>
+                                        <button onClick={() => play(index+1, song.title, song.artist, song.cover)}><Play size='12' active={active[index+1]}/></button>
                                     </div>
                                 </div>
                                 <div className={styles.song_details}>
-                                    <img src={song.img} alt='cover'/>
+                                    <img src={song.cover} alt='cover'/>
                                     <div>
                                         <div className={styles.title} id={ready[index+1] ? `${styles.active}` : ""}>{song.title}</div>
                                         <span id={styles.artist}>{song.artist}</span>
