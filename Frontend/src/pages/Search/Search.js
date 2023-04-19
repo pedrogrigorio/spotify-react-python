@@ -2,6 +2,7 @@ import { getMetadata, getSong } from '../../services/pytube'
 import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import * as PlayActions from '../../store/actions/play'
+import * as SearchActions from '../../store/actions/search'
 import Play from '../../components/icons/Play'
 import styles from "./Search.module.css"
 import Duration from '../../components/icons/Duration'
@@ -9,35 +10,34 @@ import Like from '../../components/icons/Like'
 import Options from '../../components/icons/Options'
 import convertTime from '../../helpers/convertTime'
 import equalizer from '../../assets/gif/equalizer.gif'
+import useToggle from './hooks/useToggle'
+import { useMemo } from 'react'
 
-function Search({searchResult, setSongMetaData, setSongTrackData, isPlaying, setIsPlaying}) {
+function Search({searchResult, setSongMetaData, setSongTrackData, isPlaying, setIsPlaying, clearOldRequests}) {
 
     const initialState = {}
-    const[active, setActive] = useState(initialState)
-    const[ready, setReady] = useState(initialState)
+    // const[active, setActive] = useState(initialState)
+    // const[ready, setReady] = useState(initialState)
+    // const [active, indexActive, ready] = useToggleSong(0);
     const[index, setIndex] = useState()
+    const [active, toggleActive, setActiveOn] = useToggle()
+    const [ready, toggleReady, setReadyOn] = useToggle()
 
     useEffect(() => {
-        console.log(searchResult)
+        clearOldRequests()
+        console.log("search render")
+        console.log(active)
     }, [])
-
-    // useEffect(() => {
-    //     console.log(searchResult)
-    // }, [searchResult])
 
     useEffect(() => {
         setIsPlaying(active[index])
-    }, [active])
+    }, [])
 
     useEffect(() => {
-        setActive(state => ({
-            ...initialState,
-            [index]: isPlaying
-        }))
-        console.log(searchResult)
+        toggleActive(isPlaying)
     }, [isPlaying])
 
-    async function play(index,title,artist,img){
+    async function play(index, title, artist, img){
         
         setIndex(index)
         if(!active[index] && !ready[index]){
@@ -45,23 +45,13 @@ function Search({searchResult, setSongMetaData, setSongTrackData, isPlaying, set
             setSongTrackData(audio)
             setSongMetaData(title, artist, img)
 
-            setActive(state => ({
-                ...initialState,
-                [index]: true
-            }))
-            
-            setReady(state => ({
-                ...initialState,
-                [index]: true
-            }))
+            setActiveOn(index)
+            setReadyOn(index)
 
             setIsPlaying(true)
         }
-        else{
-            setActive(state => ({
-                ...initialState,
-                [index]: !state[index]
-            }))
+        else {
+            toggleActive(index)
         }
     }
 
@@ -157,7 +147,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     setSongMetaData: (title, artist, img) => dispatch(PlayActions.setSongMetaData(title, artist, img)),
     setSongTrackData:(trackData) => dispatch(PlayActions.setSongTrackData(trackData)),
-    setIsPlaying: (status) => dispatch(PlayActions.setIsPlaying(status))
+    setIsPlaying: (status) => dispatch(PlayActions.setIsPlaying(status)),
+    clearOldRequests: () => dispatch(SearchActions.clearOldRequests())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search)
