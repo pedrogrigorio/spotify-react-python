@@ -17,9 +17,9 @@ function Search({searchResult, setSongMetaData, setSongTrackData, isPlaying, set
     const[ready, setReady] = useState(initialState)
     const[index, setIndex] = useState()
 
-    // useEffect(() => {
-    //     console.log(searchResult)
-    // }, [])
+    useEffect(() => {
+        console.log(searchResult)
+    }, [])
 
     // useEffect(() => {
     //     console.log(searchResult)

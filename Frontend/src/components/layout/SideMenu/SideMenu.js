@@ -4,6 +4,7 @@ import spotify_menu_logo from '../../../assets/img/spotify_menu_logo.png'
 import {BsPlusSquareFill} from 'react-icons/bs'
 import LikedSongs from '../../icons/LikedSongs'
 import DownloadApp from '../../icons/DownloadApp'
+import { NavLink } from 'react-router-dom'
 
 function SideMenu(){
 
@@ -18,11 +19,15 @@ function SideMenu(){
                 <ul className={styles.pages_list}>
                     {SidebarData.map((val,key) => {
                         return(
-                            <li key={key} className={styles.row} id={window.location.pathname == val.link ? `${styles.active}` : ""}>
-                                <a href={val.link}>
-                                    {val.icon}
-                                    <span id={styles.title}>{val.title}</span>
-                                </a>
+                            <li key={key}>
+                                <NavLink to={val.link} className={({ isActive }) => (isActive ? `${styles.active}` : '')}>
+                                    {({isActive}) => (
+                                        <>
+                                            <val.icon active={isActive} size='24'/>
+                                            <span id={styles.title}>{val.title}</span>
+                                        </>                                        
+                                    )}                     
+                                </NavLink>
                             </li>
                         );
                     })}
@@ -36,10 +41,10 @@ function SideMenu(){
                             </button>
                         </div>
                         <div className={styles.liked_songs}>
-                            <button id={window.location.pathname == "/liked-songs" ? `${styles.active}` : ""} onClick={() => {window.location.pathname = "/liked-songs"}}>
+                            <NavLink to='/liked-songs' className={({ isActive }) => (isActive ? `${styles.active}` : '')}>
                                 <div><LikedSongs size='24'/></div>
                                 <span>Músicas Curtidas</span>
-                            </button>
+                            </NavLink>
                         </div>
                         <div className={styles.horizontal_line}>
                             <hr/>

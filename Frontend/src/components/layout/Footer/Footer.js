@@ -14,6 +14,8 @@ import PlayerSlider from '../../ui/PlayerSlider/PlayerSlider'
 import Audio from "./Audio"
 import Like from "../../icons/Like"
 import * as PlayActions from '../../../store/actions/play'
+import { memo } from "react"
+import { useMemo } from "react"
 
 function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songData, songMetaData}){
 
@@ -28,7 +30,7 @@ function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songDat
 
     useEffect(() => {
         clearSettingSong()
-        console.log("test")
+        console.log(audioRef.current)
         if(isPlaying) {
             audioRef.current.play()
         }
@@ -93,4 +95,4 @@ const mapDispatchToProps = dispatch => ({
     clearSettingSong: (bool) => dispatch(PlayActions.clearSettingSong(bool))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Footer)
+export default connect(mapStateToProps, mapDispatchToProps)(memo(Footer))

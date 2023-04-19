@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styles from './NavBar.module.css' 
 import Forward from '../../icons/Forward'
 import Backward from '../../icons/Backward';
@@ -6,13 +7,15 @@ import SearchBox from '../../ui/SearchBox/SearchBox';
 import ArrowDown from '../../icons/ArrowDown';
 import User from '../../icons/User';
 
-export default function NavBar(props) {
+export default function NavBar() {
 
     const[width, setWidth] = useState(window.innerWidth)
 
     useEffect(() => {
         window.addEventListener('resize', () => setWidth(window.innerWidth));
     }, [])
+
+    const location = useLocation();
 
     return ( 
         <nav className={styles.navbar}>
@@ -23,7 +26,7 @@ export default function NavBar(props) {
                 </div>
                 <div className={styles.page_top_bar_content}>
                     <div>
-                        {window.location.pathname == "/search" && <SearchBox/>}
+                        {location.pathname == "/search" && <SearchBox/>}
                     </div>
                 </div>
                 <button className={styles.user}>
