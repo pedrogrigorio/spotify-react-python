@@ -70,7 +70,7 @@
     transition: .2s;
 }
 
-.pages_list li#active a span {
+.pages_list li a.active span {
     color: white;
 }
 
@@ -135,7 +135,7 @@
     display: flex;
 }
 
-.liked_songs button {
+.liked_songs a {
     width: 100%;
     display: flex;
     align-items: center;
@@ -143,22 +143,22 @@
     cursor: pointer;
 }
 
-.liked_songs button span {
+.liked_songs a span {
     color: white;
     opacity: 0.7;
 }
 
-.liked_songs button div {
+.liked_songs a div {
     height: 24px;
     font-size: 24px;
     color: white;
     margin-right: 16px;
 }
 
-.liked_songs button:hover,
-.liked_songs button:hover span,
-.liked_songs button#active,
-.liked_songs button#active span {
+.liked_songs a:hover,
+.liked_songs a:hover span,
+.liked_songs a.active,
+.liked_songs a.active span {
     opacity: 1;
     filter: brightness(150%);
     transition: .2s;

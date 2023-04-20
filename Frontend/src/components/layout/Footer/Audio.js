@@ -1,6 +1,6 @@
 import { forwardRef } from "react"
 
-const Audio = forwardRef((props,ref) => {
+const Audio = forwardRef((props, ref) => {
     return (
         <audio
             ref={ref}

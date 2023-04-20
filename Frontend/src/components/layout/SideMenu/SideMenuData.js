@@ -6,17 +6,17 @@ import Library from '../../icons/Library'
 export const SidebarData = [
     {
         title: "Início",
-        icon: <Home active={window.location.pathname === "/" ? true : false} size='24' />,
+        icon: Home,
         link: "/"
     },
     {
         title: "Buscar",
-        icon: <Search active={window.location.pathname === "/search" ? true : false} size='24' />,
+        icon: Search,
         link: "/search"
     },
     {
         title: "Sua Biblioteca",
-        icon: <Library active={window.location.pathname === "/library" ? true : false} size='24' />,
+        icon: Library,
         link: "/library"
     },
 ];

@@ -1,16 +1,26 @@
-export function setSearchData(title, image, duration, artist, album) {
-    return { 
-        type : 'SET_SEARCH_DATA',
-        title,
-        image,
-        duration,
-        artist,
-        album,
+export function setSearchData(data) {
+    return {
+        type: 'SET_SEARCH_DATA',
+        data
     }
 }
 
 export function clearOldRequests() {
     return {
-        type : 'CLEAR_OLD_REQUESTS'
+        type: 'CLEAR_OLD_REQUESTS'
+    }
+}
+
+export function setActiveIndex(index) {
+    return {
+        type: 'SET_ACTIVE_INDEX',
+        index
+    }
+}
+
+export function setActiveSong(status) {
+    return {
+        type: 'SET_ACTIVE_SONG',
+        status
     }
 }

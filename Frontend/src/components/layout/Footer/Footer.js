@@ -14,8 +14,11 @@ import PlayerSlider from '../../ui/PlayerSlider/PlayerSlider'
 import Audio from "./Audio"
 import Like from "../../icons/Like"
 import * as PlayActions from '../../../store/actions/play'
+import * as SearchActions from '../../../store/actions/search'
+import { memo } from "react"
+import { useMemo } from "react"
 
-function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songData, songMetaData}){
+function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songData, songMetaData, activeSong, setActiveSong, activeIndex}){
 
     const audioRef = useRef()
     const [volume, setVolume] = useState(1)
@@ -40,6 +43,14 @@ function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songDat
         audioRef.current.volume = volume
     }, [audioRef, volume])
 
+    useEffect(() => {
+        setActiveSong({[activeIndex]: isPlaying})
+    }, [isPlaying])
+
+    function toggle() {
+        setIsPlaying(!isPlaying)
+    }
+
     return (
         <footer className={styles.playbar_container}>
             <div className={styles.footerLeft}>
@@ -57,7 +68,7 @@ function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songDat
                 <ul className={styles.icons}>
                     <div id={styles.shuffle}><Shuffle size="17" fill="#bababa"/></div>
                     <div id={styles.previous}><Previous size="14"/></div>
-                    <div id={styles.play} onClick={() => setIsPlaying(!isPlaying)}><PlayButton size="47" active={isPlaying}/></div>
+                    <div id={styles.play} onClick={toggle}><PlayButton size="47" active={isPlaying}/></div>
                     <div id={styles.next}><Next size="14"/></div>
                     <div id={styles.repeat}><Repeat size="16" fill="#bababa"/></div>
                 </ul>
@@ -84,12 +95,15 @@ const mapStateToProps = state => ({
     settingSong: state.play.settingSong,
     isPlaying: state.play.isPlaying,
     songData: state.play.songData,
-    songMetaData: state.play.songMetaData
+    songMetaData: state.play.songMetaData,
+    activeSong: state.search.activeSong,
+    activeIndex: state.search.activeIndex
 })
 
 const mapDispatchToProps = dispatch => ({
     setIsPlaying: (status) => dispatch(PlayActions.setIsPlaying(status)),
-    clearSettingSong: (bool) => dispatch(PlayActions.clearSettingSong(bool))
+    clearSettingSong: (bool) => dispatch(PlayActions.clearSettingSong(bool)),
+    setActiveSong: (status) => dispatch(SearchActions.setActiveSong(status))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Footer)
+export default connect(mapStateToProps, mapDispatchToProps)(memo(Footer))

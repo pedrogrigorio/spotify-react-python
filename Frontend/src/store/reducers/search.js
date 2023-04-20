@@ -1,22 +1,16 @@
 const INITIAL_STATE = {
 
-    searchData : []
+    searchData: [],
+    activeIndex: 0,
+    activeSong: {}
 }
 
 export default function search(state = INITIAL_STATE, action) {
+    // console.log(state);
 
     if (action.type === 'SET_SEARCH_DATA') {
         return {
-            searchData: [
-                ...state.searchData,
-                {
-                    title: action.title,
-                    img: action.image,
-                    duration: action.duration,
-                    artist: action.artist,
-                    album: action.album,
-                }
-            ]
+            searchData: action.data
         }
     }
     
@@ -24,5 +18,20 @@ export default function search(state = INITIAL_STATE, action) {
         return INITIAL_STATE
     }
 
+    else if (action.type === 'SET_ACTIVE_INDEX') {
+        return {
+            ...state,
+            activeIndex: action.index
+        }
+    }
+
+    else if (action.type === 'SET_ACTIVE_SONG') {
+
+        return {
+            ...state,
+            activeSong: action.status
+        }
+    }
+    
     return state 
 }
