@@ -5,7 +5,7 @@ import * as SearchActions from '../../../store/actions/search'
 import Search from '../../icons/Search'
 import styles from './SearchBox.module.css'
 
-function SearchBox({setSearchData, clearOldRequests}) {
+function SearchBox({setSearchData, clearOldRequests, setActiveIndex, setActiveSong, songMetaData, isPlaying}) {
 
     const[searchContent, setSearchContent] = useState('')
 
@@ -14,6 +14,20 @@ function SearchBox({setSearchData, clearOldRequests}) {
             clearOldRequests()
             const data = (await searchEngine(searchContent)).data
             setSearchData(data)
+
+            setActiveIndex(0)
+            setActiveSong({})
+
+            /*
+            *   \/ check if any song in the new search is playing. \/
+            */
+            
+            // data.map((song, index) => {
+            //     if(song.id_deezer == songMetaData.id_deezer) {
+            //         setActiveIndex(index+1)
+            //         setActiveSong({[index+1]: isPlaying})
+            //     }
+            // }) 
         }
     }
 
@@ -30,10 +44,17 @@ function SearchBox({setSearchData, clearOldRequests}) {
     )
 }
 
-const mapDispatchToProps = dispatch => ({
-    setSearchData: (title, img, duration, artist, album) => dispatch(SearchActions.setSearchData(title, img, duration, artist, album)),
-    clearOldRequests: () => dispatch(SearchActions.clearOldRequests())
+const mapStateToProps = state => ({
+    isPlaying: state.play.isPlaying,
+    songMetaData: state.play.songMetaData
 })
 
-export default connect(null, mapDispatchToProps)(SearchBox);
+const mapDispatchToProps = dispatch => ({
+    setSearchData: (title, img, duration, artist, album) => dispatch(SearchActions.setSearchData(title, img, duration, artist, album)),
+    clearOldRequests: () => dispatch(SearchActions.clearOldRequests()),
+    setActiveSong: (status) => dispatch(SearchActions.setActiveSong(status)),
+    setActiveIndex: (index) => dispatch(SearchActions.setActiveIndex(index))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBox);
 

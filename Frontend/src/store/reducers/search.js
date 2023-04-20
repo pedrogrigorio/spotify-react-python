@@ -1,7 +1,8 @@
 const INITIAL_STATE = {
 
-    previousData: [],
-    searchData: []
+    searchData: [],
+    activeIndex: 0,
+    activeSong: {}
 }
 
 export default function search(state = INITIAL_STATE, action) {
@@ -17,5 +18,20 @@ export default function search(state = INITIAL_STATE, action) {
         return INITIAL_STATE
     }
 
+    else if (action.type === 'SET_ACTIVE_INDEX') {
+        return {
+            ...state,
+            activeIndex: action.index
+        }
+    }
+
+    else if (action.type === 'SET_ACTIVE_SONG') {
+
+        return {
+            ...state,
+            activeSong: action.status
+        }
+    }
+    
     return state 
 }

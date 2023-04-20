@@ -7,6 +7,20 @@ export function setSearchData(data) {
 
 export function clearOldRequests() {
     return {
-        type : 'CLEAR_OLD_REQUESTS'
+        type: 'CLEAR_OLD_REQUESTS'
+    }
+}
+
+export function setActiveIndex(index) {
+    return {
+        type: 'SET_ACTIVE_INDEX',
+        index
+    }
+}
+
+export function setActiveSong(status) {
+    return {
+        type: 'SET_ACTIVE_SONG',
+        status
     }
 }
