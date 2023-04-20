@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 import request_models
 from engine_api import api_requests
+from asyncio import run
 
 app = FastAPI()
 
@@ -43,6 +44,5 @@ def get_search_content(search : request_models.SearchContent):
 
 @app.post('/read_music')
 def get_music_bytes(search : request_models.MusicRequest):
-    return StreamingResponse(api_requests.get_song_by_id(search.index_request), media_type="audio/mp3")
-
+    return api_requests.get_song_by_id(search.index_request)
   

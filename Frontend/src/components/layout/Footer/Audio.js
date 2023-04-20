@@ -7,6 +7,7 @@ const Audio = forwardRef((props, ref) => {
             onLoadedMetadata={(e) => props.handleDuration(e.target.duration)}
             onTimeUpdate={(e) => props.handleCurrentTime(e.target.currentTime)}
             src={props.trackData}
+            typeof="audio/webm"
         />
     )
 })

@@ -1,29 +1,93 @@
-import { useEffect } from "react"
-import { connect } from 'react-redux'
-import * as PlayActions from '../../store/actions/play'
+import styles from './Home.module.css'
+import PlayButton from '../../components/icons/PlayButton'
+import musiclogo from '../../assets/img/baixados.jpg'
 
-function Home({searchResult, setSongMetaData, setSongTrackData, isPlaying, setIsPlaying}){
+function Home(){
 
-    useEffect(() => {
-        console.log(searchResult)
-    }, [])
+    
 
     return(
-        <div>
-            <h1>Home</h1>
+        <div className={styles.container}>
+            <section className={styles.section}>
+                <div className={styles.sectiontext}> 
+                    <h2>Músicas que estão bombando</h2>
+                    <button onClick={() => console.log("working fine")} className={styles.showall}><h4>Mostrar tudo</h4></button>
+                </div>
+                <div className={styles.gridcontainer}>
+                    <div className={styles.card}>
+                        <div className={styles.cover}>
+                            <img src={musiclogo} alt='cover'/>
+                            <button className={styles.playbtn}><PlayButton size={60}/></button>
+                        </div>
+                        <div className={styles.text}>
+                            <h2>Rap old School</h2>
+                            <h3>Escute suas músicas prefiridas no spotify</h3>
+                        </div>
+                    </div>
+                    <div className={styles.card}>
+                        <div className={styles.cover}>
+                            <img src={musiclogo} alt='cover'/>
+                            <button className={styles.playbtn}><PlayButton size={48}/></button>
+                        </div>
+                        <div className={styles.text}>
+                            <h2>Rap old School</h2>
+                            <h3>Escute suas músicas prefiridas no spotify</h3>
+                        </div>
+                    </div>
+                    <div className={styles.card}>
+                        <div className={styles.cover}>
+                            <img src={musiclogo} alt='cover'/>
+                            <button className={styles.playbtn}><PlayButton size={48}/></button>
+                        </div>
+                        <div className={styles.text}>
+                            <h2>Rap old School</h2>
+                            <h3>Escute suas músicas prefiridas no spotify</h3>
+                        </div>
+                    </div>
+                    <div className={styles.card}>
+                        <div className={styles.cover}>
+                            <img src={musiclogo} alt='cover'/>
+                            <button className={styles.playbtn}><PlayButton size={48}/></button>
+                        </div>
+                        <div className={styles.text}>
+                            <h2>Rap old School</h2>
+                            <h3>Escute suas músicas prefiridas no spotify</h3>
+                        </div>
+                    </div>
+                    <div className={styles.card}>
+                        <div className={styles.cover}>
+                            <img src={musiclogo} alt='cover'/>
+                            <button className={styles.playbtn}><PlayButton size={48}/></button>
+                        </div>
+                        <div className={styles.text}>
+                            <h2>Rap old School</h2>
+                            <h3>Escute suas músicas prefiridas no spotify</h3>
+                        </div>
+                    </div>
+                    <div className={styles.card}>
+                        <div className={styles.cover}>
+                            <img src={musiclogo} alt='cover'/>
+                            <button className={styles.playbtn}><PlayButton size={48}/></button>
+                        </div>
+                        <div className={styles.text}>
+                            <h2>Rap old School</h2>
+                            <h3>Escute suas músicas prefiridas no spotify</h3>
+                        </div>
+                    </div>
+                    <div className={styles.card}>
+                        <div className={styles.cover}>
+                            <img src={musiclogo} alt='cover'/>
+                            <button className={styles.playbtn}><PlayButton size={48}/></button>
+                        </div>
+                        <div className={styles.text}>
+                            <h2>Rap old School</h2>
+                            <h3>Escute suas músicas prefiridas no spotify</h3>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     )
 }
 
-const mapStateToProps = state => ({
-    isPlaying: state.play.isPlaying,
-    searchResult: state.search.searchData
-})
-
-const mapDispatchToProps = dispatch => ({
-    setSongMetaData: (title, artist, img) => dispatch(PlayActions.setSongMetaData(title, artist, img)),
-    setSongTrackData:(trackData) => dispatch(PlayActions.setSongTrackData(trackData)),
-    setIsPlaying: (status) => dispatch(PlayActions.setIsPlaying(status))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default Home
