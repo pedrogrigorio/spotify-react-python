@@ -12,27 +12,15 @@ export async function searchEngine(searchContent){
 
     return { data }
 }
-// Deprecated 
-// export async function getMetadata(link){
-    
-//     let data
 
-//     await api.post('/read_meta_data', {link_request: link})
-//     .then(response => {
-//         data = response.data
-//         console.log(data)
-//     })
-
-//     return { data }
-// }
 
 export async function getSong(index){
 
     let audio
 
-    await api.post('/read_music', {index_request: index}, {responseType: 'blob'})
+    await api.post('/read_music', {index_request: index})
     .then(response => {
-        audio = URL.createObjectURL(response.data)
+        audio = response.data
         console.log(audio)
     })
 
