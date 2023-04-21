@@ -24,7 +24,6 @@ COPY backend ./
 COPY --from=build /app/build /app/static
 
 # Copy Redis config
-COPY redis.conf /etc/redis/redis.conf
 RUN mkdir /data && chown redis:redis /data
 VOLUME /data
 
