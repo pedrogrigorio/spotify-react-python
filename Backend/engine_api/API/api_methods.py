@@ -15,7 +15,7 @@ class ApiRequests():
     def __init__(self) -> None:
         self.song_index = 0
         self.client = deezer.Client()
-        self.redis_client =  redis.Redis(host='redis', port=6379, db=0)
+        self.redis_client =  redis.Redis(host='redis://red-ch1j2nlgk4qarql78nag:6379', port=6379, db=0)
         self.background_tasks = []
  
     async def api_is_works():

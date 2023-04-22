@@ -1,51 +1,7 @@
-# render.yml
-
-build:
-  frontend:
-    context: ./frontend
-    dockerfile: Dockerfile
-  backend:
-    context: ./backend
-    dockerfile: Dockerfile
-
 services:
-  frontend:
-    image: frontend
-    command: npm run start-watch
-    ports:
-      - 3000:3000
-    volumes:
-      - type: bind
-        source: ./frontend
-        target: /user/app
-        consistency: cached
-      - type: bind
-        source: ./frontend/node_modules
-        target: /user/app/node_modules
-        consistency: cached
-  
-  backend:
-    image: backend
-    command: uvicorn main:app --reload --host 0.0.0.0
-    ports:
-      - 8000:8000
-    volumes:
-      - type: bind
-        source: ./backend
-        target: /usr/app
-        consistency: cached
-      - type: volume
-        name: redis-data
-        target: /data
+  -type: web
+   env : docker
+   name: spotify-react-app
 
-  redis:
-    image: redis
-    volumes:
-      - type: volume
-        name: redis-data
-        target: /data
-    ports:
-      - 6379:6379
 
-volumes:
-  redis-data:
+  - type: web
