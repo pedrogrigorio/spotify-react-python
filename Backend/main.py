@@ -35,14 +35,18 @@ app.add_middleware(
 async def get_status_api():
     return api_requests.api_is_works()
 
-
 @app.post('/search_music')
 def get_search_content(search : request_models.SearchContent):
     return api_requests.search_engine(search.search_content)
   
-
-
 @app.post('/read_music')
-def get_music_bytes(search : request_models.MusicRequest):
+def get_music_direct_link(search : request_models.MusicRequest):
     return api_requests.get_song_by_id(search.index_request)
-  
+
+@app.get('/get_top_trends')
+def get_top_trends():
+    return api_requests.get_top_content()
+
+@app.get('/get_recents_search')
+def get_recents_search():
+    return api_requests.get_recents_search_content()

@@ -15,8 +15,9 @@ class ApiRequests():
     def __init__(self) -> None:
         self.song_index = 0
         self.client = deezer.Client()
-        self.redis_client =  redis.Redis(host='redis://red-ch1j2nlgk4qarql78nag:6379', port=6379, db=0)
+        self.redis_client =  redis.Redis(host='redis', port=6379, db=0)
         self.background_tasks = []
+        self.recent_searchs = []
  
     async def api_is_works():
         return {"message": "Up and running"}
@@ -67,11 +68,9 @@ class ApiRequests():
 
 
     def song_engine_link(self, request : str, index : int):
-        print("search " + request)
+        self.recent_searchs.append(request)
         videosSearch = VideosSearch(request, limit = 1)
         url = videosSearch.result().get('result')[0].get('link')
-        print("before " + str(url))
-
         while(True):
             try:
                 fetcher = StreamURLFetcher()    
@@ -141,13 +140,59 @@ class ApiRequests():
         self.background_tasks.clear()
         self.redis_client.flushall()
 
-    def getTredingTops(self,):
-        # Not working 
-        ls_ed = self.client.list_editorials()
-        for ed in ls_ed:
-            print(ed.get_selection())
+     
+    def get_top_content(self,):
+        top_albums = self.client.get_albums_chart(genre_id=0)
+        top_tracks = self.client.get_tracks_chart(genre_id=0)
+        top_albums_data_package = []
+        top_tracks_data_package = []
+        for album in top_albums:
+            data = {
+                'title' : album.title,
+                'cover' : album.cover_medium,
+                'id'    : album.id,
+                'artist' : album.get_artist().name,
+                'release_date' : album.release_date
+            }
+            top_albums_data_package.append(data)
+
+        for tracks in top_tracks:
+            data = {
+                'title' : tracks.title,
+                'rank'  : tracks.rank,
+                'artist' : tracks.artist.name,
+                'cover' : tracks.album.cover_medium,
+                'bpm' : tracks.bpm
+            }
+
+            top_tracks_data_package.append(data)
+
+        return {
+            'album' : top_albums_data_package,
+            'songs' : top_tracks_data_package
+        }
+    
+    def get_recents_search_content(self,):
+        # Problemas com o data que é gerado para ser enviado via endPoint
+        recently_data = []
+        for search in list(set(self.recent_searchs)):
+            track = self.client.search(search)[0]
+            # title = track[0].title
+            # artist = track[0].artist
+            # cover  = track[0].album.cover_medium
+            data = {  
+                "title" : track.title, 
+                "artist": track.artist, 
+                "cover" :track.album.cover_medium,
+                }
+ 
+            recently_data.append(data)
+
+        return {'recents' : recently_data}
+
+   
+
+        
+
 
     
-
-    
-

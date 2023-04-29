@@ -26,3 +26,25 @@ export async function getSong(index){
 
     return { audio }
 }
+
+export async function getTopContent() {
+    let content
+    
+    await api.get('/get_top_trends')
+    .then(response => {
+        content = response.data
+    })
+
+    return { content }
+}
+
+export async function getRecentSearch() {
+    let recent
+    
+    await api.get('/get_recents_search')
+    .then(response => {
+        recent = response.data
+    })
+
+    return { recent }
+}
