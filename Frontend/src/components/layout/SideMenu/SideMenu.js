@@ -11,15 +11,17 @@ import { useState, useEffect } from 'react'
 function SideMenu(){
 
     const [playlists, setPlaylists] = useState([])
+    const [actionOcurred, setActionOcurred] = useState(false)
 
     useEffect(() => {
-        async function ola() {
+        async function get_playlists() {
             const data = await get_all_playlists()
             setPlaylists(data)
         }
         
-        ola()
-    }, [])
+        get_playlists()
+        setActionOcurred(false)
+    }, [actionOcurred])
 
     useEffect(() => {
         console.log(playlists)
@@ -29,13 +31,17 @@ function SideMenu(){
         const data = await create_playlist()
         console.log("playlist criada")
 
-        const playlists = await get_all_playlists()
-        setPlaylists(playlists)
+        setActionOcurred(true)
     }
 
-    async function teste(id) {
+    async function getPlaylistData(id) {
         const data = await get_one_playlist(id)
         console.log(data)
+    }
+
+    async function handleDeletePlaylist(id) {
+        await delete_playlist(id)
+        setActionOcurred(true)
     }
 
     return (
@@ -86,8 +92,8 @@ function SideMenu(){
                                     {playlists.map(playlist => {
                                         return (
                                             <li key={playlist._id}>
-                                                <div onClick={() => teste(playlist._id)}>{playlist.name}</div>
-                                                <button onClick={() => delete_playlist(playlist._id)}>delete</button>
+                                                <div onClick={() => getPlaylistData(playlist._id)}>{playlist.name}</div>
+                                                <button onClick={() => handleDeletePlaylist(playlist._id)}>delete</button>
                                             </li>
                                         );
                                     })}
