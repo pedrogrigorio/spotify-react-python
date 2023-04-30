@@ -1,7 +1,0 @@
-services:
-  -type: web
-   env : docker
-   name: spotify-react-app
-
-
-  - type: web

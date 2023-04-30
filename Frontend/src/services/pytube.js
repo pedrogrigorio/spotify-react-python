@@ -21,7 +21,6 @@ export async function getSong(index){
     await api.post('/read_music', {index_request: index})
     .then(response => {
         audio = response.data
-        console.log(audio)
     })
 
     return { audio }

@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 import request_models
 from engine_api import api_requests
-from asyncio import run
+
 
 app = FastAPI()
 

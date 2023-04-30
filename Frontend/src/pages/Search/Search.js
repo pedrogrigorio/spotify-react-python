@@ -9,7 +9,7 @@ import Options from '../../components/icons/Options'
 import convertTime from '../../helpers/convertTime'
 import equalizer from '../../assets/gif/equalizer.gif'
 
-function Search({searchResult, clearOldRequests, activeSong = {}}) {
+function Search({searchResult, clearOldRequests, activeSong = {}, songMetaData}) {
 
     useEffect(() => {
         clearOldRequests()
@@ -68,7 +68,7 @@ function Search({searchResult, clearOldRequests, activeSong = {}}) {
                             <li className={styles.list_item} key={index}>
                                 <div className={styles.song_index}>
                                     <div id={activeSong[index+1] ? `${styles.active}` : ""}>
-                                        <span id={activeSong[index+1] ? `${styles.active}` : ""}>{index+1}</span>
+                                        <span id={songMetaData.title == song.title ? `${styles.active}` : ""}>{index+1}</span>
                                         <img src={equalizer} width='14' height='20'></img>
                                         <ToggleSongButton index={index+1} title={song.title} artist={song.artist} img={song.cover}/>
                                     </div>
@@ -76,7 +76,7 @@ function Search({searchResult, clearOldRequests, activeSong = {}}) {
                                 <div className={styles.song_details}>
                                     <img src={song.cover} alt='cover'/>
                                     <div>
-                                        <div className={styles.title} id={activeSong[index+1] ? `${styles.active}` : ""}>{song.title}</div>
+                                        <div className={styles.title} id={songMetaData.title == song.title ? `${styles.active}` : ""}>{song.title}</div>
                                         <span id={styles.artist}>{song.artist}</span>
                                     </div>
                                 </div>
@@ -101,7 +101,8 @@ function Search({searchResult, clearOldRequests, activeSong = {}}) {
 
 const mapStateToProps = state => ({
     searchResult: state.search.searchData,
-    activeSong: state.search.activeSong
+    activeSong: state.search.activeSong,
+    songMetaData: state.play.songMetaData
 })
 
 const mapDispatchToProps = dispatch => ({
