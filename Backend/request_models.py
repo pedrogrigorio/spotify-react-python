@@ -5,3 +5,7 @@ class MusicRequest(BaseModel):
 
 class SearchContent(BaseModel):
     search_content: str
+
+class Playlist(BaseModel):
+    name: str
+    songs: object

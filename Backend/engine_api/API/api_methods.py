@@ -9,6 +9,8 @@ import redis
 from io import BytesIO
 import asyncio
 import threading
+import pymongo
+from bson.objectid import ObjectId
 
 class ApiRequests():
 
@@ -19,7 +21,8 @@ class ApiRequests():
         self.background_tasks = []
  
     async def api_is_works():
-        return {"message": "Up and running"}
+        response = {"message": "Up and running"}
+        return response
     
     
     def search_engine(self, search : str):
@@ -148,6 +151,13 @@ class ApiRequests():
             print(ed.get_selection())
 
     
+    # def create_user_playlist():
+    #     cliente = pymongo.MongoClient("mongodb://localhost:27017/")
+    #     db = cliente['spotify']
+    #     collection = db['user_playlists']
+    #     id = 1
 
-    
+    #     playlist = {"name": "Minha Playlist nº " + str(id), "songs": {}}
+    #     collection.insert_one(playlist)
 
+    #     return collection.find({}).sort("_id":-1).

@@ -5,8 +5,38 @@ import {BsPlusSquareFill} from 'react-icons/bs'
 import LikedSongs from '../../icons/LikedSongs'
 import DownloadApp from '../../icons/DownloadApp'
 import { NavLink } from 'react-router-dom'
+import { create_playlist, get_all_playlists, delete_playlist, get_one_playlist} from '../../../services/mongodb'
+import { useState, useEffect } from 'react'
 
 function SideMenu(){
+
+    const [playlists, setPlaylists] = useState([])
+
+    useEffect(() => {
+        async function ola() {
+            const data = await get_all_playlists()
+            setPlaylists(data)
+        }
+        
+        ola()
+    }, [])
+
+    useEffect(() => {
+        console.log(playlists)
+    }, [playlists])
+
+    async function handleCreatePlaylist() {
+        const data = await create_playlist()
+        console.log("playlist criada")
+
+        const playlists = await get_all_playlists()
+        setPlaylists(playlists)
+    }
+
+    async function teste(id) {
+        const data = await get_one_playlist(id)
+        console.log(data)
+    }
 
     return (
         <nav className={styles.sidemenu}>
@@ -35,7 +65,7 @@ function SideMenu(){
                 <div className={styles.playlists_root_container}>
                     <div className={styles.content}>
                         <div className={styles.create_playlist}>
-                            <button>
+                            <button onClick={handleCreatePlaylist}>
                                 <div><BsPlusSquareFill /></div>
                                 <span>Criar playlist</span>
                             </button>
@@ -53,8 +83,14 @@ function SideMenu(){
                         <div className={styles.playlists_container}>
                             <div>
                                 <ul className={styles.playlists}>
-                                    <li>Minha playlist nº 1</li>
-                                    <li>Minha playlist nº 2</li>
+                                    {playlists.map(playlist => {
+                                        return (
+                                            <li key={playlist._id}>
+                                                <div onClick={() => teste(playlist._id)}>{playlist.name}</div>
+                                                <button onClick={() => delete_playlist(playlist._id)}>delete</button>
+                                            </li>
+                                        );
+                                    })}
                                 </ul>
                             </div>
                         </div>

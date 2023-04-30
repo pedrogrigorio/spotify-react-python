@@ -213,10 +213,18 @@
     font-family: 'Circular Book';
 }
 
+.playlists li div {
+    all: unset;
+}
+
 .playlists li:hover {
     color: white;
 }
 
+.playlists li button {
+    margin-left: 10px;
+    border: 4px solid white;
+}
 /* ------------------------------------------------
 *   3.4 - Install app
 *-------------------------------------------------- */
