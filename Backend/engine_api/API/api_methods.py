@@ -43,7 +43,7 @@ class ApiRequests():
 
     def set_metadata_cache(self, title : str, artist : str):
         self.song_index += 1
-        self.redis_client.set(self.song_index,f"{title} {artist} {'official audio'}")
+        self.redis_client.set(self.song_index,f"{title} {artist}")
 
 
     def song_engine_link(self, request : str, index : int):
