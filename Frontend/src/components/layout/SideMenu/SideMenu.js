@@ -4,7 +4,7 @@ import spotify_menu_logo from '../../../assets/img/spotify_menu_logo.png'
 import {BsPlusSquareFill} from 'react-icons/bs'
 import LikedSongs from '../../icons/LikedSongs'
 import DownloadApp from '../../icons/DownloadApp'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { create_playlist, get_all_playlists, delete_playlist, get_one_playlist} from '../../../services/mongodb'
 import { useState, useEffect } from 'react'
 
@@ -92,7 +92,7 @@ function SideMenu(){
                                     {playlists.map(playlist => {
                                         return (
                                             <li key={playlist._id}>
-                                                <div onClick={() => getPlaylistData(playlist._id)}>{playlist.name}</div>
+                                                <Link to={`/playlist/${playlist._id}`}>{playlist.name}</Link>
                                                 <button onClick={() => handleDeletePlaylist(playlist._id)}>delete</button>
                                             </li>
                                         );

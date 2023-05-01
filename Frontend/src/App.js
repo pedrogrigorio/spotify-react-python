@@ -10,7 +10,7 @@ import Home from './pages/Home/Home';
 import Search from './pages/Search/Search';
 import Library from './pages/Library/Library';
 import LikedSongs from './pages/LikedSongs/LikedSongs';
-
+import Playlist from './pages/Playlist/Playlist';
 
 function App() {
 
@@ -26,6 +26,7 @@ function App() {
               <Route path='/search' element={<Search />}></Route>
               <Route path='/library' element={<Library />}></Route>
               <Route path='/liked-songs' element={<LikedSongs />}></Route>
+              <Route path='/playlist/:id' element={<Playlist />}></Route>
             </Routes>
           </Container>
           <Footer />

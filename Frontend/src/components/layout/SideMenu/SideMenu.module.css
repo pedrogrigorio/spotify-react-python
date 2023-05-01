@@ -213,10 +213,6 @@
     font-family: 'Circular Book';
 }
 
-.playlists li div {
-    all: unset;
-}
-
 .playlists li:hover {
     color: white;
 }
