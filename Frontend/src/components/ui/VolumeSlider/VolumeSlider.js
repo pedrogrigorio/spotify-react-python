@@ -23,7 +23,7 @@ function VolumeSlider({volume, setVolume, size}) {
             <div id={styles.volume} onClick={muteBtn}>
                 <Volume size="16" active={mute} />
             </div>
-            <Slider minvalue={0} maxvalue={1} value={volume} handleChange={setVolume}/>
+            <Slider minvalue={0} maxvalue={100} value={volume} handleChange={setVolume}/>
         </div>
     )
 }

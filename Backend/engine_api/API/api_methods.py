@@ -1,16 +1,9 @@
 import deezer
 from deezer import exceptions as deezer_exceptions
-from pytube import YouTube
-from pytube import Search
-from pytube import exceptions
-from youtubesearchpython import *
+
 from youtubesearchpython import VideosSearch
 import redis
-from io import BytesIO
-import asyncio
-import threading
-import pymongo
-from bson.objectid import ObjectId
+
 
 class ApiRequests():
 
@@ -18,11 +11,10 @@ class ApiRequests():
         self.song_index = 0
         self.client = deezer.Client()
         self.redis_client =  redis.Redis(host='redis', port=6379, db=0)
-        self.background_tasks = []
+        self.recent_searchs = []
  
     async def api_is_works():
-        response = {"message": "Up and running"}
-        return response
+        return {"message": "Up and running"}
     
     
     def search_engine(self, search : str):
@@ -38,13 +30,11 @@ class ApiRequests():
                         "cover"     : result.album.cover,
                         "artist"    : result.artist.name, 
                         "album"     : result.album.title,
+                        'id'        : result.id
                     }
                     self.set_metadata_cache(result.title,result.artist.name)
                     data_package.append(data)
-
-                # thread = threading.Thread(target=self.download_comand)
-                # thread.start()
-                
+                    
                 return data_package
 
             except deezer_exceptions.requests.ConnectionError:
@@ -53,40 +43,77 @@ class ApiRequests():
 
     def set_metadata_cache(self, title : str, artist : str):
         self.song_index += 1
-        self.redis_client.set(self.song_index,f"{title} {artist}")
-
-    # def download_comand(self):
-    #     print("ok")
-    #     asyncio.run(self.async_download_control())
-
-
-    # async def async_download_control(self):
-    #     for index in range(1,self.song_index+1):
-    #         self.background_tasks.append(asyncio.create_task(self.song_engine_link(self.redis_client.get(index), index)))
-            
-    #     await asyncio.gather(*self.background_tasks)      
-        
-   
+        self.redis_client.set(self.song_index,f"{title} {artist} {'official audio'}")
 
 
     def song_engine_link(self, request : str, index : int):
-        print("search " + request)
+        self.recent_searchs.append(request)
         videosSearch = VideosSearch(request, limit = 1)
-        url = videosSearch.result().get('result')[0].get('link')
-        print("before " + str(url))
-
-        while(True):
-            try:
-                fetcher = StreamURLFetcher()    
-                video = Video.get(str(url))
-                url = fetcher.get(video, itag=251)
-                self.redis_client.set(f"{index}dw", url)
-                break
-            except Exception:
-                print(f"{url} video with direct link have failed, trying again..")
+        id = videosSearch.result().get('result')[0].get('id')
+        self.redis_client.set(f"{index}dw", id)
+       
+        
+    def get_song_by_id(self, song_id : int):
+        print('ok')
+        self.song_engine_link(self.redis_client.get(song_id).decode(), song_id)
+        return self.redis_client.get(f"{song_id}dw").decode()
+        
     
+    def clear_redis_cache(self) -> None:
+        self.song_index = 0 
+        self.redis_client.flushall()
+
+     
+    def get_top_content(self,):
+        top_albums = self.client.get_albums_chart(genre_id=0)
+        top_tracks = self.client.get_tracks_chart(genre_id=0)
+        top_albums_data_package = []
+        top_tracks_data_package = []
+        for album in top_albums:
+            data = {
+                'title' : album.title,
+                'cover' : album.cover_medium,
+                'id'    : album.id,
+                'artist' : album.get_artist().name,
+                'release_date' : album.release_date
+            }
+            top_albums_data_package.append(data)
+
+        for track in top_tracks:
+            data = {
+                'title' : track.title,
+                'artist' : track.artist.name,
+                'cover' : track.album.cover_medium,
+                'id'    : track.id
+            }
+
+            top_tracks_data_package.append(data)
+
+        return {
+            'album' : top_albums_data_package,
+            'songs' : top_tracks_data_package
+        }
+    
+    def get_recents_search_content(self,):
+        # Problemas com o data que é gerado para ser enviado via endPoint
+        recently_data = []
+        for search in list(set(self.recent_searchs)):
+            track = self.client.search(search)[0]
+            # title = track[0].title
+            # artist = track[0].artist
+            # cover  = track[0].album.cover_medium
+            data = {  
+                "title" : track.title, 
+                "artist": track.artist, 
+                "cover" :track.album.cover_medium,
+                }
+ 
+            recently_data.append(data)
 
 
+   
+
+    # Deprecated for now 
     # async def download_song_to_cache(self, song_id : int) -> None:
     #     if song_id is not None:
     #         buffer = BytesIO()
@@ -107,57 +134,6 @@ class ApiRequests():
     #                 print(f'Content {query} video keyError, retrying')
                
         
-    def get_song_by_id(self, song_id : int):
-        self.song_engine_link(self.redis_client.get(song_id).decode(), song_id)
-        return self.redis_client.get(f"{song_id}dw").decode()
-    #     song_cache = self.redis_client.get(f"{song_id} + dw")
-    #     next_song_cache = self.redis_client.get(f"{song_id+1} + dw")
 
-    #     if song_cache is not None and next_song_cache is None: 
-    #         # executar a função em background 
-    #         thread = threading.Thread(target=self.async_download_comand, args=(song_id,))
-    #         thread.start()
-    #         print('Sending and runnig background request')
-    #         return BytesIO(song_cache)
-    #     elif song_cache is None and next_song_cache is not None :
-    #         self.async_download_comand(song_id)
-    #     elif song_cache is None and next_song_cache is None:
-    #         self.async_download_comand(song_id)
-    #         return BytesIO(self.redis_client.get(f"{song_id} + dw"))
-    #     else:
-    #         return BytesIO(self.redis_client.get(f"{song_id} + dw"))
-
-    # def async_download_comand(self, song_id : int):
-    #     asyncio.run(self.index_control_redis(song_id))
-  
-    # async def index_control_redis(self, song_id : int):
-    #     tasks = []
-    #     for i in range(-1, 2, 1):
-    #         if self.redis_client.get(f"{song_id-i} + dw") is None:
-    #             if song_id-i > 0 and song_id-i <= self.song_index:
-    #                 tasks.append(asyncio.create_task(self.download_song_to_cache(song_id-i)))
-
-    #     await asyncio.gather(*tasks)        
-    
-    def clear_redis_cache(self) -> None:
-        self.song_index = 0 
-        self.background_tasks.clear()
-        self.redis_client.flushall()
-
-    def getTredingTops(self,):
-        # Not working 
-        ls_ed = self.client.list_editorials()
-        for ed in ls_ed:
-            print(ed.get_selection())
 
     
-    # def create_user_playlist():
-    #     cliente = pymongo.MongoClient("mongodb://localhost:27017/")
-    #     db = cliente['spotify']
-    #     collection = db['user_playlists']
-    #     id = 1
-
-    #     playlist = {"name": "Minha Playlist nº " + str(id), "songs": {}}
-    #     collection.insert_one(playlist)
-
-    #     return collection.find({}).sort("_id":-1).

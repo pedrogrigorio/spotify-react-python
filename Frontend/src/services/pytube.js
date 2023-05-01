@@ -21,8 +21,29 @@ export async function getSong(index){
     await api.post('/read_music', {index_request: index})
     .then(response => {
         audio = response.data
-        console.log(audio)
     })
 
     return { audio }
+}
+
+export async function getTopContent() {
+    let content
+    
+    await api.get('/get_top_trends')
+    .then(response => {
+        content = response.data
+    })
+
+    return { content }
+}
+
+export async function getRecentSearch() {
+    let recent
+    
+    await api.get('/get_recents_search')
+    .then(response => {
+        recent = response.data
+    })
+
+    return { recent }
 }
