@@ -1,5 +1,5 @@
 .container{
-    grid-area: c;
+    grid-area: n / c / c / c;
     overflow: auto;
 }
 

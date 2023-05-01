@@ -2,9 +2,15 @@
 *   0 - Page Background
 *================================================== */
 
+.navbar_view {
+    background-color: #121212;
+    height: 64px;
+    width: 100%;
+}
+
 .container {
     background-color: #121212;
-    height: 100%;
+    height: calc(100% - 64px);
     overflow: auto;
     padding-left: 2px;
 }

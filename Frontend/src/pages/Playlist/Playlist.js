@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import { get_one_playlist } from '../../services/mongodb'
 import styles from './Playlist.module.css'
 import test_img from '../../assets/img/baixados.jpg'
+import MusicNote from "../../components/icons/MusicNote"
 
 function Playlist() {
     const {id} = useParams()
@@ -24,22 +25,28 @@ function Playlist() {
     }
 
     return(
-        <div className={styles.playlist_container}>
-            <div className={styles.playlist_info_container}>
+        <div className={styles.container}>
+            <div className={styles.playlist_details_container}>
+                <div className={styles.background}></div>
+                <div className={styles.background_gradient}></div>
                 <div className={styles.playlist_cover}>
-                    <img src={test_img}/>
+                    <MusicNote size='48'/>
                 </div>
                 <div className={styles.playlist_details}>
-                    <span>Playlist</span>
-                    <span>{playlist.name}</span>
+                    <span className={styles.category}>Playlist</span>
+                    <span className={styles.title}>
+                        <h1>{playlist.name}</h1>
+                    </span>
                     <div>
-                        <span>Usuário</span>
-                        <span>93 músicas, cerca de 5h</span>
+                        <span className={styles.user}>Usuário</span>
+                        <div className={styles.separator}>•</div>
+                        <span>{'93 músicas'}, &nbsp;</span>
+                        <span className={styles.total_duration}>cerca de {'5'}h</span>
                     </div>
                 </div>
             </div>
-            <div className={styles.songs_list_container}>
-
+            <div className={styles.playlist_content}>
+                <div className={styles.content_background_gradient}></div>
             </div>
         </div>
     )

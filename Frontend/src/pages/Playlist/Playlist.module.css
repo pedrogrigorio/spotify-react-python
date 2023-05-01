@@ -2,19 +2,131 @@
 *   0 - Container
 *================================================== */
 
+.container {
+    background-color: #121212;
+    height: 100%;
+    overflow: auto;
+}
+
 /* ================================================
-*   1 - Logo
+*   1 - Playlist Details
 *================================================== */
 
+.playlist_details_container {
+    display: flex;
+    padding: 0 32px 24px 32px;
+    height: 30vh;
+    max-height: 400px;
+    min-height: 340px;
+    position: relative;
+}
+
+.playlist_details_container .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgb(208, 64, 48);
+    width: 100%;
+    height: 100%;
+}
+
+.playlist_details_container .background_gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(transparent 0,rgba(0,0,0,.5) 100%);
+    width: 100%;
+    height: 100%;
+}
+
 /* ------------------------------------------------
-*   1.1 - Create Playlist
+*   1.1 - Img
+*-------------------------------------------------- */
+
+.playlist_cover {
+    margin-inline-end: 24px;
+    align-self: flex-end;
+    z-index: 1;
+    width: 232px;
+    height: 232px;
+    background-color: #282828;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 60px rgba(0,0,0,.5);
+}
+
+.playlist_cover svg {
+    width: 64px;
+    height: 64px;
+}
+
+/* ------------------------------------------------
+*   1.2 - Details
+*-------------------------------------------------- */
+
+.playlist_details {
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: flex-end;
+    z-index: 1;
+}
+
+.playlist_details .category {
+    font-family: 'Circular Bold';
+    margin-bottom: 4px;
+}
+
+.playlist_details .title {
+    margin-top: 8px;
+    width: 100%;
+}
+
+.playlist_details .title h1 {
+    box-sizing: border-box;
+    font-size: 92px;
+    height: 96px;
+    line-height: 82px;
+    font-family: 'Circular Medium';
+    font-weight: 900;
+    margin: 8px 0 12px;
+}
+
+.playlist_details div {
+    margin-top: 8px;
+    display: flex;
+}
+
+.playlist_details .separator {
+    margin: 0px 4px;
+}
+
+.playlist_details .user {
+    font-family: 'Circular Bold';
+}
+
+.playlist_details .total_duration {
+    color: hsla(0,0,100,.7);
+}
+
+/* ================================================
+*   2 - Playlist Content
+*================================================== */
+
+.content_background_gradient {
+    background-color: rgb(208, 64, 48);
+    background-image: linear-gradient(rgba(0,0,0,.6) 0, #121212 100%);
+    height: 232px;
+    width: 100%;
+    z-index: -1;
+}
+
+/* ------------------------------------------------
+*   2.1 - Details
 *-------------------------------------------------- */
 
 /* 
 *   1.1.1 - Index
 *-------------------------------------------------- */
-
-
-/* ================================================
-*   2 - Pages List
-*================================================== */
