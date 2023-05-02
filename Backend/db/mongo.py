@@ -1,4 +1,3 @@
-import pymongo
 import motor.motor_asyncio
 from bson.objectid import ObjectId
 import pydantic
@@ -29,7 +28,7 @@ async def fetch_one_playlist(id: str):
 
 async def create_user_playlist():
     id = await collection.count_documents({}) + 1
-    document = {"name": "Minha playlist nº " + str(id), "songs": {}}
+    document = {"name": "Minha playlist nº " + str(id), "songs": []}
     result = await collection.insert_one(document)
     created_document = await collection.find_one({"_id": result.inserted_id})
     return created_document
@@ -37,4 +36,13 @@ async def create_user_playlist():
 
 async def delete_playlist(id: str):
     result = await collection.delete_one({"_id": ObjectId(id)})
+    return True
+
+async def add_song(id: str, song: object):
+    old_document = await collection.find_one({'_id': ObjectId(id)})
+    document = old_document['songs']
+    document.append(song)
+
+    result = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'songs': document}})
+    #new_document = await collection.find_one({'_id': ObjectId(id)})
     return True

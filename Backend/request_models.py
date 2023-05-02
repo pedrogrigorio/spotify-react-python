@@ -9,3 +9,7 @@ class SearchContent(BaseModel):
 class Playlist(BaseModel):
     name: str
     songs: object
+
+class Song(BaseModel):
+    data: object
+    

@@ -46,3 +46,12 @@ export async function delete_playlist(id) {
         console.log(response.data)
     })
 }
+
+export async function add_song(id, song) {
+
+    console.log(song)
+    await api.put(`/playlist/${id}`, { data: song })
+    .then(response => {
+        console.log(response.data)
+    })
+}

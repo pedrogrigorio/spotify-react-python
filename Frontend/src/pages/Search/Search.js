@@ -8,6 +8,7 @@ import Like from '../../components/icons/Like'
 import Options from '../../components/icons/Options'
 import convertTime from '../../helpers/convertTime'
 import equalizer from '../../assets/gif/equalizer.gif'
+import { add_song } from '../../services/mongodb'
 
 function Search({searchResult, clearOldRequests, activeSong = {}, songMetaData}) {
 
@@ -20,6 +21,12 @@ function Search({searchResult, clearOldRequests, activeSong = {}, songMetaData})
     useEffect(() => {
         window.addEventListener('resize', () => setWidth(window.innerWidth));
     }, [])
+
+    function addSong(song) {
+        console.log(song)
+        const id = '64506c328ccaed3f63e4e82a'
+        add_song(id, song)
+    }
 
     return (
         <>
@@ -90,7 +97,7 @@ function Search({searchResult, clearOldRequests, activeSong = {}, songMetaData})
                                     <div className={styles.song_duration}>
                                         <button id={styles.like}><Like size='18'/></button>
                                         <span id={styles.time}>{convertTime(song.duration)}</span>
-                                        <button id={styles.options}><Options size='18'/></button>
+                                        <button id={styles.options} onClick={() => addSong(song)}><Options size='18'/></button>
                                     </div>
                                 </li>
                             )

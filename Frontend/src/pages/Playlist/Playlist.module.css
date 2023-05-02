@@ -115,18 +115,311 @@
 *   2 - Playlist Content
 *================================================== */
 
+.playlist_content {
+    position: relative;
+    isolation: isolate;
+}
+
 .content_background_gradient {
     background-color: rgb(208, 64, 48);
     background-image: linear-gradient(rgba(0,0,0,.6) 0, #121212 100%);
     height: 232px;
     width: 100%;
     z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 /* ------------------------------------------------
-*   2.1 - Details
+*   2.1 - Play and options
 *-------------------------------------------------- */
 
-/* 
-*   1.1.1 - Index
+.playlist_interaction_container {
+    width: 100%;
+    display: flex;
+    padding: 24px 32px;
+}
+
+.playlist_interactions {
+    display: flex;
+}
+
+.play_button {
+    width: 56px;
+    height: 56px;
+    margin-right: 32px;
+    border-radius: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1ed760;
+}
+
+/* ------------------------------------------------
+*   2.2 - Songs
 *-------------------------------------------------- */
+
+.search_result_container {
+    width: 100%;
+    height: calc(100% - 48px);
+    padding: 0px 32px;
+}
+
+/* 
+*   2.2.1 - List Header
+*-------------------------------------------------- */
+
+.list_header {
+    width: 100%;
+    height: 36px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid hsla(0,0%,100%,.1);
+}
+
+.grid {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    padding: 0px 16px;
+    grid-template-columns: 16px 4fr 2fr minmax(120px, 1fr);
+    grid-template-areas: "index title title duration";
+    grid-gap: 16px;
+}
+
+.grid div {
+    display: flex;
+    align-items: center;
+    color: #b3b3b3;
+    font-family: 'Circular Light';
+}
+
+.grid .index {
+    font-size: 16px;
+    justify-content: center;
+    grid-area: index;
+}
+
+.grid .title {
+    grid-area: title;
+}
+
+.grid .album {
+    grid-area: album;
+}
+
+.grid .duration {
+    justify-self: end;
+    grid-area: duration;
+}
+
+.grid .duration svg {
+    margin-right: 32px;
+}
+
+/* 
+*   2.2.2 - Songs List
+*-------------------------------------------------- */
+
+.list_item {
+    width: 100%;
+    height: 56px;
+    padding: 0px 16px;
+    display: grid;
+    grid-template-columns: 16px 4fr 2fr minmax(120px, 1fr);
+    grid-template-areas: "song_index song_details song_details song_duration";
+    grid-gap: 16px;
+}
+
+.list_item:hover {
+    background-color: #2a2a2a;
+    border-radius: 4px;
+}
+.list_item div {
+    margin-top: 2px;
+    /* border: 1px solid white; */
+}
+
+/* 
+*   2.2.1 - Index
+*-------------------------------------------------- */
+
+.song_index {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-area: song_index;
+    color: white;
+}
+
+.song_index div {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.song_index div span {
+    display: inline-block;
+    font-size: 16px;
+    font-family: 'Circular Book';
+}
+
+.song_index div span#active {
+    color: #1DB954;
+}
+
+.song_index div button,
+.list_item:hover .song_index div span {
+    display: none;
+}
+
+.list_item:hover .song_index div button {
+    display: inline-block;
+}
+
+.song_index div img {
+    display: none;
+    position: relative;
+    top: -3px;
+    filter: invert(46%) sepia(94%) saturate(403%) hue-rotate(88deg) brightness(103%) contrast(91%);
+}
+
+.song_index div#active img {
+    display: inline-block;
+}
+
+.song_index div#active span,
+.list_item:hover .song_index div#active img {
+    display: none;
+}
+
+/* 
+*   2.2.2 - Details
+*-------------------------------------------------- */
+
+.song_details {
+    display: flex;
+    align-items: center;
+    grid-area: song_details;
+}
+
+.song_details img {
+    width: 40px;
+    height: 40px;
+    margin-right: 16px;
+}
+
+.song_details div {
+    display: grid;
+    align-items: center;
+    grid-template-rows: auto auto;
+    grid-template-areas: "title" "artist";
+    font-family: 'Circular Book';
+    height: 100%;
+}
+
+.song_details .title {
+    line-height: 26px;
+    font-size: 16px;
+    grid-area: title;
+    color: white;
+
+    /* overflow text on a ellipsis */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: initial;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.title#active {
+    color: #1DB954;
+}
+
+.song_details #artist {
+    line-height: 20px;
+    grid-area: artist;
+    color: #b3b3b3;
+    white-space: nowrap;
+
+    /* overflow text on a ellipsis */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: initial;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+/* 
+*   2.2.3 - Album
+*-------------------------------------------------- */
+
+.song_album {
+    display: flex;
+    align-items: center;
+    color: #b3b3b3;
+    white-space: nowrap;
+    grid-area: song_album;
+}
+
+/* 
+*   2.2.4 - Duration
+*-------------------------------------------------- */
+
+.song_duration {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    color: #b3b3b3;
+    grid-area: song_duration;
+}
+
+.song_duration #like,
+.song_duration #options {
+    opacity: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.song_duration #like {
+    margin-right: 16px;
+}
+
+.song_duration #time {
+    width: 5ch;
+    height: 100%;
+    margin-right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.song_duration #like,
+.song_duration #options {
+    opacity: 0;
+}
+
+.list_item:hover .song_duration #like,
+.list_item:hover .song_duration #options {
+    opacity: 1;
+}
+
+/* 
+*   2.2.3 - Media Queries
+*-------------------------------------------------- */
+@media (min-width: 777px) {
+    .grid {
+        grid-template-columns: 16px 4fr 2fr minmax(120px, 1fr);
+        grid-template-areas: "index title album duration";
+    }
+
+    .list_item {
+        grid-template-columns: 16px 4fr 2fr minmax(120px, 1fr);
+    grid-template-areas: "song_index song_details song_album song_duration";
+    }
+}
