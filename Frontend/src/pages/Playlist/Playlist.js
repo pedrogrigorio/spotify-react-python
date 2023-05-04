@@ -10,13 +10,16 @@ import equalizer from '../../assets/gif/equalizer.gif'
 import convertTime from '../../helpers/convertTime'
 import ToggleSongButton from '../Search/components/ToggleSongButton'
 import Like from '../../components/icons/Like'
+import { connect } from "react-redux"
+import getMeanDuration from '../../helpers/getMeanDuration'
 
-function Playlist() {
+function Playlist({activeSong, songMetaData}) {
+
     const {id} = useParams()
-
     const [playlist, setPlaylist] = useState(null)
-
-    const[width, setWidth] = useState(window.innerWidth) 
+    const [width, setWidth] = useState(window.innerWidth) 
+    const [totalSongs, setTotalSongs] = useState(0)
+    const [totalDuration, setTotalDuration] = useState("")
 
     useEffect(() => {
         window.addEventListener('resize', () => setWidth(window.innerWidth));
@@ -26,14 +29,15 @@ function Playlist() {
         const loadPlaylist = async () => {
             const data = await get_one_playlist(id)
             setPlaylist(data)
-            console.log(data.songs)
+            setTotalSongs(data.songs.length)
+            setTotalDuration(getMeanDuration(data))
         }
 
         loadPlaylist()
     }, [id])
 
     if (!playlist) {
-        return <div>Playlist not found</div>;
+        return <div className={styles.container}>Playlist not found</div>;
     }
 
     return(
@@ -52,8 +56,8 @@ function Playlist() {
                     <div>
                         <span className={styles.user}>Usuário</span>
                         <div className={styles.separator}>•</div>
-                        <span>{'93 músicas'}, &nbsp;</span>
-                        <span className={styles.total_duration}>cerca de {'5'}h</span>
+                        <span>{totalSongs} músicas,&nbsp;</span>
+                        <span className={styles.total_duration}>{totalDuration}</span>
                     </div>
                 </div>
             </div>
@@ -91,16 +95,16 @@ function Playlist() {
                             return(
                                 <li className={styles.list_item} key={index}>
                                     <div className={styles.song_index}>
-                                        <div>
-                                            <span>{index+1}</span>
+                                        <div id={activeSong[song.id] ? `${styles.active}` : ""}>
+                                            <span id={songMetaData.id == song.id ? `${styles.active}` : ""}>{index+1}</span>
                                             <img src={equalizer} width='14' height='20'></img>
-                                            <ToggleSongButton index={index+1} title={song.title} artist={song.artist} img={song.cover}/>
+                                            <ToggleSongButton index={song.id} title={song.title} artist={song.artist} img={song.cover}/>
                                         </div>
                                     </div>
                                     <div className={styles.song_details}>
                                         <img src={song.cover} alt='cover'/>
                                         <div>
-                                            <div>{song.title}</div>
+                                            <div className={styles.title} id={songMetaData.id == song.id ? `${styles.active}` : ""}>{song.title}</div>
                                             <span id={styles.artist}>{song.artist}</span>
                                         </div>
                                     </div>
@@ -124,4 +128,9 @@ function Playlist() {
     )
 }
 
-export default Playlist
+const mapStateToProps = state => ({
+    activeSong: state.search.activeSong,
+    songMetaData: state.play.songMetaData
+})
+
+export default connect(mapStateToProps)(Playlist)

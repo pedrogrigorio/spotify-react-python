@@ -10,8 +10,7 @@ import convertTime from '../../helpers/convertTime'
 import equalizer from '../../assets/gif/equalizer.gif'
 import { add_song } from '../../services/mongodb'
 
-function Search({searchResult, clearOldRequests, activeSong = {}, songMetaData}) {
-
+function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
     useEffect(() => {
         clearOldRequests()
     }, [])
@@ -24,10 +23,10 @@ function Search({searchResult, clearOldRequests, activeSong = {}, songMetaData})
 
     function addSong(song) {
         console.log(song)
-        const id = '64506c328ccaed3f63e4e82a'
+        const id = '6452db9d4614575dc91c25d7'
         add_song(id, song)
     }
-
+    
     return (
         <>
             <div className={styles.navbar_view}></div>
@@ -76,16 +75,16 @@ function Search({searchResult, clearOldRequests, activeSong = {}, songMetaData})
                             return(
                                 <li className={styles.list_item} key={index}>
                                     <div className={styles.song_index}>
-                                        <div id={activeSong[index+1] ? `${styles.active}` : ""}>
-                                            <span id={songMetaData.title == song.title ? `${styles.active}` : ""}>{index+1}</span>
+                                        <div id={activeSong[song.id] ? `${styles.active}` : ""}>
+                                            <span id={songMetaData.id == song.id ? `${styles.active}` : ""}>{index+1}</span>
                                             <img src={equalizer} width='14' height='20'></img>
-                                            <ToggleSongButton index={index+1} title={song.title} artist={song.artist} img={song.cover}/>
+                                            <ToggleSongButton index={song.id} title={song.title} artist={song.artist} img={song.cover}/>
                                         </div>
                                     </div>
                                     <div className={styles.song_details}>
                                         <img src={song.cover} alt='cover'/>
                                         <div>
-                                            <div className={styles.title} id={songMetaData.title == song.title ? `${styles.active}` : ""}>{song.title}</div>
+                                            <div className={styles.title} id={songMetaData.id == song.id ? `${styles.active}` : ""}>{song.title}</div>
                                             <span id={styles.artist}>{song.artist}</span>
                                         </div>
                                     </div>
