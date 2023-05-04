@@ -17,10 +17,12 @@ function Playlist({activeSong, songMetaData}) {
 
     const {id} = useParams()
     const [playlist, setPlaylist] = useState(null)
-    const [width, setWidth] = useState(window.innerWidth) 
     const [totalSongs, setTotalSongs] = useState(0)
     const [totalDuration, setTotalDuration] = useState("")
+    const [playlistCover, setPlaylistCover] = useState([])
+    const [dominantColor, setDominantColor] = useState(null);
 
+    const [width, setWidth] = useState(window.innerWidth) 
     useEffect(() => {
         window.addEventListener('resize', () => setWidth(window.innerWidth));
     }, [])
@@ -36,6 +38,16 @@ function Playlist({activeSong, songMetaData}) {
         loadPlaylist()
     }, [id])
 
+    // console.log(dominantColor)
+
+    // useEffect(() => {
+    //     if(playlist.cover.length == 1) {
+    //         const colorThief = new ColorThief();
+    //         const dominantColor = colorThief.getColor(playlist.cover[0]);
+    //         setDominantColor(dominantColor);
+    //     }
+    //   }, []);
+
     if (!playlist) {
         return <div className={styles.container}>Playlist not found</div>;
     }
@@ -45,8 +57,17 @@ function Playlist({activeSong, songMetaData}) {
             <div className={styles.playlist_details_container}>
                 <div className={styles.background}></div>
                 <div className={styles.background_gradient}></div>
-                <div className={styles.playlist_cover}>
-                    <MusicNote size='48'/>
+                <div className={styles.playlist_cover} id={totalSongs >= 4 ? `${styles.active}` : ""}>
+                    {totalSongs == 0 && <MusicNote size='48'/>}
+                    {totalSongs == 1 && <img src={playlist.cover[0]}/>}
+                    {totalSongs >= 4 && (
+                        <>
+                            <img src={playlist.cover[0]} id={styles.img1}/>
+                            <img src={playlist.cover[1]} id={styles.img2}/>
+                            <img src={playlist.cover[2]} id={styles.img3}/>
+                            <img src={playlist.cover[3]} id={styles.img4}/>
+                        </>
+                    )}
                 </div>
                 <div className={styles.playlist_details}>
                     <span className={styles.category}>Playlist</span>

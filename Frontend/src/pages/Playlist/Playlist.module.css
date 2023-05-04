@@ -47,8 +47,10 @@
     margin-inline-end: 24px;
     align-self: flex-end;
     z-index: 1;
-    width: 232px;
-    height: 232px;
+    min-width: 232px;
+    min-height: 232px;
+    max-width: 232px;
+    max-height: 232px;
     background-color: #282828;
     display: flex;
     align-items: center;
@@ -59,6 +61,39 @@
 .playlist_cover svg {
     width: 64px;
     height: 64px;
+}
+
+.playlist_cover#active {
+    display:grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+    grid-template-areas: 
+        "img1 img2"
+        "img3 img4";
+}
+
+.playlist_cover #img1 {
+    grid-area: "img1";
+    width: 100%;
+    height: 100%;
+}
+
+.playlist_cover #img2 {
+    grid-area: "img3";
+    width: 100%;
+    height: 100%;
+}
+
+.playlist_cover #img3 {
+    grid-area: "img3";
+    width: 100%;
+    height: 100%;
+}
+
+.playlist_cover #img4 {
+    grid-area: "img4";
+    width: 100%;
+    height: 100%;
 }
 
 /* ------------------------------------------------
@@ -86,12 +121,13 @@
 
 .playlist_details .title h1 {
     box-sizing: border-box;
-    font-size: 92px;
-    height: 96px;
-    line-height: 82px;
+    font-size: clamp(32px, 5vw, 92px);
+    height: auto;
+    line-height: auto;
     font-family: 'Circular Medium';
     font-weight: 900;
     margin: 8px 0 12px;
+    overflow-wrap: break-word;
 }
 
 .playlist_details div {
@@ -420,6 +456,32 @@
 
     .list_item {
         grid-template-columns: 16px 4fr 2fr minmax(120px, 1fr);
-    grid-template-areas: "song_index song_details song_album song_duration";
+        grid-template-areas: "song_index song_details song_album song_duration";
+    }
+}
+
+@media (max-width: 1023px) {
+    .playlist_details_container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .playlist_interaction_container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .search_result_container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .playlist_cover {
+        min-width: 192px;
+        min-height: 192px;
+        max-width: 192px;
+        max-height: 192px;
     }
 }

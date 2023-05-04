@@ -107,7 +107,10 @@ class ApiRequests():
  
             recently_data.append(data)
 
-
+    def get_cover_by_id(self, id):
+        img = self.client.get_track(id).album.cover_medium
+        return img
+        
    
 
     # Deprecated for now 
