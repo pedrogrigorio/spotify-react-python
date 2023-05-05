@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import { connect } from "react-redux"
 import { get_one_playlist } from '../../services/mongodb'
 import styles from './Playlist.module.css'
 import MusicNote from "../../components/icons/MusicNote"
@@ -10,7 +11,6 @@ import equalizer from '../../assets/gif/equalizer.gif'
 import convertTime from '../../helpers/convertTime'
 import ToggleSongButton from '../Search/components/ToggleSongButton'
 import Like from '../../components/icons/Like'
-import { connect } from "react-redux"
 import getMeanDuration from '../../helpers/getMeanDuration'
 
 function Playlist({activeSong, songMetaData}) {
@@ -19,8 +19,7 @@ function Playlist({activeSong, songMetaData}) {
     const [playlist, setPlaylist] = useState(null)
     const [totalSongs, setTotalSongs] = useState(0)
     const [totalDuration, setTotalDuration] = useState("")
-    const [playlistCover, setPlaylistCover] = useState([])
-    const [dominantColor, setDominantColor] = useState(null);
+    const [mosaic, setMosaic] = useState(null)
 
     const [width, setWidth] = useState(window.innerWidth) 
     useEffect(() => {
@@ -33,20 +32,13 @@ function Playlist({activeSong, songMetaData}) {
             setPlaylist(data)
             setTotalSongs(data.songs.length)
             setTotalDuration(getMeanDuration(data))
+
+            const image = "data:image/jpeg;base64," + btoa(String.fromCharCode.apply(null, playlist.mosaic));
+            setMosaic(image)
         }
 
         loadPlaylist()
     }, [id])
-
-    // console.log(dominantColor)
-
-    // useEffect(() => {
-    //     if(playlist.cover.length == 1) {
-    //         const colorThief = new ColorThief();
-    //         const dominantColor = colorThief.getColor(playlist.cover[0]);
-    //         setDominantColor(dominantColor);
-    //     }
-    //   }, []);
 
     if (!playlist) {
         return <div className={styles.container}>Playlist not found</div>;
@@ -55,11 +47,11 @@ function Playlist({activeSong, songMetaData}) {
     return(
         <div className={styles.container}>
             <div className={styles.playlist_details_container}>
-                <div className={styles.background}></div>
+                <div className={styles.background} style={{ backgroundColor: `rgb(${playlist.color_theme[0]}, ${playlist.color_theme[1]}, ${playlist.color_theme[2]})`}}></div>
                 <div className={styles.background_gradient}></div>
                 <div className={styles.playlist_cover} id={totalSongs >= 4 ? `${styles.active}` : ""}>
                     {totalSongs == 0 && <MusicNote size='48'/>}
-                    {totalSongs == 1 && <img src={playlist.cover[0]}/>}
+                    {(totalSongs >= 1 && totalSongs < 4) && <img src={playlist.cover[0]} id={styles.img0}/>}
                     {totalSongs >= 4 && (
                         <>
                             <img src={playlist.cover[0]} id={styles.img1}/>
@@ -83,7 +75,7 @@ function Playlist({activeSong, songMetaData}) {
                 </div>
             </div>
             <div className={styles.playlist_content}>
-                <div className={styles.content_background_gradient}></div>
+                <div className={styles.content_background_gradient} style={{ backgroundColor: `rgb(${playlist.color_theme[0]}, ${playlist.color_theme[1]}, ${playlist.color_theme[2]})`}}></div>
                 <div className={styles.playlist_interaction_container}>
                     <div className={styles.playlist_interactions}>
                         <button className={styles.play_button}>

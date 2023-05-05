@@ -10,9 +10,6 @@ from fastapi.responses import StreamingResponse
 import request_models
 from engine_api import api_requests
 
-
-from request_models import Playlist
-
 from db.mongo import (
     create_user_playlist,
     fetch_all_playlists,
