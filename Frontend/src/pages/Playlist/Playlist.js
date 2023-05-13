@@ -19,7 +19,6 @@ function Playlist({activeSong, songMetaData}) {
     const [playlist, setPlaylist] = useState(null)
     const [totalSongs, setTotalSongs] = useState(0)
     const [totalDuration, setTotalDuration] = useState("")
-    const [mosaic, setMosaic] = useState(null)
 
     const [width, setWidth] = useState(window.innerWidth) 
     useEffect(() => {
@@ -32,9 +31,6 @@ function Playlist({activeSong, songMetaData}) {
             setPlaylist(data)
             setTotalSongs(data.songs.length)
             setTotalDuration(getMeanDuration(data))
-
-            const image = "data:image/jpeg;base64," + btoa(String.fromCharCode.apply(null, playlist.mosaic));
-            setMosaic(image)
         }
 
         loadPlaylist()
@@ -51,7 +47,7 @@ function Playlist({activeSong, songMetaData}) {
                 <div className={styles.background_gradient}></div>
                 <div className={styles.playlist_cover} id={totalSongs >= 4 ? `${styles.active}` : ""}>
                     {totalSongs == 0 && <MusicNote size='48'/>}
-                    {(totalSongs >= 1 && totalSongs < 4) && <img src={playlist.cover[0]} id={styles.img0}/>}
+                    {totalSongs >= 1 && totalSongs < 4 && <img src={playlist.cover[0]} id={styles.img0}/>}
                     {totalSongs >= 4 && (
                         <>
                             <img src={playlist.cover[0]} id={styles.img1}/>
@@ -68,9 +64,11 @@ function Playlist({activeSong, songMetaData}) {
                     </span>
                     <div>
                         <span className={styles.user}>Usuário</span>
-                        <div className={styles.separator}>•</div>
-                        <span>{totalSongs} músicas,&nbsp;</span>
-                        <span className={styles.total_duration}>{totalDuration}</span>
+                        {totalSongs > 0 && <>
+                            <div className={styles.separator}>•</div>
+                            <span>{totalSongs} músicas,&nbsp;</span>
+                            <span className={styles.total_duration}>{totalDuration}</span>
+                        </>}
                     </div>
                 </div>
             </div>

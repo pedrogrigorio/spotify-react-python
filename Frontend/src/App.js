@@ -15,7 +15,7 @@ import Playlist from './pages/Playlist/Playlist';
 function App() {
 
   return (
-    <div className="App">
+    <div className="App" onContextMenu={(e) => e.preventDefault()}>
       <Router>
         <Provider store={store}>
           <SideMenu />

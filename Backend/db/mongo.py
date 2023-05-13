@@ -85,31 +85,28 @@ async def add_song(id: str, song: object):
     return True
 
 def get_dominant_color(url):
-    # response = requests.get(url)
-    # img = BytesIO(response.content)
-    
-    # ct = ColorThief(img)
-    # dominant_color = ct.get_color(quality=1)
+    # get predominant color in the middle of the image
 
     response1 = requests.get(url)
     img = Image.open(BytesIO(response1.content))
 
     width, height = img.size
 
+    # center square dimensions
     crop_width = int(width * 0.75)
     crop_height = int(height * 0.75)
 
-    # Obtém o centro da imagem
+    # get center
     center_x = width // 2
     center_y = height // 2
 
-    # Obtém o retângulo central
+    # get central square
     left = center_x - crop_width // 2
     top = center_y - crop_height // 2
     right = center_x + crop_width // 2
     bottom = center_y + crop_height // 2
 
-    # Obtém a imagem recortada
+    # get cropped image
     cropped_img = img.crop((left, top, right, bottom))
 
     cropped_bytes  = BytesIO()

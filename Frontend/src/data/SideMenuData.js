@@ -1,7 +1,6 @@
-import React from 'react'
-import Search from '../../icons/Search'
-import Home from '../../icons/Home'
-import Library from '../../icons/Library'
+import Search from '../components/icons/Search'
+import Home from '../components/icons/Home'
+import Library from '../components/icons/Library'
 
 export const SidebarData = [
     {

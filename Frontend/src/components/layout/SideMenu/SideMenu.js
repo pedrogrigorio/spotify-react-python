@@ -1,5 +1,5 @@
 import styles from './SideMenu.module.css'
-import {SidebarData} from './SideMenuData'
+import {SidebarData} from '../../../data/SideMenuData'
 import spotify_menu_logo from '../../../assets/img/spotify_menu_logo.png'
 import {BsPlusSquareFill} from 'react-icons/bs'
 import LikedSongs from '../../icons/LikedSongs'
@@ -7,45 +7,50 @@ import DownloadApp from '../../icons/DownloadApp'
 import { Link, NavLink } from 'react-router-dom'
 import { create_playlist, get_all_playlists, delete_playlist, get_one_playlist} from '../../../services/mongodb'
 import { useState, useEffect } from 'react'
+import ContextMenu from '../../ui/ContextMenu/ContextMenu'
+import { connect } from 'react-redux'
+import * as PlaylistActions from '../../../store/actions/playlist'
 
-function SideMenu(){
+function SideMenu({actionOccurred, setActionOccurred}){
+
+    const initialContextMenu = {
+        show: false,
+        x: 0,
+        y: 0,
+        playlist_id: '',
+    }
 
     const [playlists, setPlaylists] = useState([])
-    const [actionOcurred, setActionOcurred] = useState(false)
+    const [contextMenu, setContextMenu] = useState(initialContextMenu)
 
     useEffect(() => {
-        async function get_playlists() {
+        async function load_playlists() {
             const data = await get_all_playlists()
             setPlaylists(data)
         }
         
-        get_playlists()
-        setActionOcurred(false)
-    }, [actionOcurred])
+        load_playlists()
+        setActionOccurred(false)
+    }, [actionOccurred])
 
-    useEffect(() => {
-        console.log(playlists)
-    }, [playlists])
-
-    async function handleCreatePlaylist() {
+    const handleCreatePlaylist = async () => {
         const data = await create_playlist()
-        console.log("playlist criada")
-
-        setActionOcurred(true)
+        setActionOccurred(true)
     }
 
-    async function getPlaylistData(id) {
-        const data = await get_one_playlist(id)
-        console.log(data)
+    const handleContextMenu = (e, playlist_id='') => {
+        e.preventDefault()
+        if (playlist_id != '') {
+            e.stopPropagation()
+        }
+        setContextMenu({ show: true, x: e.pageX, y: e.pageY, playlist_id: playlist_id})
     }
 
-    async function handleDeletePlaylist(id) {
-        await delete_playlist(id)
-        setActionOcurred(true)
-    }
+    const contextMenuClose = () => setContextMenu(initialContextMenu)
 
     return (
         <nav className={styles.sidemenu}>
+            {contextMenu.show && (<ContextMenu x={contextMenu.x} y={contextMenu.y} playlist_id={contextMenu.playlist_id} contextMenuClose={contextMenuClose}/>)}
             <div className={styles.principal}>
                 <div className={styles.logo}>
                     <a href='http://localhost:3000/'>
@@ -86,14 +91,13 @@ function SideMenu(){
                             <hr/>
                             <div />
                         </div>
-                        <div className={styles.playlists_container}>
+                        <div className={styles.playlists_container} onContextMenu={(e) => handleContextMenu(e)}>
                             <div>
                                 <ul className={styles.playlists}>
                                     {playlists.map(playlist => {
                                         return (
-                                            <li key={playlist._id}>
+                                            <li key={playlist._id} onContextMenu={(e) => handleContextMenu(e, playlist._id)}>
                                                 <Link to={`/playlist/${playlist._id}`}>{playlist.name}</Link>
-                                                <button onClick={() => handleDeletePlaylist(playlist._id)}>delete</button>
                                             </li>
                                         );
                                     })}
@@ -118,4 +122,12 @@ function SideMenu(){
     )
 }
 
-export default SideMenu
+const mapStateToProps = state => ({
+    actionOccurred: state.playlist.actionOccurred
+})
+
+const mapDispatchToProps = dispatch => ({
+    setActionOccurred: (bool) => dispatch(PlaylistActions.setActionOccurred(bool))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideMenu)
