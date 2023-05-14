@@ -17,7 +17,8 @@ from db.mongo import (
     fetch_one_playlist,
     delete_playlist,
     rename_playlist,
-    add_song
+    add_song,
+    remove_song
 )
 
 app = FastAPI()
@@ -83,11 +84,12 @@ async def delete_playlist_by_id(id: str):
     raise HTTPException(404, f"There is no playlist with the id {id}")
 
 @app.put('/playlist/{id}')
-# async def put_song(id: str, song_to_be_added: Optional[request_models.Song] = None, name: Optional[request_models.PlaylistName] = None):
 async def put_song(id: str, playlist_update: request_models.PlaylistUpdate):
     response = None
     if playlist_update.song_to_be_added:
         response = await add_song(id, playlist_update.song_to_be_added)
+    if playlist_update.song_to_be_removed != None:
+        response = await remove_song(id, playlist_update.song_to_be_removed)
     if playlist_update.name:
         response = await rename_playlist(id, playlist_update.name)
     if response:

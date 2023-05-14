@@ -121,3 +121,27 @@ def get_dominant_color(url):
 async def rename_playlist(id, name):
     name_added = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'name': name}})
     return True
+
+async def remove_song(id, song_index):
+    print("teste \n \n \n \n \n \n")
+    print(song_index)
+    old_document = await collection.find_one({'_id': ObjectId(id)})
+    songs = old_document['songs']
+
+    if (len(songs) == 4):
+        covers = old_document['cover']
+        color_theme = get_dominant_color(covers[0])
+        color_added = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'color_theme': color_theme}})
+    if (len(songs) > 1 and len(songs) <= 4):
+        covers = old_document['cover']
+        covers.remove(covers[song_index])
+        covers_updated = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'cover': covers}})
+    if (len(songs) == 1):
+        covers_updated = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'cover': []}})
+        songs_updated = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'songs': []}})
+        color_added = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'color_theme': [83, 83, 83]}})
+        return True
+        
+    songs.remove(songs[song_index])
+    songs_updated = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'songs': songs}})
+    return True

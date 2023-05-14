@@ -11,6 +11,7 @@ import convertTime from '../../helpers/convertTime'
 import equalizer from '../../assets/gif/equalizer.gif'
 import SongOptions from '../../components/ui/SongOptions/SongOptions'
 import useWindowWidth from '../../hooks/useWindowWidth'
+import { get_all_playlists } from '../../services/mongodb'
 
 function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
     
@@ -18,9 +19,16 @@ function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
     const [songOptions, setSongOptions] = useState(initialSongOptions)
     const songOptionsRefs = useRef({});
     const width = useWindowWidth();
+    const [playlists, setPlaylists] = useState([])
 
     useEffect(() => {
-        clearOldRequests()
+        clearOldRequests();
+        const loadPlaylists = async () => {
+            const data = await get_all_playlists();
+            setPlaylists(data)
+        }
+
+        loadPlaylists()
     }, [])
     
     const handleRef = (index) => (ref) => {
@@ -38,7 +46,7 @@ function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
     
     return (
         <>
-            {songOptions.show && <SongOptions x={songOptions.x} y={songOptions.y} songOptionsClose={songOptionsClose}/>}
+            {songOptions.show && <SongOptions x={songOptions.x} y={songOptions.y} song={songOptions.song} playlists={playlists} songOptionsClose={songOptionsClose}/>}
             <div className={styles.navbar_view}></div>
             <div className={styles.container}>
                 <div className={styles.categories_container}>

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useParams } from "react-router-dom"
 import { connect } from "react-redux"
-import { get_one_playlist } from '../../services/mongodb'
+import { get_one_playlist, get_all_playlists } from '../../services/mongodb'
 import styles from './Playlist.module.css'
 import MusicNote from "../../components/icons/MusicNote"
 import Play2 from "../../components/icons/Play2"
@@ -13,15 +13,21 @@ import ToggleSongButton from '../Search/components/ToggleSongButton'
 import Like from '../../components/icons/Like'
 import getMeanDuration from '../../helpers/getMeanDuration'
 import useWindowWidth from "../../hooks/useWindowWidth"
+import SongOptions from "../../components/ui/SongOptions/SongOptions"
 
 function Playlist({activeSong, songMetaData, actionOccurred}) {
 
     const {id} = useParams()
     const width = useWindowWidth()
-    const [playlist, setPlaylist] = useState(null)
+    const [playlist, setPlaylist] = useState()
     const [totalSongs, setTotalSongs] = useState(0)
     const [totalDuration, setTotalDuration] = useState("")
 
+    const songOptionsRefs = useRef({});
+    const initialSongOptions = {show: false, x: 0, y: 0, song: {}, index: 0}
+    const [songOptions, setSongOptions] = useState(initialSongOptions)
+    const [playlists, setPlaylists] = useState([])
+    
     useEffect(() => {
         const loadPlaylist = async () => {
             const data = await get_one_playlist(id)
@@ -33,12 +39,35 @@ function Playlist({activeSong, songMetaData, actionOccurred}) {
         loadPlaylist()
     }, [id, actionOccurred])
 
+    useEffect(() => {
+        const loadPlaylists = async () => {
+            const data = await get_all_playlists();
+            setPlaylists(data)
+        }
+
+        loadPlaylists()
+    }, [])
+    
+    const handleRef = (index) => (ref) => {
+        songOptionsRefs.current[index] = ref;
+    };
+
+    const handleSongOptions = (song, index) => {
+        const element = songOptionsRefs.current[index]
+        const cordX = element.getBoundingClientRect().left
+        const cordY = element.getBoundingClientRect().top
+        setSongOptions({show: true, x: cordX, y: cordY, song: song, index: index})
+    }
+
+    const songOptionsClose = () => setSongOptions(initialSongOptions);
+
     if (!playlist) {
         return <div className={styles.container}>Playlist not found</div>;
     }
 
     return(
         <div className={styles.container}>
+            {songOptions.show && <SongOptions x={songOptions.x} y={songOptions.y} song={songOptions.song} index={songOptions.index} current_playlist={playlist} playlists={playlists} songOptionsClose={songOptionsClose}/>}
             <div className={styles.playlist_details_container}>
                 <div className={styles.background} style={{ backgroundColor: `rgb(${playlist.color_theme[0]}, ${playlist.color_theme[1]}, ${playlist.color_theme[2]})`}}></div>
                 <div className={styles.background_gradient}></div>
@@ -124,7 +153,9 @@ function Playlist({activeSong, songMetaData, actionOccurred}) {
                                     <div className={styles.song_duration}>
                                         <button id={styles.like}><Like size='18'/></button>
                                         <span id={styles.time}>{convertTime(song.duration)}</span>
-                                        <button id={styles.options}><Options size='18'/></button>
+                                        <button id={styles.options} onClick={() => handleSongOptions(song, index)} ref={handleRef(index)}>
+                                            <Options size='18'/>
+                                        </button>
                                     </div>
                                 </li>
                             )

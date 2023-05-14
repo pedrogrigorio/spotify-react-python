@@ -55,13 +55,14 @@ export async function add_song(id, song) {
     })
 }
 
-// export async function remove_song(id, song) {
+export async function remove_song(id, index) {
 
-//     await api.put(`/playlist/${id}`, { data: song })
-//     .then(response => {
-//         console.log(response.data)
-//     })
-// }
+    console.log(index)
+    await api.put(`/playlist/${id}`, { song_to_be_removed: index })
+    .then(response => {
+        console.log(response.data)
+    })
+}
 
 export async function rename_playlist(id, name) {
 
