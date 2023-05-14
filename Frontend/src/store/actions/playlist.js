@@ -4,3 +4,10 @@ export function setActionOccurred(bool) {
         bool,
     }
 }
+
+export function setModal(bool) {
+    return { 
+        type : 'SET_MODAL',
+        bool,
+    }
+}

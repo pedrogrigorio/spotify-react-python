@@ -1,13 +1,14 @@
 import React from 'react'
 import styles from './ContextMenu.module.css'
 import { useOnClickOutside } from '../../../hooks/useOnClickOutside'
-import { useRef } from 'react'
-import { create_playlist, delete_playlist } from '../../../services/mongodb'
+import { useRef, useState } from 'react'
+import { create_playlist, delete_playlist, get_one_playlist } from '../../../services/mongodb'
 import { connect } from 'react-redux'
 import * as PlaylistActions from '../../../store/actions/playlist'
+import PlaylistDatailsUpdate from '../PlaylistDetailsUpdate/PlaylistDatailsUpdate'
 
-function ContextMenu({x, y, playlist_id, contextMenuClose, setActionOccurred}) {
-  
+function ContextMenu({x, y, playlist, contextMenuClose, setActionOccurred, setModal}) {
+
   const contextMenuRef = useRef(null)
   useOnClickOutside(contextMenuRef, contextMenuClose)
 
@@ -18,47 +19,49 @@ function ContextMenu({x, y, playlist_id, contextMenuClose, setActionOccurred}) {
   }
 
   async function handleDeletePlaylist() {
-    await delete_playlist(playlist_id)
+    await delete_playlist(playlist._id)
     contextMenuClose()
     setActionOccurred(true)
   }
 
   async function handleUpdatePlaylist() {
-    await delete_playlist(playlist_id)
+    // const data = await get_one_playlist(playlist_id)
+    setModal(true)
     contextMenuClose()
     setActionOccurred(true)
   }
 
   return (
     <div className={styles.context_menu_container} ref={contextMenuRef} style={{top: `${y}px`, left: `${x}px`}}>
-        <ul className={styles.context_menu}>
-          {playlist_id != '' && (
-            <>
-              <li>
-                <button>
-                  <span>Editar os detalhes</span>
-                </button>
-              </li>
-              <li>
-                <button onClick={handleDeletePlaylist}>
-                  <span>Apagar</span>
-                </button>
-              </li>
-              <hr />
-            </>
-          )}
-          <li>
-            <button onClick={handleCreatePlaylist}>
-              <span>Criar playlist</span>
-            </button>
-          </li>
-        </ul>
+      <ul className={styles.context_menu}>
+        {Object.keys(playlist).length > 0 && (
+          <>
+            <li>
+              <button onClick={handleUpdatePlaylist}>
+                <span>Editar os detalhes</span>
+              </button>
+            </li>
+            <li>
+              <button onClick={handleDeletePlaylist}>
+                <span>Apagar</span>
+              </button>
+            </li>
+            <hr />
+          </>
+        )}
+        <li>
+          <button onClick={handleCreatePlaylist}>
+            <span>Criar playlist</span>
+          </button>
+        </li>
+      </ul>
     </div>
   )
 }
 
 const mapDispatchToProps = dispatch => ({
-  setActionOccurred: (bool) => dispatch(PlaylistActions.setActionOccurred())
+  setActionOccurred: (bool) => dispatch(PlaylistActions.setActionOccurred(bool)),
+  setModal: (bool) => dispatch(PlaylistActions.setModal(bool))
 })
 
 export default connect(null, mapDispatchToProps)(ContextMenu)

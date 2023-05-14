@@ -10,18 +10,23 @@ import { useState, useEffect } from 'react'
 import ContextMenu from '../../ui/ContextMenu/ContextMenu'
 import { connect } from 'react-redux'
 import * as PlaylistActions from '../../../store/actions/playlist'
+import PlaylistDatailsUpdate from '../../ui/PlaylistDetailsUpdate/PlaylistDatailsUpdate'
 
-function SideMenu({actionOccurred, setActionOccurred}){
+function SideMenu({actionOccurred, setActionOccurred, modal}){
 
     const initialContextMenu = {
         show: false,
         x: 0,
         y: 0,
-        playlist_id: '',
+        playlist: {},
     }
 
     const [playlists, setPlaylists] = useState([])
     const [contextMenu, setContextMenu] = useState(initialContextMenu)
+
+    useEffect(() => {
+        console.log(contextMenu)    
+    }, [contextMenu])
 
     useEffect(() => {
         async function load_playlists() {
@@ -38,19 +43,25 @@ function SideMenu({actionOccurred, setActionOccurred}){
         setActionOccurred(true)
     }
 
-    const handleContextMenu = (e, playlist_id='') => {
+    const handleContextMenu = (e, playlist = {}) => {
         e.preventDefault()
-        if (playlist_id != '') {
+        if (playlist != {}) {
             e.stopPropagation()
         }
-        setContextMenu({ show: true, x: e.pageX, y: e.pageY, playlist_id: playlist_id})
+        setContextMenu({ show: true, x: e.pageX, y: e.pageY, playlist: playlist})
     }
 
-    const contextMenuClose = () => setContextMenu(initialContextMenu)
+    const contextMenuClose = () => {
+        setContextMenu({
+            ...contextMenu,
+            show: false, 
+        })
+    }
 
     return (
         <nav className={styles.sidemenu}>
-            {contextMenu.show && (<ContextMenu x={contextMenu.x} y={contextMenu.y} playlist_id={contextMenu.playlist_id} contextMenuClose={contextMenuClose}/>)}
+            {contextMenu.show && (<ContextMenu x={contextMenu.x} y={contextMenu.y} playlist={contextMenu.playlist} contextMenuClose={contextMenuClose}/>)}
+            {modal && <PlaylistDatailsUpdate playlist={contextMenu.playlist}/>}
             <div className={styles.principal}>
                 <div className={styles.logo}>
                     <a href='http://localhost:3000/'>
@@ -96,7 +107,7 @@ function SideMenu({actionOccurred, setActionOccurred}){
                                 <ul className={styles.playlists}>
                                     {playlists.map(playlist => {
                                         return (
-                                            <li key={playlist._id} onContextMenu={(e) => handleContextMenu(e, playlist._id)}>
+                                            <li key={playlist._id} onContextMenu={(e) => handleContextMenu(e, playlist)}>
                                                 <Link to={`/playlist/${playlist._id}`}>{playlist.name}</Link>
                                             </li>
                                         );
@@ -123,7 +134,8 @@ function SideMenu({actionOccurred, setActionOccurred}){
 }
 
 const mapStateToProps = state => ({
-    actionOccurred: state.playlist.actionOccurred
+    actionOccurred: state.playlist.actionOccurred,
+    modal: state.playlist.modal
 })
 
 const mapDispatchToProps = dispatch => ({

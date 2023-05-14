@@ -1,0 +1,145 @@
+.overlay {
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0,0,0,.7);
+    z-index: 999;
+}
+
+.modal_container {
+    width: 524px;
+    height: 384px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    background-color: #282828;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 24px;
+}
+
+.header h1 {
+    font-size: 24px;
+    color: white;
+    font-family: 'Circular Bold';
+}
+
+.header button {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    border-radius: 32px;
+    align-self: end;
+    align-items: center;
+    justify-content: center;
+    color: hsla(0,0%,100%,.7);
+}
+
+.header button:hover {
+    background-color: hsla(0,0%,100%,.1);
+}
+
+.header button svg {
+    fill: currentColor;
+}
+
+.fields {
+    display: grid;
+    grid-gap: 16px;
+    grid-template-columns: 180px 1fr;
+    grid-template-rows: 32px 132px 32px auto;
+    grid-template-areas: 
+        "cover title"
+        "cover description"
+        ". save_button"
+        "disclaimer disclaimer";
+    padding: 0 24px 24px;
+    height: 100%;
+}
+
+.cover {
+    grid-area: cover;
+}
+
+.cover img {
+    width: 180px;
+    height: 180px;
+}
+
+.title {
+    grid-area: title;
+    position: relative;
+}
+
+.title input {
+    border: none;
+    width: 100%;
+    height: 40px;
+    color: #fff;
+    font-size: 14px;
+    font-family: 'Circular Book';
+    padding: 0 12px;
+    border-radius: 4px;
+    background: hsla(0,0%,100%,.1);
+}
+
+.description {
+    grid-area: description;
+    margin-top: 8px;
+    position: relative;
+}
+
+.description textarea {
+    border: none;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    font-size: 14px;
+    font-family: 'Circular Book';
+    resize: none;
+    padding: 8px 8px 28px;
+    border-radius: 4px;
+    background: hsla(0,0%,100%,.1);
+    justify-items: flex-start;
+}
+
+.save_button {
+    grid-area: save_button;
+    cursor: pointer;
+    display: flex;
+    justify-self: end;
+    align-self: center;
+    border-radius: 500px;
+    background-color: white;
+}
+
+.save_button:hover {
+    transform: scale(1.05);
+    transition-duration: 33ms;
+}
+
+.save_button span {
+    display: flex;
+    font-size: 14px;
+    font-family: 'Circular Book';
+    color: black;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 48px;
+    padding-block: 8px;
+    padding-inline: 32px;
+}
+
+.disclaimer {
+    grid-area: disclaimer;
+    font-size: 11px;
+    color: white;
+}
