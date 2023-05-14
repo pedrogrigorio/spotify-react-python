@@ -1,0 +1,40 @@
+.song_options_container {
+    position: absolute;
+    z-index: 9999;
+}
+
+.song_options {
+    display: flex;
+    flex-direction: column;
+    background-color: #282828;
+    width: 160px;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.song_options li {
+    all: unset;
+    width: 100%;
+    display: flex;
+}
+
+.song_options li button {
+    display: flex;
+    width: 100%;
+    height: 20px;
+    padding: 12px;
+    border-radius: 2px;
+    justify-content: center;
+    align-items: center;
+    /* text-align: start; */
+}
+
+.song_options li button:hover {
+    background-color: hsla(0,0%,100%,.1);
+    color: #fff;
+}
+
+.song_options li button span {
+    color: hsla(0,0%,100%,.9);
+    flex: 1;
+}
