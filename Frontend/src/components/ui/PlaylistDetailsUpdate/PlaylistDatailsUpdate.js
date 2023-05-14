@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styles from './PlaylistDatailsUpdate.module.css'
 import Close from '../../icons/Close'
 import baixados from '../../../assets/img/baixados.jpg'
@@ -7,14 +7,17 @@ import { useState, useEffect } from 'react'
 import * as PlaylistActions from '../../../store/actions/playlist'
 import { get_one_playlist, rename_playlist} from '../../../services/mongodb'
 import MusicNote from '../../icons/MusicNote'
+import { useOnClickOutside } from '../../../hooks/useOnClickOutside'
 
 function PlaylistDatailsUpdate({playlist = {}, setModal, setActionOccurred}) {
 
+  
+  const playlistDetailModal = useRef(null)
   const [message, setMessage] = useState('');
 
-  const handleChange = (e) => {
-    setMessage(e.target.value);
-  }
+  useOnClickOutside(playlistDetailModal, () => setModal(false))
+
+  const handleChange = (e) => setMessage(e.target.value);
 
   const handleClick = async () => {
     if (message.length > 0) {
@@ -24,13 +27,9 @@ function PlaylistDatailsUpdate({playlist = {}, setModal, setActionOccurred}) {
     setModal(false)
   }
 
-  if (!playlist) {
-    return <div className={styles.overlay}></div>
-  }
-
   return (
     <div className={styles.overlay}>
-      <div className={styles.modal_container}>
+      <div className={styles.modal_container} ref={playlistDetailModal}>
         <div className={styles.header}>
           <h1>Editar detalhes</h1>
           <button onClick={() => setModal(false)}>
