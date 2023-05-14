@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class MusicRequest(BaseModel):
     index_request : int
@@ -6,10 +7,10 @@ class MusicRequest(BaseModel):
 class SearchContent(BaseModel):
     search_content: str
 
-class Playlist(BaseModel):
-    name: str
-    songs: object
+class PlaylistUpdate(BaseModel):
+    song_to_be_added: Optional[object] = None
+    name: Optional[str] = None
 
-class Song(BaseModel):
-    data: object
+class ExcludeSong(BaseModel):
+    song: object
     

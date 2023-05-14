@@ -67,11 +67,51 @@
 
 .cover {
     grid-area: cover;
-}
-
-.cover img {
     width: 180px;
     height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #282828;
+    box-shadow: 0 4px 60px rgba(0,0,0,.5);
+}
+
+.cover#active {
+    display:grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+    grid-template-areas: 
+        "img1 img2"
+        "img3 img4";
+}
+
+.cover #img0 {
+    width: 100%;
+    height: 100%;
+}
+
+.cover #img1 {
+    grid-area: "img1";
+    width: 100%;
+    height: 100%;
+}
+
+.cover #img2 {
+    grid-area: "img3";
+    width: 100%;
+    height: 100%;
+}
+
+.cover #img3 {
+    grid-area: "img3";
+    width: 100%;
+    height: 100%;
+}
+
+.cover #img4 {
+    grid-area: "img4";
+    width: 100%;
+    height: 100%;
 }
 
 .title {

@@ -13,7 +13,7 @@ import ToggleSongButton from '../Search/components/ToggleSongButton'
 import Like from '../../components/icons/Like'
 import getMeanDuration from '../../helpers/getMeanDuration'
 
-function Playlist({activeSong, songMetaData}) {
+function Playlist({activeSong, songMetaData, actionOccurred}) {
 
     const {id} = useParams()
     const [playlist, setPlaylist] = useState(null)
@@ -34,7 +34,7 @@ function Playlist({activeSong, songMetaData}) {
         }
 
         loadPlaylist()
-    }, [id])
+    }, [id, actionOccurred])
 
     if (!playlist) {
         return <div className={styles.container}>Playlist not found</div>;
@@ -141,7 +141,8 @@ function Playlist({activeSong, songMetaData}) {
 
 const mapStateToProps = state => ({
     activeSong: state.search.activeSong,
-    songMetaData: state.play.songMetaData
+    songMetaData: state.play.songMetaData,
+    actionOccurred: state.playlist.actionOccurred
 })
 
 export default connect(mapStateToProps)(Playlist)

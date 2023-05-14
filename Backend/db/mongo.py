@@ -117,3 +117,7 @@ def get_dominant_color(url):
     dominant_color = ct.get_color(quality=1)
 
     return list(dominant_color)
+
+async def rename_playlist(id, name):
+    name_added = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'name': name}})
+    return True
