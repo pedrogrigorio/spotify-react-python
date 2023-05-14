@@ -1,4 +1,5 @@
-import { useEffect, useState, useCallback } from 'react'
+import React from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { connect } from 'react-redux'
 import * as SearchActions from '../../store/actions/search'
 import ToggleSongButton from './components/ToggleSongButton'
@@ -8,27 +9,36 @@ import Like from '../../components/icons/Like'
 import Options from '../../components/icons/Options'
 import convertTime from '../../helpers/convertTime'
 import equalizer from '../../assets/gif/equalizer.gif'
-import { add_song } from '../../services/mongodb'
+import SongOptions from '../../components/ui/SongOptions/SongOptions'
+import useWindowWidth from '../../hooks/useWindowWidth'
 
 function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
+    
+    const initialSongOptions = {show: false, x: 0, y: 0, song: {}}
+    const [songOptions, setSongOptions] = useState(initialSongOptions)
+    const songOptionsRefs = useRef({});
+    const width = useWindowWidth();
+
     useEffect(() => {
         clearOldRequests()
     }, [])
+    
+    const handleRef = (index) => (ref) => {
+        songOptionsRefs.current[index] = ref;
+    };
 
-    const[width, setWidth] = useState(window.innerWidth) 
-    console.log(width)
-    useEffect(() => {
-        window.addEventListener('resize', () => setWidth(window.innerWidth));
-    }, [])
-
-    function addSong(song) {
-        console.log(song)
-        const id = '6460e8be64ba7097b1c52903'
-        add_song(id, song)
+    const handleSongOptions = (song, index) => {
+        const element = songOptionsRefs.current[index]
+        const cordX = element.getBoundingClientRect().left
+        const cordY = element.getBoundingClientRect().top
+        setSongOptions({show: true, x: cordX, y: cordY, song: song})
     }
+
+    const songOptionsClose = () => setSongOptions(initialSongOptions);
     
     return (
         <>
+            {songOptions.show && <SongOptions x={songOptions.x} y={songOptions.y} songOptionsClose={songOptionsClose}/>}
             <div className={styles.navbar_view}></div>
             <div className={styles.container}>
                 <div className={styles.categories_container}>
@@ -96,7 +106,9 @@ function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
                                     <div className={styles.song_duration}>
                                         <button id={styles.like}><Like size='18'/></button>
                                         <span id={styles.time}>{convertTime(song.duration)}</span>
-                                        <button id={styles.options} onClick={() => addSong(song)}><Options size='18'/></button>
+                                        <button id={styles.options} onClick={() => handleSongOptions(song, index)} ref={handleRef(index)}>
+                                            <Options size='18'/>
+                                        </button>
                                     </div>
                                 </li>
                             )

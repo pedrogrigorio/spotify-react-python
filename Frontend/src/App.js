@@ -11,7 +11,6 @@ import Search from './pages/Search/Search';
 import Library from './pages/Library/Library';
 import LikedSongs from './pages/LikedSongs/LikedSongs';
 import Playlist from './pages/Playlist/Playlist';
-import PlaylistDatailsUpdate from './components/ui/PlaylistDetailsUpdate/PlaylistDatailsUpdate';
 
 function App() {
 

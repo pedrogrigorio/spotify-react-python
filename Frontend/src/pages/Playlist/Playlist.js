@@ -12,18 +12,15 @@ import convertTime from '../../helpers/convertTime'
 import ToggleSongButton from '../Search/components/ToggleSongButton'
 import Like from '../../components/icons/Like'
 import getMeanDuration from '../../helpers/getMeanDuration'
+import useWindowWidth from "../../hooks/useWindowWidth"
 
 function Playlist({activeSong, songMetaData, actionOccurred}) {
 
     const {id} = useParams()
+    const width = useWindowWidth()
     const [playlist, setPlaylist] = useState(null)
     const [totalSongs, setTotalSongs] = useState(0)
     const [totalDuration, setTotalDuration] = useState("")
-
-    const [width, setWidth] = useState(window.innerWidth) 
-    useEffect(() => {
-        window.addEventListener('resize', () => setWidth(window.innerWidth));
-    }, [])
 
     useEffect(() => {
         const loadPlaylist = async () => {
