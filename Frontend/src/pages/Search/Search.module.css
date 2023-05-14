@@ -279,8 +279,17 @@ div#forward svg{
     display: flex;
     align-items: center;
     color: #b3b3b3;
-    white-space: nowrap;
     grid-area: song_album;
+}
+
+.song_album span {
+    /* overflow text on a ellipsis */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: initial;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
 /* 
@@ -293,6 +302,7 @@ div#forward svg{
     justify-content: end;
     color: #b3b3b3;
     grid-area: song_duration;
+
 }
 
 .song_duration #like,
@@ -338,6 +348,6 @@ div#forward svg{
 
     .list_item {
         grid-template-columns: 16px 4fr 2fr minmax(120px, 1fr);
-    grid-template-areas: "song_index song_details song_album song_duration";
+        grid-template-areas: "song_index song_details song_album song_duration";
     }
 }

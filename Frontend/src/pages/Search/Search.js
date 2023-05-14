@@ -16,7 +16,7 @@ function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
     }, [])
 
     const[width, setWidth] = useState(window.innerWidth) 
-
+    console.log(width)
     useEffect(() => {
         window.addEventListener('resize', () => setWidth(window.innerWidth));
     }, [])

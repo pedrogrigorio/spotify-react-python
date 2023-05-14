@@ -403,8 +403,17 @@
     display: flex;
     align-items: center;
     color: #b3b3b3;
-    white-space: nowrap;
     grid-area: song_album;
+}
+
+.song_album span {
+    /* overflow text on a ellipsis */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: initial;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
 /* 
