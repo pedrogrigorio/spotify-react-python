@@ -61,7 +61,7 @@ function SideMenu({actionOccurred, setActionOccurred, modal}){
     return (
         <nav className={styles.sidemenu}>
             {contextMenu.show && (<ContextMenu x={contextMenu.x} y={contextMenu.y} playlist={contextMenu.playlist} contextMenuClose={contextMenuClose}/>)}
-            {modal && <PlaylistDatailsUpdate playlist={contextMenu.playlist}/>}
+            {modal && <PlaylistDatailsUpdate/>}
             <div className={styles.principal}>
                 <div className={styles.logo}>
                     <a href='http://localhost:3000/'>

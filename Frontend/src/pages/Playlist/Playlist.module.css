@@ -195,6 +195,12 @@
     align-items: center;
     justify-content: center;
     background-color: #1ed760;
+    cursor: pointer;
+}
+
+.play_button:hover {
+    transform: scale(1.05);
+    transition: .1s;
 }
 
 /* ------------------------------------------------
