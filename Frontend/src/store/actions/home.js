@@ -1,13 +1,20 @@
-export function setTopContent(updateSongData) {
+export function setTopSongs(updateSongs) {
     return { 
         type : 'SET_SONG_UPDATE_DATA',
-        updateSongData
+        updateSongs
+    }
+}
+
+export function setTopAlbums(updateAlbums) {
+    return { 
+        type : 'SET_ALBUM_UPDATE_DATA',
+        updateAlbums
     }
 }
 
 export function setRecentSearch(recentsSearch) {
     return { 
-        type : 'SET_SONG_UPDATE_DATA',
+        type : 'SET_RECENTS_UPDATE_DATA',
         recentsSearch
     }
 }

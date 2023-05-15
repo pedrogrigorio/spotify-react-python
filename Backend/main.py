@@ -43,9 +43,13 @@ def get_search_content(search : request_models.SearchContent):
 def get_music_direct_link(search : request_models.MusicRequest):
     return api_requests.get_song_by_id(search.index_request)
 
-@app.get('/get_top_trends')
+@app.get('/get_top_albums')
 def get_top_trends():
-    return api_requests.get_top_content()
+    return api_requests.get_top_albums()
+
+@app.get('/get_top_songs')
+def get_top_trends():
+    return api_requests.get_top_songs()
 
 @app.get('/get_recents_search')
 def get_recents_search():

@@ -43,7 +43,7 @@ class ApiRequests():
 
     def set_metadata_cache(self, title : str, artist : str):
         self.song_index += 1
-        self.redis_client.set(self.song_index,f"{title} {artist} {'official audio'}")
+        self.redis_client.set(self.song_index,f"{title} {artist}")
 
 
     def song_engine_link(self, request : str, index : int):
@@ -64,11 +64,9 @@ class ApiRequests():
         self.redis_client.flushall()
 
      
-    def get_top_content(self,):
+    def get_top_albums(self,):
         top_albums = self.client.get_albums_chart(genre_id=0)
-        top_tracks = self.client.get_tracks_chart(genre_id=0)
         top_albums_data_package = []
-        top_tracks_data_package = []
         for album in top_albums:
             data = {
                 'title' : album.title,
@@ -79,6 +77,15 @@ class ApiRequests():
             }
             top_albums_data_package.append(data)
 
+        return [
+            {'title' : 'Principais albums da semana',
+             'content' : top_albums_data_package
+            }
+        ]
+
+    def get_top_songs(self,):
+        top_tracks = self.client.get_tracks_chart(genre_id=0)
+        top_tracks_data_package = []
         for track in top_tracks:
             data = {
                 'title' : track.title,
@@ -86,30 +93,31 @@ class ApiRequests():
                 'cover' : track.album.cover_medium,
                 'id'    : track.id
             }
-
             top_tracks_data_package.append(data)
 
-        return {
-            'album' : top_albums_data_package,
-            'songs' : top_tracks_data_package
-        }
+        return [
+            {'title' : 'Músicas que estão bombando',
+             'content' : top_tracks_data_package
+            }
+        ]
     
     def get_recents_search_content(self,):
-        # Problemas com o data que é gerado para ser enviado via endPoint
         recently_data = []
         for search in list(set(self.recent_searchs)):
             track = self.client.search(search)[0]
-            # title = track[0].title
-            # artist = track[0].artist
-            # cover  = track[0].album.cover_medium
             data = {  
                 "title" : track.title, 
-                "artist": track.artist, 
+                "artist": track.artist.name, 
                 "cover" :track.album.cover_medium,
                 }
  
             recently_data.append(data)
 
+        return [
+            {'title' : 'Músicas que você tocou recentemente',
+             'content' : recently_data
+            }
+        ]
 
    
 
