@@ -195,6 +195,12 @@
     align-items: center;
     justify-content: center;
     background-color: #1ed760;
+    cursor: pointer;
+}
+
+.play_button:hover {
+    transform: scale(1.05);
+    transition: .1s;
 }
 
 /* ------------------------------------------------
@@ -247,6 +253,10 @@
 
 .grid .album {
     grid-area: album;
+}
+
+.grid .add_in {
+    grid-area: date;
 }
 
 .grid .duration {
@@ -417,6 +427,27 @@
 }
 
 /* 
+*   2.2.3 - Date
+*-------------------------------------------------- */
+
+.song_date {
+    display: flex;
+    align-items: center;
+    color: #b3b3b3;
+    grid-area: song_date;
+}
+
+.song_date span {
+    /* overflow text on a ellipsis */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: initial;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+/* 
 *   2.2.4 - Duration
 *-------------------------------------------------- */
 
@@ -471,6 +502,18 @@
     .list_item {
         grid-template-columns: 16px 4fr 2fr minmax(120px, 1fr);
         grid-template-areas: "song_index song_details song_album song_duration";
+    }
+}
+
+@media (min-width: 1041px) {
+    .grid {
+        grid-template-columns: 16px 6fr 4fr 3fr minmax(120px, 1fr);
+        grid-template-areas: "index title album date duration";
+    }
+
+    .list_item {
+        grid-template-columns: 16px 6fr 4fr 3fr minmax(120px, 1fr);
+        grid-template-areas: "song_index song_details song_album song_date song_duration";
     }
 }
 
