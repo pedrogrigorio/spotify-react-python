@@ -8,6 +8,8 @@ from io import BytesIO
 import requests
 from colorthief import ColorThief
 
+from datetime import date
+
 pydantic.json.ENCODERS_BY_TYPE[ObjectId]=str
 
 
@@ -37,7 +39,7 @@ async def fetch_one_playlist(id: str):
 
 async def create_user_playlist():
     id = await collection.count_documents({}) + 1
-    document = {"name": "Minha playlist nº " + str(id), "color_theme": [83, 83, 83], "cover": [], "songs": []}
+    document = {"name": "Minha playlist nº " + str(id), "color_theme": [83, 83, 83], "cover": [], "songs": [], "songs_add_date": []}
     result = await collection.insert_one(document)
     created_document = await collection.find_one({"_id": result.inserted_id})
     return created_document
@@ -48,11 +50,16 @@ async def delete_playlist(id: str):
     return True
 
 async def add_song(id: str, song: object):
+    today = str(date.today())
+
     # add new song
     old_document = await collection.find_one({'_id': ObjectId(id)})
     songs = old_document['songs']
     songs.append(song)
+    dates = old_document['songs_add_date']
+    dates.append(today)
     song_added = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'songs': songs}})
+    date_added = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'songs_add_date': dates}})
 
     # add to "songs_cover"
     covers = old_document['cover']
@@ -123,10 +130,9 @@ async def rename_playlist(id, name):
     return True
 
 async def remove_song(id, song_index):
-    print("teste \n \n \n \n \n \n")
-    print(song_index)
     old_document = await collection.find_one({'_id': ObjectId(id)})
     songs = old_document['songs']
+    dates = old_document['songs_add_date']
 
     if (len(songs) == 4):
         covers = old_document['cover']
@@ -134,14 +140,19 @@ async def remove_song(id, song_index):
         color_added = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'color_theme': color_theme}})
     if (len(songs) > 1 and len(songs) <= 4):
         covers = old_document['cover']
-        covers.remove(covers[song_index])
+        del covers[song_index]
+        # covers.remove(covers[song_index])
         covers_updated = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'cover': covers}})
     if (len(songs) == 1):
         covers_updated = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'cover': []}})
         songs_updated = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'songs': []}})
+        date_added = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'songs_add_date': []}})
         color_added = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'color_theme': [83, 83, 83]}})
         return True
         
-    songs.remove(songs[song_index])
+    del songs[song_index]
+    del dates[song_index]
+
     songs_updated = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'songs': songs}})
+    date_updated = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'songs_add_date': dates}})
     return True

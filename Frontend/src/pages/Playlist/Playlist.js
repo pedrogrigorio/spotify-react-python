@@ -16,6 +16,7 @@ import useWindowWidth from "../../hooks/useWindowWidth"
 import SongOptions from "../../components/ui/SongOptions/SongOptions"
 import PlaylistOptions from "./components/PlaylistOptions"
 import * as PlayActions from '../../store/actions/play'
+import convertDate from "../../helpers/convertDate"
 
 function Playlist({activeSong, songMetaData, actionOccurred, isPlaying, setIsPlaying}) {
 
@@ -33,14 +34,6 @@ function Playlist({activeSong, songMetaData, actionOccurred, isPlaying, setIsPla
     const initialPlaylistOptions = {show: false, x: 0, y: 0}
     const playlistOptionsRef = useRef(null)
     const [playlistOptions, setPlaylistOptions] = useState(initialPlaylistOptions)
-
-    const [playlistSongIsPlaying, setplaylistSongIsPlaying] = useState(false)
-
-    // useEffect(() => {
-    //     if(playlist.songs.some(song => song.id === songMetaData.id) && isPlaying) {
-    //         setplaylistSongIsPlaying(true)
-    //     }
-    // }, [isPlaying])
 
     useEffect(() => {
         const loadPlaylist = async () => {
@@ -145,6 +138,11 @@ function Playlist({activeSong, songMetaData, actionOccurred, isPlaying, setIsPla
                                     <span>Álbum</span>
                                 </div>
                             )}
+                            {width > 1040 && (
+                                <div className={styles.date}>
+                                    <span>Adiconada em</span>
+                                </div> 
+                            )}
                             <div className={styles.duration}>
                                 <span><Duration size='16' /></span>
                             </div>
@@ -171,6 +169,11 @@ function Playlist({activeSong, songMetaData, actionOccurred, isPlaying, setIsPla
                                     {width > 776 && (
                                         <div className={styles.song_album}>
                                             <span>{song.album}</span>
+                                        </div>
+                                    )}
+                                    {width > 1040 && (
+                                        <div className={styles.song_date}>
+                                            <span>{convertDate(playlist.songs_add_date[index])}</span>
                                         </div>
                                     )}
                                     <div className={styles.song_duration}>
