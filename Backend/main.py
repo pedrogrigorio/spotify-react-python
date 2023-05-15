@@ -4,12 +4,22 @@
 
 """
 
-from fastapi import FastAPI  
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 import request_models
 from engine_api import api_requests
+from typing import Optional
 
+from db.mongo import (
+    create_user_playlist,
+    fetch_all_playlists,
+    fetch_one_playlist,
+    delete_playlist,
+    rename_playlist,
+    add_song,
+    remove_song
+)
 
 app = FastAPI()
 
@@ -50,3 +60,38 @@ def get_top_trends():
 @app.get('/get_recents_search')
 def get_recents_search():
     return api_requests.get_recents_search_content()
+
+@app.get('/playlists')
+async def get_playlists():
+    response = await fetch_all_playlists()
+    return response
+
+@app.get('/playlist/{id}')
+async def get_playlist_by_id(id: str):
+    response = await fetch_one_playlist(id)
+    return response
+
+@app.post('/playlists')
+async def create_playlist():
+    response = await create_user_playlist()
+    return response
+
+@app.delete('/playlist/{id}')
+async def delete_playlist_by_id(id: str):
+    response = await delete_playlist(id)
+    if response:
+        return "Succesfully deleted playlist"
+    raise HTTPException(404, f"There is no playlist with the id {id}")
+
+@app.put('/playlist/{id}')
+async def put_song(id: str, playlist_update: request_models.PlaylistUpdate):
+    response = None
+    if playlist_update.song_to_be_added:
+        response = await add_song(id, playlist_update.song_to_be_added)
+    if playlist_update.song_to_be_removed != None:
+        response = await remove_song(id, playlist_update.song_to_be_removed)
+    if playlist_update.name:
+        response = await rename_playlist(id, playlist_update.name)
+    if response:
+        return "Succesfully updated playlist"
+    raise HTTPException(404, f"There is no playlist with the id {id}")

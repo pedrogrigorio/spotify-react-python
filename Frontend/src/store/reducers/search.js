@@ -9,12 +9,16 @@ export default function search(state = INITIAL_STATE, action) {
     
     if (action.type === 'SET_SEARCH_DATA') {
         return {
+            ...state,
             searchData: action.data
         }
     }
     
     else if (action.type === 'CLEAR_OLD_REQUESTS') {
-        return INITIAL_STATE
+        return {
+            ...state,
+            searchData: []
+        }
     }
 
     else if (action.type === 'SET_ACTIVE_INDEX') {

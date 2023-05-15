@@ -36,10 +36,14 @@
 .App {
   width: 100vw;
   height: 100vh;
+  min-width: 775px;
   display: grid;
   grid-template-columns: 241px 1fr;
   grid-template-rows: 64px calc(100vh - 154px) 90px;
-  grid-template-areas: "s n" "s c" "f f";
+  grid-template-areas:  
+      "s n" 
+      "s c" 
+      "f f";
 }
 
 body {

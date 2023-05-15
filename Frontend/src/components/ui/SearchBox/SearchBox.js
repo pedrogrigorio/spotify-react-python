@@ -15,8 +15,8 @@ function SearchBox({setSearchData, clearOldRequests, setActiveIndex, setActiveSo
             const data = (await searchEngine(searchContent)).data
             setSearchData(data)
 
-            setActiveIndex(0)
-            setActiveSong({})
+            // setActiveIndex(0)
+            // setActiveSong({})
 
             /*
             *   \/ check if any song in the new search is playing. \/

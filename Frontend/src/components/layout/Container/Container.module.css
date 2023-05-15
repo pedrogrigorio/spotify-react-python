@@ -1,17 +1,4 @@
-.container{
-    grid-area: c;
+.container {
+    grid-area: n / c / c / c;
     overflow: auto;
 }
-
-/* .min-height{
-    min-height: 75vh;
-}
-
-.start{
-    justify-content: flex-start;
-}
-
-.column{
-    flex-direction: column;
-    justify-content: flex-start;
-} */
