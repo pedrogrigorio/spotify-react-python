@@ -4,9 +4,10 @@ const INITIAL_STATE = {
     settingSong: false,
     songData : {trackData : null},
     songMetaData : {
-        title     : "", 
-        artist    : "", 
-        img       : "", 
+        title: "", 
+        artist: "", 
+        img: "", 
+        id: null
     }
 } 
 
@@ -17,9 +18,10 @@ export default function play(state = INITIAL_STATE, action) {
             ...state,
             settingSong: true,
             songMetaData: {
-                title : action.title, 
-                artist : action.artist,
-                img : action.image, 
+                title: action.title, 
+                artist: action.artist,
+                img: action.image, 
+                id: action.index
             }
         }
     }
@@ -28,7 +30,7 @@ export default function play(state = INITIAL_STATE, action) {
         return {
             ...state,
             songData: {
-                trackData : action.trackData
+                trackData: action.trackData
             }
         }
     }

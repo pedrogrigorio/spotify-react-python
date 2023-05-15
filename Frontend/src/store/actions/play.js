@@ -1,9 +1,10 @@
-export function setSongMetaData(title, artist, image) {
+export function setSongMetaData(title, artist, image, index) {
     return { 
         type : 'SET_SONG_META_DATA',
         title,
         artist,
         image,
+        index,
     }
 }
 

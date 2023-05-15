@@ -1,81 +1,205 @@
 /* ================================================
-*   0 - Page Background
+*   0 - Container
 *================================================== */
-
-.navbar_view {
-    background-color: #121212;
-    height: 64px;
-    width: 100%;
-}
 
 .container {
     background-color: #121212;
-    height: calc(100% - 64px);
+    height: 100%;
     overflow: auto;
-    padding-left: 2px;
 }
 
 /* ================================================
-*   1 - Categories
+*   1 - Playlist Details
 *================================================== */
 
-.categories_container {
+.playlist_details_container {
     display: flex;
+    padding: 0 32px 24px 32px;
+    height: 30vh;
+    max-height: 400px;
+    min-height: 340px;
+    position: relative;
+}
+
+.playlist_details_container .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* background-color: rgb(208, 64, 48); */
     width: 100%;
-    height: 48px;
-    padding-top: 7px;
-}
-
-.categories {
-    display: flex;
-    width: 100%;
-    height: 32px;
-    padding: 0px 32px 0px 32px;
-}
-
-.categories button {
-    margin-right: 12px;
-    cursor: pointer;
-    border: none;
-    border-radius: 40px;
-    color: white;
-    background-color: #232323;
-}
-
-.categories button span {
     height: 100%;
+}
+
+.playlist_details_container .background_gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(transparent 0,rgba(0,0,0,.5) 100%);
+    width: 100%;
+    height: 100%;
+}
+
+/* ------------------------------------------------
+*   1.1 - Img
+*-------------------------------------------------- */
+
+.playlist_cover {
+    margin-inline-end: 24px;
+    align-self: flex-end;
+    z-index: 1;
+    min-width: 232px;
+    min-height: 232px;
+    max-width: 232px;
+    max-height: 232px;
+    background-color: #282828;
     display: flex;
     align-items: center;
-    white-space: nowrap;
-    padding: 4px 12px;
-}
-
-.categories #highlight {
-    color: black;
-    background-color: white;
-}
-
-/* .category div#forward{
-    position: absolute;
-    right: 0;
-    margin: 0;
-    margin-right: 10px;
-    padding: 0;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    box-shadow: 0 4px 60px rgba(0,0,0,.5);
 }
 
-div#forward svg{
-    margin-left: 1px;
-} */
+.playlist_cover svg {
+    width: 64px;
+    height: 64px;
+}
 
+.playlist_cover #img0 {
+    width: 100%;
+    height: 100%;
+}
+
+.playlist_cover#active {
+    display:grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+    grid-template-areas: 
+        "img1 img2"
+        "img3 img4";
+}
+
+.playlist_cover #img1 {
+    grid-area: "img1";
+    width: 100%;
+    height: 100%;
+}
+
+.playlist_cover #img2 {
+    grid-area: "img3";
+    width: 100%;
+    height: 100%;
+}
+
+.playlist_cover #img3 {
+    grid-area: "img3";
+    width: 100%;
+    height: 100%;
+}
+
+.playlist_cover #img4 {
+    grid-area: "img4";
+    width: 100%;
+    height: 100%;
+}
+
+/* ------------------------------------------------
+*   1.2 - Details
+*-------------------------------------------------- */
+
+.playlist_details {
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: flex-end;
+    z-index: 1;
+}
+
+.playlist_details .category {
+    font-family: 'Circular Bold';
+    margin-bottom: 4px;
+}
+
+.playlist_details .title {
+    margin-top: 8px;
+    width: 100%;
+}
+
+.playlist_details .title h1 {
+    box-sizing: border-box;
+    font-size: clamp(32px, 5vw, 92px);
+    height: auto;
+    line-height: auto;
+    font-family: 'Circular Medium';
+    font-weight: 900;
+    margin: 8px 0 12px;
+    overflow-wrap: break-word;
+}
+
+.playlist_details div {
+    margin-top: 8px;
+    display: flex;
+}
+
+.playlist_details .separator {
+    margin: 0px 4px;
+}
+
+.playlist_details .user {
+    font-family: 'Circular Bold';
+}
+
+.playlist_details .total_duration {
+    color: hsla(0,0,100,.7);
+}
 
 /* ================================================
-*   2 - Search Result 
+*   2 - Playlist Content
 *================================================== */
 
-/* Container */
+.playlist_content {
+    position: relative;
+    isolation: isolate;
+}
+
+.content_background_gradient {
+    /* background-color: rgb(208, 64, 48); */
+    background-image: linear-gradient(rgba(0,0,0,.6) 0, #121212 100%);
+    height: 232px;
+    width: 100%;
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* ------------------------------------------------
+*   2.1 - Play and options
+*-------------------------------------------------- */
+
+.playlist_interaction_container {
+    width: 100%;
+    display: flex;
+    padding: 24px 32px;
+}
+
+.playlist_interactions {
+    display: flex;
+}
+
+.play_button {
+    width: 56px;
+    height: 56px;
+    margin-right: 32px;
+    border-radius: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1ed760;
+}
+
+/* ------------------------------------------------
+*   2.2 - Songs
+*-------------------------------------------------- */
 
 .search_result_container {
     width: 100%;
@@ -83,8 +207,8 @@ div#forward svg{
     padding: 0px 32px;
 }
 
-/* ------------------------------------------------
-*   2.1 - List Header
+/* 
+*   2.2.1 - List Header
 *-------------------------------------------------- */
 
 .list_header {
@@ -134,8 +258,8 @@ div#forward svg{
     margin-right: 32px;
 }
 
-/* ------------------------------------------------
-*   2.2 - Song List
+/* 
+*   2.2.2 - Songs List
 *-------------------------------------------------- */
 
 .list_item {
@@ -302,7 +426,6 @@ div#forward svg{
     justify-content: end;
     color: #b3b3b3;
     grid-area: song_duration;
-
 }
 
 .song_duration #like,
@@ -337,9 +460,8 @@ div#forward svg{
 }
 
 /* 
-*   2.2.5 - Media Queries
+*   2.2.3 - Media Queries
 *-------------------------------------------------- */
-
 @media (min-width: 777px) {
     .grid {
         grid-template-columns: 16px 4fr 2fr minmax(120px, 1fr);
@@ -349,5 +471,31 @@ div#forward svg{
     .list_item {
         grid-template-columns: 16px 4fr 2fr minmax(120px, 1fr);
         grid-template-areas: "song_index song_details song_album song_duration";
+    }
+}
+
+@media (max-width: 1023px) {
+    .playlist_details_container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .playlist_interaction_container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .search_result_container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .playlist_cover {
+        min-width: 192px;
+        min-height: 192px;
+        max-width: 192px;
+        max-height: 192px;
     }
 }

@@ -6,15 +6,11 @@ import Backward from '../../icons/Backward';
 import SearchBox from '../../ui/SearchBox/SearchBox';
 import ArrowDown from '../../icons/ArrowDown';
 import User from '../../icons/User';
+import useWindowWidth from '../../../hooks/useWindowWidth';
 
 export default function NavBar() {
 
-    const[width, setWidth] = useState(window.innerWidth)
-
-    useEffect(() => {
-        window.addEventListener('resize', () => setWidth(window.innerWidth));
-    }, [])
-
+    const width = useWindowWidth()
     const location = useLocation();
 
     return ( 

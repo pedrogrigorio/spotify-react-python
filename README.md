@@ -15,6 +15,7 @@ This repo contains a work in progress Spotify Clone made with React, Redux, Axio
 - [React](http://reactjs.org/)
 - [Python](https://python.org/)
 - [RedisDB](https://redis.io/)
+- [Docker](https://www.docker.com/)
 
 ## 📄 Available pages
 

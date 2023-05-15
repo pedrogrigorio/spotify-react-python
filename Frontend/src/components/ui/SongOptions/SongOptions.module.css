@@ -1,0 +1,151 @@
+.song_options_container {
+    position: absolute;
+    z-index: 9999;
+}
+
+.song_options {
+    display: flex;
+    flex-direction: column;
+    background-color: #282828;
+    width: 200px;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.song_options li {
+    all: unset;
+    width: 100%;
+    display: flex;
+}
+
+.song_options li button {
+    display: flex;
+    width: 100%;
+    height: 20px;
+    padding: 12px;
+    border-radius: 2px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.song_options li button:hover {
+    background-color: hsla(0,0%,100%,.1);
+    color: #fff;
+}
+
+.song_options li button span {
+    color: hsla(0,0%,100%,.9);
+}
+
+.song_options li button svg {
+    transform: rotate(-90deg);
+}
+
+.add_to_playlist:hover .playlists_container {
+    display: block;
+}
+
+.add_to_playlist .active {
+    background-color: hsla(0,0%,100%,.1);
+}
+
+.playlists_container {
+    display: none;
+    position: absolute;
+}
+
+.playlists {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    background-color: #282828;
+    padding: 4px;
+    border-radius: 4px;
+    box-shadow: 0 16px 24px rgba(0,0,0,.3), 0 6px 8px rgba(0,0,0,.2);
+}
+
+.playlists li {
+    all: unset;
+    width: 100%;
+    display: flex;
+}
+
+.playlists li button {
+    display: flex;
+    width: 100%;
+    height: 20px;
+    padding: 12px;
+    border-radius: 2px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.playlists li button:hover {
+    background-color: hsla(0,0%,100%,.1);
+    color: #fff;
+}
+
+.playlists li button span {
+    color: hsla(0,0%,100%,.9);
+}
+
+.playlists hr {
+    height: 1px;
+    border: none;
+    background-color: #484848;
+}
+
+.search_box {
+    position: relative;
+    height: 36px;
+}
+
+.search_box input {
+    height: 32px;
+    width: 100%;
+    padding: 8px 32px;
+    outline: none;
+    border: none;
+    color: #fff;
+    font-size: 12px;
+    font-family: 'Circular Book';
+    border-radius: 4px;
+    color: hsla(0,0%,100%,.7);
+    background: hsla(0,0%,100%,.1);
+}
+
+.search_icon {
+    position: absolute;
+    display: flex;
+    top: 0;
+    left: 0;
+}
+
+.search_icon span {
+    flex: 1;
+    padding: 8px;
+    color: hsla(0,0%,100%,.7);
+}
+
+.search_icon svg {
+    fill: currentColor;
+}
+
+.close_icon {
+    all: unset;
+}
+
+.close_icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 8px;
+    color: hsla(0,0%,100%,.7);
+}
+
+
+.close_icon svg {
+    fill: currentColor;
+}

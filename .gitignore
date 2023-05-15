@@ -24,4 +24,5 @@
 /Backend/__pycache__
 /Backend/engine_api/__pycache__
 /Backend/engine_api/API/__pycache__
-/data
+/Backend/db/__pycache__
+test.py

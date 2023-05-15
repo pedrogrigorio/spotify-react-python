@@ -32,7 +32,7 @@ class ApiRequests():
                         "album"     : result.album.title,
                         'id'        : result.id
                     }
-                    self.set_metadata_cache(result.title,result.artist.name)
+                    self.set_metadata_cache(result.title,result.artist.name, result.id)
                     data_package.append(data)
                     
                 return data_package
@@ -41,23 +41,20 @@ class ApiRequests():
                 print(f'Content {search} have a conection error for deezer search, retrying')   
 
 
-    def set_metadata_cache(self, title : str, artist : str):
-        self.song_index += 1
-        self.redis_client.set(self.song_index,f"{title} {artist}")
+    def set_metadata_cache(self, title: str, artist: str, id: str):
+        self.redis_client.set(id,f"{title} {artist}")
 
 
     def song_engine_link(self, request : str, index : int):
         self.recent_searchs.append(request)
         videosSearch = VideosSearch(request, limit = 1)
         id = videosSearch.result().get('result')[0].get('id')
-        self.redis_client.set(f"{index}dw", id)
-       
+        return id
         
     def get_song_by_id(self, song_id : int):
-        print('ok')
-        self.song_engine_link(self.redis_client.get(song_id).decode(), song_id)
-        return self.redis_client.get(f"{song_id}dw").decode()
-        
+        track = self.client.get_track(song_id)
+        request = f"{track.title} {track.artist.name}"
+        return self.song_engine_link(request, song_id)
     
     def clear_redis_cache(self) -> None:
         self.song_index = 0 
@@ -114,11 +111,17 @@ class ApiRequests():
             recently_data.append(data)
 
         return [
-            {'title' : 'Músicas que você tocou recentemente',
+            {'title' : 'Tocadas recentemente',
              'content' : recently_data
             }
         ]
 
+
+
+    def get_cover_by_id(self, id):
+        img = self.client.get_track(id).album.cover_medium
+        return img
+        
    
 
     # Deprecated for now 
