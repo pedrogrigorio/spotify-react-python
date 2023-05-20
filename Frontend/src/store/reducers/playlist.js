@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
     actionOccurred: false,
     modal: false,
+    playlist: {},
 }
 
 export default function playlist(state = INITIAL_STATE, action){
@@ -17,6 +18,13 @@ export default function playlist(state = INITIAL_STATE, action){
         return {
             ...state,
             modal: action.bool
+        };
+    }
+
+    else if (action.type === 'SET_PLAYLIST') {
+        return {
+            ...state,
+            playlist: action.playlist
         };
     }
 

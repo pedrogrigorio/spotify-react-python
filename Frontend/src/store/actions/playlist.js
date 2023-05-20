@@ -11,3 +11,10 @@ export function setModal(bool) {
         bool,
     }
 }
+
+export function setPlaylist(playlist) {
+    return { 
+        type : 'SET_PLAYLIST',
+        playlist,
+    }
+}

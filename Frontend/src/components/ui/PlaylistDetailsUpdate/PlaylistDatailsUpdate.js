@@ -9,7 +9,7 @@ import { get_one_playlist, rename_playlist} from '../../../services/mongodb'
 import MusicNote from '../../icons/MusicNote'
 import { useOnClickOutside } from '../../../hooks/useOnClickOutside'
 
-function PlaylistDatailsUpdate({playlist = {}, setModal, setActionOccurred}) {
+function PlaylistDatailsUpdate({playlist, setModal, setActionOccurred}) {
 
   
   const playlistDetailModal = useRef(null)
@@ -65,9 +65,13 @@ function PlaylistDatailsUpdate({playlist = {}, setModal, setActionOccurred}) {
   )
 }
 
+const mapStateToProps = state => ({
+  playlist: state.playlist.playlist
+})
+
 const mapDispatchToProps = dispatch => ({
   setActionOccurred: (bool) => dispatch(PlaylistActions.setActionOccurred(bool)),
   setModal: (bool) => dispatch(PlaylistActions.setModal(bool))
 })
 
-export default connect(null, mapDispatchToProps)(PlaylistDatailsUpdate)
+export default connect(mapStateToProps, mapDispatchToProps)(PlaylistDatailsUpdate)
