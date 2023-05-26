@@ -1,9 +1,7 @@
 import deezer
 from deezer import exceptions as deezer_exceptions
-
 from youtubesearchpython import VideosSearch
 import redis
-
 
 class ApiRequests():
 

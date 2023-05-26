@@ -8,7 +8,6 @@ import { connect } from 'react-redux'
 
 function Home(props){
 
-  
     useEffect(() => {
         const updatePage = async () => {
             const songs   = (await getTopSongs()).content
@@ -32,7 +31,7 @@ function Home(props){
                             <div className={styles.card}>
                                 <div className={styles.cover}>
                                     <img src={content.cover} alt='cover' />
-                                    <button className={styles.playbtn} ><ToggleSongButton /></button>
+                                    <button className={styles.playbtn} ><ToggleSongButton index={content.id} title={content.title} artist={content.artist} img={content.cover} /></button>
                                 </div>
                                 <div className={styles.text}>
                                     <h2>{content.title}</h2>
