@@ -14,8 +14,11 @@ import Like from '../../components/icons/Like'
 import getMeanDuration from '../../helpers/getMeanDuration'
 import useWindowWidth from "../../hooks/useWindowWidth"
 import SongOptions from "../../components/ui/SongOptions/SongOptions"
+import PlaylistOptions from "./components/PlaylistOptions"
+import * as PlayActions from '../../store/actions/play'
+import convertDate from "../../helpers/convertDate"
 
-function Playlist({activeSong, songMetaData, actionOccurred}) {
+function Playlist({activeSong, songMetaData, actionOccurred, isPlaying, setIsPlaying}) {
 
     const {id} = useParams()
     const width = useWindowWidth()
@@ -28,6 +31,10 @@ function Playlist({activeSong, songMetaData, actionOccurred}) {
     const [songOptions, setSongOptions] = useState(initialSongOptions)
     const [playlists, setPlaylists] = useState([])
     
+    const initialPlaylistOptions = {show: false, x: 0, y: 0}
+    const playlistOptionsRef = useRef(null)
+    const [playlistOptions, setPlaylistOptions] = useState(initialPlaylistOptions)
+
     useEffect(() => {
         const loadPlaylist = async () => {
             const data = await get_one_playlist(id)
@@ -61,12 +68,21 @@ function Playlist({activeSong, songMetaData, actionOccurred}) {
 
     const songOptionsClose = () => setSongOptions(initialSongOptions);
 
+    const handlePlaylistOptions = () => {
+        const cordX = playlistOptionsRef.current.getBoundingClientRect().left
+        const cordY = playlistOptionsRef.current.getBoundingClientRect().top
+        setPlaylistOptions({show: true, x: cordX, y: cordY})
+    }
+
+    const playlistOptionsClose = () => setPlaylistOptions(initialPlaylistOptions)
+
     if (!playlist) {
         return <div className={styles.container}>Playlist not found</div>;
     }
 
     return(
         <div className={styles.container}>
+            {playlistOptions.show && <PlaylistOptions x={playlistOptions.x} y={playlistOptions.y} playlist={playlist} playlistOptionsClose={playlistOptionsClose}/>}
             {songOptions.show && <SongOptions x={songOptions.x} y={songOptions.y} song={songOptions.song} index={songOptions.index} current_playlist={playlist} playlists={playlists} songOptionsClose={songOptionsClose}/>}
             <div className={styles.playlist_details_container}>
                 <div className={styles.background} style={{ backgroundColor: `rgb(${playlist.color_theme[0]}, ${playlist.color_theme[1]}, ${playlist.color_theme[2]})`}}></div>
@@ -102,10 +118,10 @@ function Playlist({activeSong, songMetaData, actionOccurred}) {
                 <div className={styles.content_background_gradient} style={{ backgroundColor: `rgb(${playlist.color_theme[0]}, ${playlist.color_theme[1]}, ${playlist.color_theme[2]})`}}></div>
                 <div className={styles.playlist_interaction_container}>
                     <div className={styles.playlist_interactions}>
-                        <button className={styles.play_button}>
-                            <Play2 size='28' fill='black'/>
+                        <button className={styles.play_button} onClick={() => setIsPlaying(!isPlaying)}>
+                            <Play2 size='28' fill='black' active={playlist.songs.some(song => song.id === songMetaData.id) ? isPlaying : false}/>
                         </button>
-                        <button>
+                        <button onClick={handlePlaylistOptions} ref={playlistOptionsRef}>
                             <Options size='32'/>
                         </button>
                     </div>
@@ -121,6 +137,11 @@ function Playlist({activeSong, songMetaData, actionOccurred}) {
                                 <div className={styles.album}>
                                     <span>Álbum</span>
                                 </div>
+                            )}
+                            {width > 1040 && (
+                                <div className={styles.date}>
+                                    <span>Adiconada em</span>
+                                </div> 
                             )}
                             <div className={styles.duration}>
                                 <span><Duration size='16' /></span>
@@ -150,6 +171,11 @@ function Playlist({activeSong, songMetaData, actionOccurred}) {
                                             <span>{song.album}</span>
                                         </div>
                                     )}
+                                    {width > 1040 && (
+                                        <div className={styles.song_date}>
+                                            <span>{convertDate(playlist.songs_add_date[index])}</span>
+                                        </div>
+                                    )}
                                     <div className={styles.song_duration}>
                                         <button id={styles.like}><Like size='18'/></button>
                                         <span id={styles.time}>{convertTime(song.duration)}</span>
@@ -170,7 +196,12 @@ function Playlist({activeSong, songMetaData, actionOccurred}) {
 const mapStateToProps = state => ({
     activeSong: state.search.activeSong,
     songMetaData: state.play.songMetaData,
+    isPlaying: state.play.isPlaying,
     actionOccurred: state.playlist.actionOccurred
 })
 
-export default connect(mapStateToProps)(Playlist)
+const mapDispatchToProps = dispatch => ({
+    setIsPlaying: (status) => dispatch(PlayActions.setIsPlaying(status))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Playlist)

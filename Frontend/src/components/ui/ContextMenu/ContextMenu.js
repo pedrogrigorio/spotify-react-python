@@ -5,9 +5,8 @@ import { useRef, useState } from 'react'
 import { create_playlist, delete_playlist, get_one_playlist } from '../../../services/mongodb'
 import { connect } from 'react-redux'
 import * as PlaylistActions from '../../../store/actions/playlist'
-import PlaylistDatailsUpdate from '../PlaylistDetailsUpdate/PlaylistDatailsUpdate'
 
-function ContextMenu({x, y, playlist, contextMenuClose, setActionOccurred, setModal}) {
+function ContextMenu({x, y, playlist, contextMenuClose, setActionOccurred, setModal, setPlaylist}) {
 
   const contextMenuRef = useRef(null)
   useOnClickOutside(contextMenuRef, contextMenuClose)
@@ -25,7 +24,7 @@ function ContextMenu({x, y, playlist, contextMenuClose, setActionOccurred, setMo
   }
 
   async function handleUpdatePlaylist() {
-    // const data = await get_one_playlist(playlist_id)
+    setPlaylist(playlist)
     setModal(true)
     contextMenuClose()
     setActionOccurred(true)
@@ -61,7 +60,8 @@ function ContextMenu({x, y, playlist, contextMenuClose, setActionOccurred, setMo
 
 const mapDispatchToProps = dispatch => ({
   setActionOccurred: (bool) => dispatch(PlaylistActions.setActionOccurred(bool)),
-  setModal: (bool) => dispatch(PlaylistActions.setModal(bool))
+  setModal: (bool) => dispatch(PlaylistActions.setModal(bool)),
+  setPlaylist: (playlist) => dispatch(PlaylistActions.setPlaylist(playlist))
 })
 
 export default connect(null, mapDispatchToProps)(ContextMenu)
