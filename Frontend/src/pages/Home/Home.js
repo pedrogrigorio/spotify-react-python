@@ -32,7 +32,7 @@ function Home(props){
                             <div className={styles.card}>
                                 <div className={styles.cover}>
                                     <img src={content.cover} alt='cover' />
-                                    <button className={styles.playbtn} ><ToggleSongButton /></button>
+                                    <ToggleSongButton artist={content.artist} title={content.title} cover={content.cover} id={content.id} />
                                 </div>
                                 <div className={styles.text}>
                                     <h2>{content.title}</h2>

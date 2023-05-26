@@ -3,26 +3,26 @@
     background-color: #121212;
     height: 100%;
     overflow: auto; 
-    padding: 24px 32px 0px;
+    padding: 60px 32px 0px;
+    min-width: 494px;
+
 }
 
-@media (max-width: 1023px){ 
+/* @media (max-width: 1023px){ 
     .container {
         padding: 16px;
     }
-}
+} */
 
  
 .section{
     content-visibility: auto;
     margin-bottom: 16px;
-    position: relative;
+    position:relative;
     max-width: 100%;
-    display: flex;
+    display:flex;
     flex: 1 1 auto;
     flex-direction: column;
-    margin-bottom: 16px;
-    
 }
 
 .sectiontext{
@@ -52,14 +52,6 @@
     cursor: pointer;
 }
 
-.gridcontainer{
-    display: grid;
-    grid-gap: 24px;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    min-width: 494px;
-
-}
-
 .card{
     background: #181818;
     display: flex; 
@@ -69,65 +61,15 @@
     cursor: pointer;
 }
 
-
-
-@media screen and (max-width: 1700px){ 
-    .card:last-child {
-        display: none;
-    }
-    .gridcontainer{
-        display: grid;
-        grid-gap: 24px;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    }
-}
-
-@media screen and (max-width: 1500px){ 
-    .card:nth-last-child(-n+2) {
-        display: none;
-    }
-    .gridcontainer{
-        display: grid;
-        grid-gap: 24px;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    }
-}
-
-
-@media screen and (max-width: 1300px){ 
-    .card:nth-last-child(-n+3){
-        display: none;
-    }
-    .gridcontainer{
-        display: grid;
-        grid-gap: 24px;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
-}
-
+/* Grid Container responsive */
+.gridcontainer {
+    display: grid;
+    grid-gap: 24px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-rows: 1fr;
+    grid-auto-rows:0cm;
  
-@media screen and (max-width: 970px){ 
-    .card:nth-last-child(-n+4){
-        display: none;
-    }
-    .gridcontainer{
-        display: grid;
-        grid-gap: 24px;
-        grid-template-columns: 1fr 1fr 1fr;
-    }
 }
-
-@media screen and (max-width: 760px){ 
-    .card:nth-last-child(-n+5){
-        display: none;
-    }
-    .gridcontainer{
-        display: grid;
-        grid-gap: 24px;
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
 
 .card:hover{
     background: #282828;

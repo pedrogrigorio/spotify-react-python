@@ -1,6 +1,5 @@
 import deezer
 from deezer import exceptions as deezer_exceptions
-
 from youtubesearchpython import VideosSearch
 import redis
 
@@ -70,7 +69,6 @@ class ApiRequests():
                 'cover' : album.cover_medium,
                 'id'    : album.id,
                 'artist' : album.get_artist().name,
-                'release_date' : album.release_date
             }
             top_albums_data_package.append(data)
 
@@ -106,6 +104,7 @@ class ApiRequests():
                 "title" : track.title, 
                 "artist": track.artist.name, 
                 "cover" :track.album.cover_medium,
+                "id"    : track.id 
                 }
  
             recently_data.append(data)
