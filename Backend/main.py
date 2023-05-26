@@ -18,7 +18,11 @@ from db.mongo import (
     delete_playlist,
     rename_playlist,
     add_song,
-    remove_song
+    remove_song,
+    like_song,
+    fetch_liked_songs_playlist,
+    unlike_song,
+    fetch_one_liked_song_id
 )
 
 app = FastAPI()
@@ -95,3 +99,26 @@ async def put_song(id: str, playlist_update: request_models.PlaylistUpdate):
     if response:
         return "Succesfully updated playlist"
     raise HTTPException(404, f"There is no playlist with the id {id}")
+
+@app.get('/liked-songs')
+async def get_liked_songs_playlist():
+    response = await fetch_liked_songs_playlist()
+    return response
+
+@app.post('/liked-songs')
+async def post_like_song(song: request_models.Song):
+    response = await like_song(song)
+    return response
+    
+@app.delete('/liked-songs/{id}')
+async def delete_song(id: str):
+    response = await unlike_song(id)
+    if response:
+        return "Succesfully unliked song"
+    raise HTTPException(404, f"There is no playlist with the id {id}")
+
+@app.get('/liked-song-id')
+async def get_one_liked_song_id(id):
+    print(id, "\n\n\n\n\n")
+    response = await fetch_one_liked_song_id(id)
+    return response

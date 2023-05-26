@@ -11,7 +11,7 @@ import convertTime from '../../helpers/convertTime'
 import equalizer from '../../assets/gif/equalizer.gif'
 import SongOptions from '../../components/ui/SongOptions/SongOptions'
 import useWindowWidth from '../../hooks/useWindowWidth'
-import { get_all_playlists } from '../../services/mongodb'
+import { get_all_playlists, like_song, get_liked_songs_playlist, unlike_song, get_one_liked_song } from '../../services/mongodb'
 
 function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
     
@@ -21,16 +21,27 @@ function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
     const width = useWindowWidth();
     const [playlists, setPlaylists] = useState([])
 
+    const [likedSongsPlaylist, setLikedSongsPlaylist] = useState([])
+    const [songsLiked, setSongsLike] = useState({})
+
     useEffect(() => {
-        clearOldRequests();
+        clearOldRequests()
+        setSongsLike({})
+
         const loadPlaylists = async () => {
             const data = await get_all_playlists();
             setPlaylists(data)
         }
 
+        const loadLikeSongs = async () => {
+            const data = await get_liked_songs_playlist()
+            setLikedSongsPlaylist(data)
+        }
+
         loadPlaylists()
+        loadLikeSongs()
     }, [])
-    
+
     const handleRef = (index) => (ref) => {
         songOptionsRefs.current[index] = ref;
     };
@@ -43,7 +54,38 @@ function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
     }
 
     const songOptionsClose = () => setSongOptions(initialSongOptions);
-    
+
+    const handleToggleLikeSong = async (index, status, song) => {
+        const updatedLikes = { ...songsLiked}
+        updatedLikes[song.id] = status
+        setSongsLike(updatedLikes)
+
+        if (status) {
+            await like_song(song)
+        }
+        else {
+            const data = await get_one_liked_song(song.id)
+            console.log(data)
+            await unlike_song(data)
+        }
+    }
+
+    useEffect(() => {
+
+        const updatedLikes = {}
+
+        searchResult.forEach((song, index) => {
+            const isLiked = likedSongsPlaylist.some(obj => obj.song.id === song.id)
+
+            if (isLiked) {
+                updatedLikes[song.id] = isLiked
+
+            }
+        })
+
+        setSongsLike(updatedLikes)
+    }, [searchResult])
+
     return (
         <>
             {songOptions.show && <SongOptions x={songOptions.x} y={songOptions.y} song={songOptions.song} playlists={playlists} songOptionsClose={songOptionsClose}/>}
@@ -94,15 +136,15 @@ function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
                                 <li className={styles.list_item} key={index}>
                                     <div className={styles.song_index}>
                                         <div id={activeSong[song.id] ? `${styles.active}` : ""}>
-                                            <span id={songMetaData.id == song.id ? `${styles.active}` : ""}>{index+1}</span>
-                                            <img src={equalizer} width='14' height='20'></img>
+                                            <span id={songMetaData.id === song.id ? `${styles.active}` : ""}>{index+1}</span>
+                                            <img src={equalizer} width='14' height='20' alt=''></img>
                                             <ToggleSongButton index={song.id} title={song.title} artist={song.artist} img={song.cover}/>
                                         </div>
                                     </div>
                                     <div className={styles.song_details}>
                                         <img src={song.cover} alt='cover'/>
                                         <div>
-                                            <div className={styles.title} id={songMetaData.id == song.id ? `${styles.active}` : ""}>{song.title}</div>
+                                            <div className={styles.title} id={songMetaData.id === song.id ? `${styles.active}` : ""}>{song.title}</div>
                                             <span id={styles.artist}>{song.artist}</span>
                                         </div>
                                     </div>
@@ -112,7 +154,15 @@ function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
                                         </div>
                                     )}
                                     <div className={styles.song_duration}>
-                                        <button id={styles.like}><Like size='18'/></button>
+                                        {songsLiked[song.id] ? (
+                                            <button className={styles.like} id={styles.active} onClick={() => handleToggleLikeSong(index, false, song)}>
+                                                <Like size='18' active={true}/>
+                                            </button>
+                                        ) : (
+                                            <button className={styles.like} onClick={() => handleToggleLikeSong(index, true, song)}>
+                                                <Like size='18'/>
+                                            </button> 
+                                        )}
                                         <span id={styles.time}>{convertTime(song.duration)}</span>
                                         <button id={styles.options} onClick={() => handleSongOptions(song, index)} ref={handleRef(index)}>
                                             <Options size='18'/>
