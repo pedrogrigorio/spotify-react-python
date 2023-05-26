@@ -305,7 +305,7 @@ div#forward svg{
 
 }
 
-.song_duration #like,
+.song_duration .like,
 .song_duration #options {
     opacity: 0;
     height: 100%;
@@ -313,7 +313,7 @@ div#forward svg{
     align-items: center;
 }
 
-.song_duration #like {
+.song_duration .like {
     margin-right: 16px;
 }
 
@@ -326,16 +326,19 @@ div#forward svg{
     justify-content: flex-end;
 }
 
-.song_duration #like,
+.song_duration .like,
 .song_duration #options {
     opacity: 0;
 }
 
-.list_item:hover .song_duration #like,
+.list_item:hover .song_duration .like,
 .list_item:hover .song_duration #options {
     opacity: 1;
 }
 
+.song_duration .like#active {
+    opacity: 1;
+}
 /* 
 *   2.2.5 - Media Queries
 *-------------------------------------------------- */

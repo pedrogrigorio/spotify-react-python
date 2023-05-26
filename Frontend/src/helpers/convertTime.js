@@ -1,9 +1,8 @@
 export default function convertTime(time) {
 
-
-  if(!time && time !== 0){
-    return
-  }
+    if(!time && time !== 0){
+      return
+    }
 
   let ret;
 

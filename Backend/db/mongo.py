@@ -156,3 +156,38 @@ async def remove_song(id, song_index):
     songs_updated = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'songs': songs}})
     date_updated = await collection.update_one({'_id': ObjectId(id)}, {'$set': {'songs_add_date': dates}})
     return True
+
+async def fetch_liked_songs_playlist():
+    liked_songs = database['liked_songs']
+
+    cursor = liked_songs.find()
+    songs = []
+    async for song in cursor:
+        songs.append(song)
+
+    return songs
+
+async def like_song(song):
+    liked_songs = database['liked_songs']
+    today = str(date.today())
+
+    document = {"song": song.song, "date": today}
+    print("\n\n\n\oi\n\n\n\n\n\n")
+    try:
+       result = await liked_songs.insert_one(document)
+    except Exception as e:
+        print(f"\n\n\n\n{e}\n\n\n\n")
+
+    print("\n\n\n\oi2\n\n\n\n\n\n")
+    return result
+
+async def unlike_song(id: str):
+    liked_songs = database['liked_songs']
+    print(f"\n\n\n\n\ntesteeeeeeeee\n\n\n\n\n\n")
+    result = await liked_songs.delete_one({"_id": ObjectId(id)})
+    return True
+
+async def fetch_one_liked_song_id(id: int):
+    liked_songs = database['liked_songs']
+    document = await liked_songs.find_one({"song.id": int(id)})
+    return document['_id']

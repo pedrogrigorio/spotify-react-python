@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react"
 import { useParams } from "react-router-dom"
 import { connect } from "react-redux"
-import { get_one_playlist, get_all_playlists } from '../../services/mongodb'
+import { get_one_playlist, get_all_playlists, get_liked_songs_playlist, unlike_song, like_song, get_one_liked_song } from '../../services/mongodb'
 import styles from './Playlist.module.css'
 import MusicNote from "../../components/icons/MusicNote"
 import Play2 from "../../components/icons/Play2"
@@ -35,26 +35,79 @@ function Playlist({activeSong, songMetaData, actionOccurred, isPlaying, setIsPla
     const playlistOptionsRef = useRef(null)
     const [playlistOptions, setPlaylistOptions] = useState(initialPlaylistOptions)
 
+    const [likedSongsPlaylist, setLikedSongsPlaylist] = useState([])
+    const [songsLiked, setSongsLike] = useState({})
+
     useEffect(() => {
         const loadPlaylist = async () => {
             const data = await get_one_playlist(id)
             setPlaylist(data)
             setTotalSongs(data.songs.length)
             setTotalDuration(getMeanDuration(data))
+
+            const updatedLikes = {}
+            data.songs.forEach((song, index) => {
+                const isLiked = likedSongsPlaylist.some(obj => obj.song.id === song.id)
+                if (isLiked) {
+                    updatedLikes[song.id] = isLiked
+                }
+            })
+            console.log(updatedLikes)
+            setSongsLike(updatedLikes)
         }
 
         loadPlaylist()
-    }, [id, actionOccurred])
+    }, [id, actionOccurred, likedSongsPlaylist])
 
     useEffect(() => {
+        setSongsLike({})
+
         const loadPlaylists = async () => {
             const data = await get_all_playlists();
             setPlaylists(data)
         }
 
+        const loadLikeSongs = async () => {
+            const data = await get_liked_songs_playlist()
+            setLikedSongsPlaylist(data)
+        }
+
         loadPlaylists()
+        loadLikeSongs()
     }, [])
     
+    // useEffect(() => {
+
+    //     const updatedLikes = {}
+
+    //     console.log(playlist)
+    //     // playlist.forEach((song, index) => {
+    //     //     const isLiked = likedSongsPlaylist.some(obj => obj.song.id === song.id)
+
+    //     //     if (isLiked) {
+    //     //         updatedLikes[song.id] = isLiked
+
+    //     //     }
+    //     // })
+
+    //     setSongsLike(updatedLikes)
+    // }, [playlist])
+
+    const handleToggleLikeSong = async (index, status, song) => {
+        const updatedLikes = { ...songsLiked}
+        updatedLikes[song.id] = status
+        setSongsLike(updatedLikes)
+
+        if (status) {
+            await like_song(song)
+        }
+        else {
+            const data = await get_one_liked_song(song.id)
+            console.log(data)
+            await unlike_song(data)
+        }
+    }
+
     const handleRef = (index) => (ref) => {
         songOptionsRefs.current[index] = ref;
     };
@@ -88,14 +141,14 @@ function Playlist({activeSong, songMetaData, actionOccurred, isPlaying, setIsPla
                 <div className={styles.background} style={{ backgroundColor: `rgb(${playlist.color_theme[0]}, ${playlist.color_theme[1]}, ${playlist.color_theme[2]})`}}></div>
                 <div className={styles.background_gradient}></div>
                 <div className={styles.playlist_cover} id={totalSongs >= 4 ? `${styles.active}` : ""}>
-                    {totalSongs == 0 && <MusicNote size='48'/>}
-                    {totalSongs >= 1 && totalSongs < 4 && <img src={playlist.cover[0]} id={styles.img0}/>}
+                    {totalSongs === 0 && <MusicNote size='48'/>}
+                    {totalSongs >= 1 && totalSongs < 4 && <img src={playlist.cover[0]} id={styles.img0} alt=''/>}
                     {totalSongs >= 4 && (
                         <>
-                            <img src={playlist.cover[0]} id={styles.img1}/>
-                            <img src={playlist.cover[1]} id={styles.img2}/>
-                            <img src={playlist.cover[2]} id={styles.img3}/>
-                            <img src={playlist.cover[3]} id={styles.img4}/>
+                            <img src={playlist.cover[0]} id={styles.img1} alt=''/>
+                            <img src={playlist.cover[1]} id={styles.img2} alt=''/>
+                            <img src={playlist.cover[2]} id={styles.img3} alt=''/>
+                            <img src={playlist.cover[3]} id={styles.img4} alt=''/>
                         </>
                     )}
                 </div>
@@ -177,7 +230,15 @@ function Playlist({activeSong, songMetaData, actionOccurred, isPlaying, setIsPla
                                         </div>
                                     )}
                                     <div className={styles.song_duration}>
-                                        <button id={styles.like}><Like size='18'/></button>
+                                        {songsLiked[song.id] ? (
+                                            <button className={styles.like} id={styles.active} onClick={() => handleToggleLikeSong(index, false, song)}>
+                                                <Like size='18' active={true}/>
+                                            </button>
+                                        ) : (
+                                            <button className={styles.like} onClick={() => handleToggleLikeSong(index, true, song)}>
+                                                <Like size='18'/>
+                                            </button> 
+                                        )}
                                         <span id={styles.time}>{convertTime(song.duration)}</span>
                                         <button id={styles.options} onClick={() => handleSongOptions(song, index)} ref={handleRef(index)}>
                                             <Options size='18'/>
