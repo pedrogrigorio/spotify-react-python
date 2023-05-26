@@ -11,7 +11,6 @@ class PlaylistUpdate(BaseModel):
     song_to_be_added: Optional[object] = None
     song_to_be_removed: Optional[int] = None
     name: Optional[str] = None
-
-class ExcludeSong(BaseModel):
-    song: object
     
+class Song(BaseModel):
+    song: object

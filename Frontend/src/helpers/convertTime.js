@@ -1,6 +1,6 @@
 export default function convertTime(time) {
 
-    if(!time){
+    if(!time && time !== 0){
       return
     }
 

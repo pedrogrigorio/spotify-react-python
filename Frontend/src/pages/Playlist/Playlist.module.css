@@ -459,7 +459,7 @@
     grid-area: song_duration;
 }
 
-.song_duration #like,
+.song_duration .like,
 .song_duration #options {
     opacity: 0;
     height: 100%;
@@ -467,7 +467,7 @@
     align-items: center;
 }
 
-.song_duration #like {
+.song_duration .like {
     margin-right: 16px;
 }
 
@@ -480,13 +480,17 @@
     justify-content: flex-end;
 }
 
-.song_duration #like,
+.song_duration .like,
 .song_duration #options {
     opacity: 0;
 }
 
-.list_item:hover .song_duration #like,
+.list_item:hover .song_duration .like,
 .list_item:hover .song_duration #options {
+    opacity: 1;
+}
+
+.song_duration .like#active {
     opacity: 1;
 }
 
