@@ -9,7 +9,6 @@ import equalizer from '../../assets/gif/equalizer.gif'
 import convertTime from '../../helpers/convertTime'
 import ToggleSongButton from '../Search/components/ToggleSongButton'
 import Like from '../../components/icons/Like'
-import getMeanDuration from '../../helpers/getMeanDuration'
 import useWindowWidth from "../../hooks/useWindowWidth"
 import SongOptions from "../../components/ui/SongOptions/SongOptions"
 import * as PlayActions from '../../store/actions/play'
@@ -20,7 +19,6 @@ function LikedSongs({activeSong, songMetaData, actionOccurred, isPlaying, setIsP
     const width = useWindowWidth()
     const [playlist, setPlaylist] = useState()
     const [totalSongs, setTotalSongs] = useState(0)
-    const [totalDuration, setTotalDuration] = useState("")
 
     const songOptionsRefs = useRef({});
     const initialSongOptions = {show: false, x: 0, y: 0, song: {}, index: 0}
@@ -31,7 +29,6 @@ function LikedSongs({activeSong, songMetaData, actionOccurred, isPlaying, setIsP
         const data = await get_liked_songs_playlist()
         setPlaylist(data)
         setTotalSongs(data.length)
-        setTotalDuration(getMeanDuration(data))
     }
 
     useEffect(() => {
@@ -67,7 +64,7 @@ function LikedSongs({activeSong, songMetaData, actionOccurred, isPlaying, setIsP
     }
 
     if (!playlist) {
-        return <div className={styles.container}>Playlist not found</div>;
+        return null;
     }
 
     return(
@@ -88,8 +85,7 @@ function LikedSongs({activeSong, songMetaData, actionOccurred, isPlaying, setIsP
                         <span className={styles.user}>Usuário</span>
                         {totalSongs > 0 && <>
                             <div className={styles.separator}>•</div>
-                            <span>{totalSongs} músicas,&nbsp;</span>
-                            <span className={styles.total_duration}>{totalDuration}</span>
+                            <span>{totalSongs} músicas</span>
                         </>}
                     </div>
                 </div>

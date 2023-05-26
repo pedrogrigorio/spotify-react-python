@@ -1,0 +1,16 @@
+.container {
+  padding-left: 24px;
+  display: flex;
+}
+
+.container div {
+  margin: 0 8px 0 0;
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.playlist {
+  background: #333;
+}

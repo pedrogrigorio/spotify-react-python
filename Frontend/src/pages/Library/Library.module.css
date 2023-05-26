@@ -1,0 +1,59 @@
+.navbar_view {
+  background-color: #121212;
+  height: 64px;
+  width: 100%;
+}
+
+.container {
+  background-color: #121212;
+  height: calc(100% - 64px);
+  overflow: auto;
+  padding: 32px;
+}
+
+.presentation h2 {
+  font-size: 24px;
+  line-height: 28px;
+  font-family: 'Circular Bold';
+  color: white;
+}
+
+.playlists {
+  margin-top: 24px;
+  display: grid;
+  grid-gap: 24px;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fill,minmax(180px,1fr));
+}
+
+.playlists li {
+  position: relative;
+}
+
+.play {
+  position: absolute;
+  bottom: 100px;
+  right: -10px;
+  opacity: 0;
+}
+
+.play_button {
+  width: 40px;
+  height: 40px;
+  margin-right: 32px;
+  border-radius: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1ed760;
+  cursor: pointer;
+}
+
+.play_button:hover {
+  transform: scale(1.05);
+  transition: .1s;
+}
+
+.playlists li:hover .play {
+  opacity: 1;
+}
