@@ -4,7 +4,7 @@
 
 """
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 import request_models
@@ -29,7 +29,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost",
-    "http://localhost:8000"
+    "http://localhost:8000",
     "http://localhost:5500",
     "http://127.0.0.1:5500",
     "http://127.0.0.1:3000",
@@ -42,9 +42,15 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["Access-Control-Allow-Origin"],
 )
  
- 
+@app.middleware("http")
+async def add_cors_header(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["Access-Control-Allow-Origin"] = request.headers.get("Origin", "*")
+    return response
+
 @app.get('/status')
 async def get_status_api():
     return api_requests.api_is_works()

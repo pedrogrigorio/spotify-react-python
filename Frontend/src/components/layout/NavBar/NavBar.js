@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styles from './NavBar.module.css' 
 import Forward from '../../icons/Forward'
 import Backward from '../../icons/Backward';
 import SearchBox from '../../ui/SearchBox/SearchBox';
+import LibrarySection from '../../ui/LibrarySection/LibrarySection';
 import ArrowDown from '../../icons/ArrowDown';
 import User from '../../icons/User';
 import useWindowWidth from '../../../hooks/useWindowWidth';
@@ -22,7 +22,8 @@ export default function NavBar() {
                 </div>
                 <div className={styles.page_top_bar_content}>
                     <div>
-                        {location.pathname == "/search" && <SearchBox/>}
+                        {location.pathname === "/search" && <SearchBox/>}
+                        {location.pathname === "/library" && <LibrarySection />}
                     </div>
                 </div>
                 <button className={styles.user}>
