@@ -7,7 +7,7 @@ import { connect } from "react-redux"
 import Play2 from "../../components/icons/Play2"
 import * as PlayActions from '../../store/actions/play'
 import * as SearchActions from '../../store/actions/search'
-import { getSong } from '../../services/pytube'
+import { getSong } from '../../services/deezer'
 
 function Library({actionOccurred, songMetaData, isPlaying, setIsPlaying, setSongMetaData, setSongTrackData, setActiveIndex, setActiveSong}){
 

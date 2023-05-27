@@ -2,7 +2,7 @@ import styles from './Home.module.css'
 import PlayButton from '../../components/icons/PlayButton'
 import * as homeActions from '../../store/actions/home'
 import musiclogo from '../../assets/img/baixados.jpg'
-import { getTopContent, getRecentSearch } from '../../services/pytube'
+import { getTopContent, getRecentSearch } from '../../services/deezer'
 import { useEffect } from 'react'
 import { connect } from 'react-redux'
 

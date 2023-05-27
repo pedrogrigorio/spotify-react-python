@@ -12,6 +12,7 @@ import equalizer from '../../assets/gif/equalizer.gif'
 import SongOptions from '../../components/ui/SongOptions/SongOptions'
 import useWindowWidth from '../../hooks/useWindowWidth'
 import { get_all_playlists, like_song, get_liked_songs_playlist, unlike_song, get_one_liked_song } from '../../services/mongodb'
+import Genres from './components/Genres'
 
 function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
     
@@ -93,6 +94,18 @@ function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
 
         setSongsLike(updatedLikes)
     }, [searchResult])
+
+    if (searchResult.length === 0) {
+        return (
+            <>
+                {songOptions.show && <SongOptions x={songOptions.x} y={songOptions.y} song={songOptions.song} playlists={playlists} songOptionsClose={songOptionsClose}/>}
+                <div className={styles.navbar_view}></div>
+                <div className={styles.container}>
+                    <Genres />
+                </div>
+            </>
+        )
+    }
 
     return (
         <>
