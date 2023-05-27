@@ -4,7 +4,7 @@ import { getGenres } from '../../../services/deezer'
 
 export default function Genres() {
 
-  const [genres, setGenres] = useState([])
+  const [genres, setGenres] = useState()
 
   useEffect(() => {
     const loadGenres = async () => {
@@ -15,10 +15,10 @@ export default function Genres() {
     loadGenres()
   }, [])
 
-  if (genres.length === 0) {
+  if (!genres) {
     return null
   }
-  
+
   return (
     <div className={styles.container}>
       <section className={styles.presentation}>

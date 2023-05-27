@@ -98,7 +98,6 @@ function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
     if (searchResult.length === 0) {
         return (
             <>
-                {songOptions.show && <SongOptions x={songOptions.x} y={songOptions.y} song={songOptions.song} playlists={playlists} songOptionsClose={songOptionsClose}/>}
                 <div className={styles.navbar_view}></div>
                 <div className={styles.container}>
                     <Genres />
