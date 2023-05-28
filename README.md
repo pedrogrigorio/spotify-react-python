@@ -1,15 +1,15 @@
 <h1 align="center">
     <img src='Frontend\src\assets\readme\spotify.png' />
-    <p> Spotify Clone</p>
+    <!-- <p> Spotify Clone</p> -->
 </h1>
 
 <h1 align='center'>
-    <img src='https://i.imgur.com/RHcxAfk.gif' />
+    <img src='https://im3.ezgif.com/tmp/ezgif-3-5469b8dc9d.gif' />
 </h1>
 
 ## 📕 About
 
-This repo contains a work in progress Spotify Clone made with React, Redux, Axios, Python and RedisDB for learning purposes. If you like it please give it a star :)
+This repo contains a responsive Spotify Clone made with React, Redux, Axios, Python and RedisDB for learning purposes. We are using the deezer API for the songs data and Youtube Player API to play the songs. If you like it please give it a star :)
 
 ## 🔧 Tools
 - [React](http://reactjs.org/)
@@ -29,10 +29,11 @@ This repo contains a work in progress Spotify Clone made with React, Redux, Axio
 - [x] Layout
 - [x] Play
 - [x] Search engine
-- [ ] Some buttons actions
-- [ ] Home page
-- [ ] Search initial page
-- [ ] Playlists
+- [x] Home page
+- [ ] See more page
+- [x] Search initial page
+- [x] Playlists
+- [x] Liked songs page
 
 ## 💻 Installation
 
