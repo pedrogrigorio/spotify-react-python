@@ -5,6 +5,7 @@ import { useRef, useState } from 'react'
 import { create_playlist, delete_playlist, get_one_playlist } from '../../../services/mongodb'
 import { connect } from 'react-redux'
 import * as PlaylistActions from '../../../store/actions/playlist'
+import { Link } from 'react-router-dom'
 
 function PlaylistOptions({x, y, playlist, playlistOptionsClose, setActionOccurred, setModal, setPlaylist}) {
 
@@ -33,9 +34,11 @@ function PlaylistOptions({x, y, playlist, playlistOptionsClose, setActionOccurre
           </button>
         </li>
         <li>
-          <button onClick={handleDeletePlaylist}>
-            <span>Apagar</span>
-          </button>
+          <Link to='/' className={styles.redirect}>
+            <button onClick={handleDeletePlaylist}>
+              <span>Apagar</span>
+            </button>
+          </Link>
         </li>
       </ul>
     </div>
