@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getSong } from '../../../services/pytube'
+import { getSong } from '../../../services/deezer'
 import * as PlayActions from '../../../store/actions/play'
 import * as SearchActions from '../../../store/actions/search'
 import Play from '../../../components/icons/Play'
