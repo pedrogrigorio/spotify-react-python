@@ -1,14 +1,14 @@
 import styles from './Home.module.css'
 import ToggleSongButton from './components/ToggleSongButton'
+import { Link } from "react-router-dom";
 import * as homeActions from '../../store/actions/home'
-import musiclogo from '../../assets/img/baixados.jpg'
-import { getTopContent, getRecentSearch } from '../../services/deezer'
-import { useEffect } from 'react'
+import {getTopAlbums, getTopSongs , getRecentSearch } from '../../services/deezer'
+import { useEffect, useState } from 'react'
+import ShowAll from './components/ShowAll'
 import { connect } from 'react-redux'
   
 
 function Home(props){
-
 
     useEffect(() => {
         const updatePage = async () => {
@@ -22,6 +22,8 @@ function Home(props){
 
         updatePage() 
     },[])
+
+
     let contentList = []; 
     return(
     <div className={styles.container}>  
@@ -50,9 +52,11 @@ function Home(props){
                         <>
                             <h2>{props.updateHomeContent[category][0].title}</h2>
                             {props.updateHomeContent[category][0].title && (
-                            <button onClick={() => console.log("working fine")} className={styles.showall}>
+                            <Link to={`/showall/${props.updateHomeContent[category][0].title}`}>
+                            <button onClick= { () => {props.typeShowAll(contentList)} }className={styles.showall}>
                                 <h4>Mostrar tudo</h4>
                             </button>
+                            </Link> 
                             )}
                         </>
                         )}
@@ -77,7 +81,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     setTopSongs: (updateSongData) => dispatch(homeActions.setTopSongs(updateSongData)),
     setTopAlbums: (updateAlbumData) => dispatch(homeActions.setTopAlbums(updateAlbumData)),
-    setRecentsSearch: (updateRecentData) => dispatch(homeActions.setRecentSearch(updateRecentData))
+    setRecentsSearch: (updateRecentData) => dispatch(homeActions.setRecentSearch(updateRecentData)),
+    typeShowAll: (ShowAllContent) => dispatch(homeActions.typeShowAll(ShowAllContent))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

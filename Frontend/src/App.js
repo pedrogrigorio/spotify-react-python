@@ -11,6 +11,7 @@ import Search from './pages/Search/Search';
 import Library from './pages/Library/Library';
 import LikedSongs from './pages/LikedSongs/LikedSongs';
 import Playlist from './pages/Playlist/Playlist';
+import ShowAll from './pages/Home/components/ShowAll';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
               <Route path='/library' element={<Library />}></Route>
               <Route path='/liked-songs' element={<LikedSongs />}></Route>
               <Route path='/playlist/:id' element={<Playlist />}></Route>
+              <Route path='/showall/:type' element={<ShowAll/>}></Route>
             </Routes>
           </Container>
           <Footer />

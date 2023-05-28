@@ -3,7 +3,10 @@ const INITIAL_STATE = {
         recents: [{title:null, content:[{title:null, artist:null, cover:null, id:null}]}],
         songs: [{title:null, content:[{title:null, artist:null, cover:null, id:null}]}],
         albums: [{title:null, content:[{title:null, artist:null, cover:null, id:null}]}],
-    }
+    },
+
+    showAllContent: [] 
+
 }
 
 
@@ -37,6 +40,13 @@ export default function home(state = INITIAL_STATE, action){
                 ...state.updateHomeContent,
                 recents : action.recentsSearch
             }
+        }
+    }
+
+    else if (action.type === 'TYPE_SHOW_ALL_CONTENT') {
+        return { 
+            ...state,
+            showAllContent : action.contentShowAll
         }
     }
 

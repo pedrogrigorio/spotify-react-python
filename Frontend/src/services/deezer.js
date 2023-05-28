@@ -57,7 +57,7 @@ export async function getRecentSearch() {
         content = response.data
     })
 
-    return { recent }
+    return { content }
 }
 
 export async function getGenres() {

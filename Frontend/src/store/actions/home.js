@@ -18,3 +18,10 @@ export function setRecentSearch(recentsSearch) {
         recentsSearch
     }
 }
+
+export function typeShowAll(contentShowAll) {
+    return { 
+        type : 'TYPE_SHOW_ALL_CONTENT',
+        contentShowAll
+    }
+}
