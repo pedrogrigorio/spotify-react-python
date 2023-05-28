@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react"
 import { useParams } from "react-router-dom"
 import { connect } from "react-redux"
 import { get_one_playlist, get_all_playlists, get_liked_songs_playlist, unlike_song, like_song, get_one_liked_song } from '../../services/mongodb'
+import { getSong } from '../../services/deezer'
 import styles from './Playlist.module.css'
 import MusicNote from "../../components/icons/MusicNote"
 import Play2 from "../../components/icons/Play2"
@@ -16,9 +17,10 @@ import useWindowWidth from "../../hooks/useWindowWidth"
 import SongOptions from "../../components/ui/SongOptions/SongOptions"
 import PlaylistOptions from "./components/PlaylistOptions"
 import * as PlayActions from '../../store/actions/play'
+import * as SearchActions from '../../store/actions/search'
 import convertDate from "../../helpers/convertDate"
 
-function Playlist({activeSong, songMetaData, actionOccurred, isPlaying, setIsPlaying}) {
+function Playlist({activeSong, songMetaData, actionOccurred, isPlaying, setIsPlaying, setSongMetaData, setSongTrackData, setActiveSong, setActiveIndex}) {
 
     const {id} = useParams()
     const width = useWindowWidth()
@@ -117,6 +119,24 @@ function Playlist({activeSong, songMetaData, actionOccurred, isPlaying, setIsPla
 
     const playlistOptionsClose = () => setPlaylistOptions(initialPlaylistOptions)
 
+    const handlePlay = async (songs) => {
+        if (songs.some(song => song.id === songMetaData.id)) {
+            setIsPlaying(!isPlaying)
+        }
+        else {
+            if (songs.length > 0) {
+                const audio = (await getSong(songs[0].id)).audio
+                console.log(audio)
+                setSongTrackData(audio)
+                setSongMetaData(songs[0].title, songs[0].artist, songs[0].cover, songs[0].id)
+                
+                setActiveIndex(songs[0].id)
+                setActiveSong({[songs[0].id]: true})
+                setIsPlaying(true)
+            }
+        }
+    }
+
     if (!playlist) {
         return <div className={styles.container}>Playlist not found</div>;
     }
@@ -159,7 +179,7 @@ function Playlist({activeSong, songMetaData, actionOccurred, isPlaying, setIsPla
                 <div className={styles.content_background_gradient} style={{ backgroundColor: `rgb(${playlist.color_theme[0]}, ${playlist.color_theme[1]}, ${playlist.color_theme[2]})`}}></div>
                 <div className={styles.playlist_interaction_container}>
                     <div className={styles.playlist_interactions}>
-                        <button className={styles.play_button} onClick={() => setIsPlaying(!isPlaying)}>
+                        <button className={styles.play_button} onClick={() => handlePlay(playlist.songs)}>
                             <Play2 size='28' fill='black' active={playlist.songs.some(song => song.id === songMetaData.id) ? isPlaying : false}/>
                         </button>
                         <button onClick={handlePlaylistOptions} ref={playlistOptionsRef}>
@@ -250,7 +270,11 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    setIsPlaying: (status) => dispatch(PlayActions.setIsPlaying(status))
+    setIsPlaying: (status) => dispatch(PlayActions.setIsPlaying(status)),
+    setSongMetaData: (title, artist, img, index) => dispatch(PlayActions.setSongMetaData(title, artist, img, index)),
+    setSongTrackData:(trackData) => dispatch(PlayActions.setSongTrackData(trackData)),
+    setActiveSong: (status) => dispatch(SearchActions.setActiveSong(status)),
+    setActiveIndex: (index) => dispatch(SearchActions.setActiveIndex(index))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Playlist)
