@@ -26,10 +26,10 @@ export async function getSong(index){
     return { audio }
 }
 
-export async function getTopContent() {
+export async function getTopAlbums() {
     let content
     
-    await api.get('/get_top_trends')
+    await api.get('/get_top_albums')
     .then(response => {
         content = response.data
     })
@@ -37,15 +37,27 @@ export async function getTopContent() {
     return { content }
 }
 
+export async function getTopSongs() {
+    let content
+    
+    await api.get('/get_top_songs')
+    .then(response => {
+        content = response.data
+    })
+
+    return { content }
+}
+
+
 export async function getRecentSearch() {
-    let recent
+    let content
     
     await api.get('/get_recents_search')
     .then(response => {
-        recent = response.data
+        content = response.data
     })
 
-    return { recent }
+    return { content }
 }
 
 export async function getGenres() {

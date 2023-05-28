@@ -1,9 +1,12 @@
 const INITIAL_STATE = {
-    updateHomeContent : {
-        album: {},
-        songs : {}, 
-        recentSearchs : {}
-    }, 
+    updateHomeContent: {
+        recents: [{title:null, content:[{title:null, artist:null, cover:null, id:null}]}],
+        songs: [{title:null, content:[{title:null, artist:null, cover:null, id:null}]}],
+        albums: [{title:null, content:[{title:null, artist:null, cover:null, id:null}]}],
+    },
+
+    showAllContent: [] 
+
 }
 
 
@@ -12,20 +15,38 @@ export default function home(state = INITIAL_STATE, action){
     
     if (action.type === 'SET_SONG_UPDATE_DATA') {
         return {
-            updateHomeContent : {
+            ...state, 
+            updateHomeContent : { 
                 ...state.updateHomeContent,
-                songs : action.updateSongData.songs,
-                album : action.updateSongData.album
+                songs : action.updateSongs
             }
         }
     }
 
-    else if (action.type === 'SET_RECENTS_SEARCHS') {
-        return { 
+    else if (action.type === 'SET_ALBUM_UPDATE_DATA') {
+        return {
+            ...state,
             updateHomeContent : {
                 ...state.updateHomeContent,
-                recentSearchs : action.recentsSearch
+                albums : action.updateAlbums
             }
+        }
+    }
+
+    else if (action.type === 'SET_RECENTS_UPDATE_DATA') {
+        return { 
+            ...state,
+            updateHomeContent : {
+                ...state.updateHomeContent,
+                recents : action.recentsSearch
+            }
+        }
+    }
+
+    else if (action.type === 'TYPE_SHOW_ALL_CONTENT') {
+        return { 
+            ...state,
+            showAllContent : action.contentShowAll
         }
     }
 

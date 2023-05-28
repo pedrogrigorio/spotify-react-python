@@ -21,16 +21,12 @@ import Youtube from './YoutubeEngine'
 
 function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songData, songMetaData, activeSong, setActiveSong, activeIndex}){
 
-    const audioRef = useRef()
     const [youtubeRef, setYotubeRef] = useState(null)
     const [volume, setVolume] = useState(100)
     const [duration, setDuration] = useState(0)
     const [currentTime, setCurrentTime] = useState(0)
 
-    // const handleTrackClick = (position) => {
-    //     audioRef.current.currentTime = position
-    // }
-
+    
     const handleTrackClick = (position) => {
         youtubeRef.seekTo(position)
     }
@@ -54,19 +50,6 @@ function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songDat
         }
     }, [youtubeRef, volume])
 
-    // useEffect(() => {
-    //     clearSettingSong()
-    //     if(isPlaying) {
-    //         audioRef.current.play()
-    //     }
-    //     else {
-    //         audioRef.current.pause()
-    //     }
-    // }, [audioRef, isPlaying, settingSong])
-    
-    // useEffect(() => {
-    //     audioRef.current.volume = volume
-    // }, [audioRef, volume])
 
     useEffect(() => {
         setActiveSong({[activeIndex]: isPlaying})
@@ -105,13 +88,6 @@ function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songDat
                 <div id={styles.connect_device}><ConnectDevice size="16" fill="white" /></div>
                 <div id={styles.volume_control}><VolumeSlider volume={volume} setVolume={setVolume}/></div>
                 <div id={styles.fullscren}><FullScreen size="14" fill="white" /></div>
-                {/* DEPRECATED 
-                    <Audio
-                    ref={audioRef}
-                    handleDuration={setDuration}
-                    handleCurrentTime={setCurrentTime}
-                    trackData={songData.trackData}
-                /> */}
                 <Youtube youtubeRef={setYotubeRef} handleDuration={setDuration} handleCurrentTime={setCurrentTime} trackData={songData.trackData}/>
             </div>
         </footer>
