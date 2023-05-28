@@ -56,18 +56,26 @@ function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
     const songOptionsClose = () => setSongOptions(initialSongOptions);
 
     const handleToggleLikeSong = async (index, status, song) => {
+        
         const updatedLikes = { ...songsLiked}
         updatedLikes[song.id] = status
         setSongsLike(updatedLikes)
 
         if (status) {
-            await like_song(song)
+            try {
+                await like_song(song)
+            }
+            catch {
+                console.log("some error that I don't know how to solve")
+            }
+            
         }
         else {
             const data = await get_one_liked_song(song.id)
             console.log(data)
             await unlike_song(data)
         }
+        
     }
 
     useEffect(() => {

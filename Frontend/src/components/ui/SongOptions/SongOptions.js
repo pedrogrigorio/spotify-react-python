@@ -69,7 +69,7 @@ function SongOptions({x, y, song, index, current_playlist, playlists, songOption
 		<div className={styles.song_options_container} ref={songOptionsRef} style={{top: `${cordY}px`, left: `${x-190}px`, opacity:`${cordY != 0 ? "1" : "0"}`}}>
       <ul className={styles.song_options}>
         <li>
-          {pathname != '/search' && (
+          {(pathname !== '/search' && pathname !== '/liked-songs') && (
 						<button onClick={deleteSong}>
           	  <span>Remover desta playlist</span>
           	</button>
