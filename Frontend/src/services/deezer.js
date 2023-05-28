@@ -57,5 +57,14 @@ export async function getRecentSearch() {
         content = response.data
     })
 
-    return { content }
+    return { recent }
+}
+
+export async function getGenres() {
+
+    const genres = await api.get('/genres')
+    
+    const response = genres.data
+
+    return response
 }

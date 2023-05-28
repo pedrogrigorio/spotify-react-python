@@ -3,6 +3,12 @@ from deezer import exceptions as deezer_exceptions
 from youtubesearchpython import VideosSearch
 import redis
 
+from PIL import Image
+from io import BytesIO
+import requests
+from colorthief import ColorThief
+import random
+
 class ApiRequests():
 
     def __init__(self) -> None:
@@ -120,7 +126,35 @@ class ApiRequests():
         img = self.client.get_track(id).album.cover_medium
         return img
         
-   
+    # def get_contrast_color(self, url):
+    #     # get predominant color in the middle of the image
+    #     response1 = requests.get(url)
+    #     img = Image.open(BytesIO(response1.content))
+
+    #     cropped_bytes  = BytesIO()
+    #     img.save(cropped_bytes, format='PNG')
+    #     cropped_bytes = cropped_bytes.getvalue()
+
+    #     ct = ColorThief(BytesIO(cropped_bytes))
+    #     dominant_color = ct.get_color(quality=1)
+
+    #     contrast_color = [255 - dominant_color[0], 255 - dominant_color[1], 255 - dominant_color[2]]
+    #     return contrast_color
+
+    def get_all_genres(self,):
+        bg = [[255,51,0], [115, 88, 255], [30, 50, 100], [232, 17, 91], [255, 200, 100], [83, 122, 161], 
+              [230, 30, 50], [20, 138, 8], [188, 89, 0], [0, 100, 80], [160, 195, 210], [30, 50, 100]]
+        random.seed(42)
+
+        genres = []
+        for genre in self.client.list_genres():
+            obj = {"id": genre.id, "name": genre.name, "coverUrl": genre.picture, "backgroundColor": random.choice(bg)}
+            genres.append(obj)
+
+        return genres
+    
+
+
 
     # Deprecated for now 
     # async def download_song_to_cache(self, song_id : int) -> None:

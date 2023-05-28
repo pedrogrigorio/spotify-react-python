@@ -129,6 +129,10 @@ async def delete_song(id: str):
 
 @app.get('/liked-song-id')
 async def get_one_liked_song_id(id):
-    print(id, "\n\n\n\n\n")
     response = await fetch_one_liked_song_id(id)
+    return response
+
+@app.get('/genres')
+async def get_all_genres():
+    response = api_requests.get_all_genres()
     return response

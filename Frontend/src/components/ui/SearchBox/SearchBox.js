@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { connect } from 'react-redux'
-import { searchEngine } from "../../../services/pytube"
+import { searchEngine } from "../../../services/deezer"
 import * as SearchActions from '../../../store/actions/search'
 import Search from '../../icons/Search'
 import styles from './SearchBox.module.css'
@@ -10,24 +10,14 @@ function SearchBox({setSearchData, clearOldRequests, setActiveIndex, setActiveSo
     const[searchContent, setSearchContent] = useState('')
 
     async function handleKeyDown(event){
-        if(event.key === "Enter"){
+        if(event.key === "Enter") {
+
             clearOldRequests()
-            const data = (await searchEngine(searchContent)).data
-            setSearchData(data)
 
-            // setActiveIndex(0)
-            // setActiveSong({})
-
-            /*
-            *   \/ check if any song in the new search is playing. \/
-            */
-            
-            // data.map((song, index) => {
-            //     if(song.id_deezer == songMetaData.id_deezer) {
-            //         setActiveIndex(index+1)
-            //         setActiveSong({[index+1]: isPlaying})
-            //     }
-            // }) 
+            if (searchContent !== '') {
+                const data = (await searchEngine(searchContent)).data
+                setSearchData(data)
+            }
         }
     }
 

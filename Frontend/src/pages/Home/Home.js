@@ -1,7 +1,8 @@
 import styles from './Home.module.css'
 import ToggleSongButton from './components/ToggleSongButton'
 import * as homeActions from '../../store/actions/home'
-import { getTopAlbums, getTopSongs, getRecentSearch } from '../../services/pytube'
+import musiclogo from '../../assets/img/baixados.jpg'
+import { getTopContent, getRecentSearch } from '../../services/deezer'
 import { useEffect } from 'react'
 import { connect } from 'react-redux'
   

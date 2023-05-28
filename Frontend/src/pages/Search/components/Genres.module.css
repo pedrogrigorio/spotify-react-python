@@ -1,0 +1,83 @@
+/* Container */
+
+.container {
+  margin-top: 32px;
+  padding: 0 16px;
+}
+
+.presentation {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 800px) {
+  .container {
+    padding: 0 24px;
+  }
+}
+
+/* title */
+
+.title {
+  margin-bottom: 16px;
+}
+
+.title h2 {
+  color: white;
+  font-size: 24px;
+  font-family: 'Circular Bold';
+}
+
+/* Genres */
+
+.genres {
+  display: grid;
+  grid-gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+}
+
+@media (min-width: 879px) {
+  .genres {
+    grid-gap: 18px;
+  }
+}
+
+@media (min-width: 1083px) {
+  .genres {
+    grid-gap: 24px;
+  }
+}
+
+.genre_card {
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.genre_card::after {
+  content: '';
+  display: block;
+  padding-bottom: 100%;
+}
+
+.genre_card img {
+  transform: rotate(25deg) translate(18%,-2%);
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+}
+
+.genre_card span {
+  font-size: 16px;
+  color: white;
+  font-family: 'Circular Bold';
+  padding: 16px;
+  position: absolute;
+  overflow-wrap: break-word;
+}
