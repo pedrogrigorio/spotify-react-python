@@ -75,23 +75,6 @@ function Playlist({activeSong, songMetaData, actionOccurred, isPlaying, setIsPla
         loadPlaylists()
         loadLikeSongs()
     }, [])
-    
-    // useEffect(() => {
-
-    //     const updatedLikes = {}
-
-    //     console.log(playlist)
-    //     // playlist.forEach((song, index) => {
-    //     //     const isLiked = likedSongsPlaylist.some(obj => obj.song.id === song.id)
-
-    //     //     if (isLiked) {
-    //     //         updatedLikes[song.id] = isLiked
-
-    //     //     }
-    //     // })
-
-    //     setSongsLike(updatedLikes)
-    // }, [playlist])
 
     const handleToggleLikeSong = async (index, status, song) => {
         const updatedLikes = { ...songsLiked}
@@ -99,7 +82,12 @@ function Playlist({activeSong, songMetaData, actionOccurred, isPlaying, setIsPla
         setSongsLike(updatedLikes)
 
         if (status) {
-            await like_song(song)
+            try {
+                await like_song(song)
+            }
+            catch {
+                console.log("some error that I don't know how to solve")
+            }
         }
         else {
             const data = await get_one_liked_song(song.id)

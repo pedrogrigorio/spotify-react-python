@@ -18,6 +18,11 @@
     display: flex;
 }
 
+.redirect {
+    width: 100%;
+    display: flex;
+}
+
 .context_menu li button {
     display: flex;
     width: 100%;

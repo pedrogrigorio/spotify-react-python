@@ -14,7 +14,7 @@ import useWindowWidth from '../../hooks/useWindowWidth'
 import { get_all_playlists, like_song, get_liked_songs_playlist, unlike_song, get_one_liked_song } from '../../services/mongodb'
 import Genres from './components/Genres'
 
-function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
+function Search({activeSong, songMetaData, searchResult, clearOldRequests, actionOccurred}) {
     
     const initialSongOptions = {show: false, x: 0, y: 0, song: {}}
     const [songOptions, setSongOptions] = useState(initialSongOptions)
@@ -29,19 +29,21 @@ function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
         clearOldRequests()
         setSongsLike({})
 
-        const loadPlaylists = async () => {
-            const data = await get_all_playlists();
-            setPlaylists(data)
-        }
-
         const loadLikeSongs = async () => {
             const data = await get_liked_songs_playlist()
             setLikedSongsPlaylist(data)
         }
 
-        loadPlaylists()
         loadLikeSongs()
     }, [])
+
+    useEffect(() => {
+        const loadPlaylists = async () => {
+            const data = await get_all_playlists();
+            setPlaylists(data)
+        }
+        loadPlaylists()
+    }, [actionOccurred])
 
     const handleRef = (index) => (ref) => {
         songOptionsRefs.current[index] = ref;
@@ -201,7 +203,8 @@ function Search({activeSong, songMetaData, searchResult, clearOldRequests}) {
 const mapStateToProps = state => ({
     searchResult: state.search.searchData,
     activeSong: state.search.activeSong,
-    songMetaData: state.play.songMetaData
+    songMetaData: state.play.songMetaData,
+    actionOccurred: state.playlist.actionOccurred
 })
 
 const mapDispatchToProps = dispatch => ({
