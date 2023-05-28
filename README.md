@@ -4,7 +4,8 @@
 </h1>
 
 <h1 align='center'>
-    <img src='https://im3.ezgif.com/tmp/ezgif-3-5469b8dc9d.gif' alt='gif_preview'/>
+    <img src='https://i.imgur.com/2hj1UBo.mp4' alt='gif_preview'/>
+    <!-- <img src='https://im3.ezgif.com/tmp/ezgif-3-5469b8dc9d.gif' alt='gif_preview'/> -->
 </h1>
 
 ## 📕 About
@@ -23,6 +24,7 @@ This repo contains a responsive Spotify Clone made with React, Redux, Axios, Pyt
 - Search: `/search`
 - Your library: `/library`
 - Liked songs: `/liked-songs`
+- Playlists: `/playlist/{playlist_id}`
 
 ## 📝 Next TO-DO
 
