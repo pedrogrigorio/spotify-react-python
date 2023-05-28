@@ -1,10 +1,10 @@
 <h1 align="center">
-    <img src='Frontend\src\assets\readme\spotify.png' />
+    <img src='Frontend\src\assets\readme\spotify.png' alt='spotify_logo'/>
     <!-- <p> Spotify Clone</p> -->
 </h1>
 
 <h1 align='center'>
-    <img src='https://im3.ezgif.com/tmp/ezgif-3-5469b8dc9d.gif' />
+    <img src='https://im3.ezgif.com/tmp/ezgif-3-5469b8dc9d.gif' alt='gif_preview'/>
 </h1>
 
 ## 📕 About
