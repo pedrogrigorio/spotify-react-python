@@ -84,6 +84,7 @@
     margin-top: 24px;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .playlists_root_container .content {
@@ -192,7 +193,9 @@
 *-------------------------------------------------- */
 
 .playlists_container {
-    height: 100%;
+    flex: 1;
+    max-height: calc(100% - 90px);
+    overflow-y: auto;
 }
 
 .playlists_container div {
@@ -211,6 +214,13 @@
     font-size: 13px;
     line-height: 32px;
     font-family: 'Circular Book';
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: initial;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
 .playlists li:hover {

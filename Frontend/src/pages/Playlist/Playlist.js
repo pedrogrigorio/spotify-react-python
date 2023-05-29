@@ -20,7 +20,7 @@ import * as PlayActions from '../../store/actions/play'
 import * as SearchActions from '../../store/actions/search'
 import convertDate from "../../helpers/convertDate"
 
-function Playlist({activeSong, songMetaData, actionOccurred, isPlaying, setIsPlaying, setSongMetaData, setSongTrackData, setActiveSong, setActiveIndex}) {
+function Playlist({activeSong, songMetaData, actionOccurred, isPlaying, setIsPlaying, setSongMetaData, setSongTrackData, setActiveSong, setActiveIndex, setPlaylistRedux, setSongIndexRedux}) {
 
     const {id} = useParams()
     const width = useWindowWidth()
@@ -133,6 +133,9 @@ function Playlist({activeSong, songMetaData, actionOccurred, isPlaying, setIsPla
                 setActiveIndex(songs[0].id)
                 setActiveSong({[songs[0].id]: true})
                 setIsPlaying(true)
+
+                setPlaylistRedux(songs)
+                setSongIndexRedux(0)
             }
         }
     }
@@ -217,7 +220,15 @@ function Playlist({activeSong, songMetaData, actionOccurred, isPlaying, setIsPla
                                         <div id={activeSong[song.id] ? `${styles.active}` : ""}>
                                             <span id={songMetaData.id == song.id ? `${styles.active}` : ""}>{index+1}</span>
                                             <img src={equalizer} width='14' height='20'></img>
-                                            <ToggleSongButton index={song.id} title={song.title} artist={song.artist} img={song.cover}/>
+                                            <ToggleSongButton 
+                                                index={song.id} 
+                                                title={song.title} 
+                                                artist={song.artist} 
+                                                img={song.cover}
+                                                isSearch={false}
+                                                isPlaylist={true}
+                                                playlistSongs={playlist.songs} 
+                                                listIndex={index}/>
                                         </div>
                                     </div>
                                     <div className={styles.song_details}>
@@ -274,7 +285,9 @@ const mapDispatchToProps = dispatch => ({
     setSongMetaData: (title, artist, img, index) => dispatch(PlayActions.setSongMetaData(title, artist, img, index)),
     setSongTrackData:(trackData) => dispatch(PlayActions.setSongTrackData(trackData)),
     setActiveSong: (status) => dispatch(SearchActions.setActiveSong(status)),
-    setActiveIndex: (index) => dispatch(SearchActions.setActiveIndex(index))
+    setActiveIndex: (index) => dispatch(SearchActions.setActiveIndex(index)),
+    setPlaylistRedux: (playlist) => dispatch(PlayActions.setPlaylist(playlist)),
+    setSongIndexRedux: (index) => dispatch(PlayActions.setSongIndex(index)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Playlist)
