@@ -3,15 +3,14 @@
     background-color: #121212;
     height: 100%;
     overflow: auto; 
-    padding: 32px 32px 0px;
+    padding: 62px 32px 0px;
     min-width: 494px;
 
 }
 
 
-
 .section{
-    content-visibility: auto;
+    content-visibility:auto;
     margin-bottom: 16px;
     position:relative;
     max-width: 100%;
@@ -61,8 +60,6 @@
     display: grid;
     grid-gap: 24px;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    grid-template-rows: 1fr;
-    grid-auto-rows:0cm;
  
 }
 
