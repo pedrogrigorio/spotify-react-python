@@ -16,6 +16,7 @@
     color: #979797;
     font-size: 12px;
     font-family: "Circular Medium";
+    white-space: nowrap;
 }
 
 .timer_end{
@@ -23,4 +24,5 @@
     color: #979797;
     font-size: 12px;
     font-family: "Circular Medium";
+    white-space: nowrap;
 }

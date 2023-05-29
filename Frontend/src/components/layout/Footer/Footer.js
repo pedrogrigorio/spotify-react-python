@@ -17,6 +17,7 @@ import * as PlayActions from '../../../store/actions/play'
 import * as SearchActions from '../../../store/actions/search'
 import { getSong } from "../../../services/deezer"
 import Youtube from './YoutubeEngine'
+import { get_liked_songs_playlist, get_one_liked_song, like_song, unlike_song } from "../../../services/mongodb"
 
 function Footer({isPlaying, settingSong, clearSettingSong, setSettingSong, setIsPlaying, songData, songMetaData, activeSong, setActiveSong, activeIndex, songIndex, playlist, setSongMetaData, setSongTrackData, setActiveIndex, setSongIndex}) {
 
@@ -27,6 +28,9 @@ function Footer({isPlaying, settingSong, clearSettingSong, setSettingSong, setIs
 
     const [shuffleActive, setShuffleActive] = useState(false)
     const [loopActive, setLoopActive] = useState(false)
+
+    const [likedSongsPlaylist, setLikedSongsPlaylist] = useState([])
+    const [isLiked, setIsLiked] = useState()
 
     const loadAudio = async (newSongIndex) => {
         const newSong = playlist[newSongIndex]
@@ -39,6 +43,16 @@ function Footer({isPlaying, settingSong, clearSettingSong, setSettingSong, setIs
         setIsPlaying(true)
         setSongIndex(newSongIndex)
     }
+
+    useEffect(() => {
+        const loadLikeSongs = async () => {
+            const data = await get_liked_songs_playlist()
+            setLikedSongsPlaylist(data)
+            setIsLiked(likedSongsPlaylist.some(obj => obj.song.id === songMetaData.id))
+        }
+
+        loadLikeSongs()
+    }, [songMetaData])
 
     useEffect(() => {
         if (!playlist) {
@@ -136,14 +150,18 @@ function Footer({isPlaying, settingSong, clearSettingSong, setSettingSong, setIs
     return (
         <footer className={styles.playbar_container}>
             <div className={styles.footerLeft}>
-                {songMetaData.title != "" && <>
-                    <img src={songMetaData.img} alt="Song"/>
-                    <div className={styles.songDetails}>
-                        <p id={styles.title}>{songMetaData.title}</p>
-                        <p id={styles.artist}>{songMetaData.artist}</p> 
-                    </div>
-                    <div id={styles.like}><Like size={20}/></div>
-                </>}
+                {songMetaData.title != "" && 
+                    <>
+                        <img src={songMetaData.img} alt="Song"/>
+                        <div className={styles.songDetails}>
+                            <p id={styles.title}>{songMetaData.title}</p>
+                            <p id={styles.artist}>{songMetaData.artist}</p> 
+                        </div>
+                        <div id={styles.like}>
+                            <Like size={20} active={isLiked}/>
+                        </div>
+                    </>
+                }
             </div>
 
             <div className={styles.footerMid}>
@@ -170,7 +188,7 @@ function Footer({isPlaying, settingSong, clearSettingSong, setSettingSong, setIs
                         <Repeat size="16" fill="#bababa" active={loopActive}/>
                     </div>
                 </ul>
-                <PlayerSlider currentTime={currentTime} duration={duration} handleTrackClick={handleTrackClick} />
+                <PlayerSlider currentTime={currentTime} duration={duration} handleTrackClick={handleTrackClick} songData={songMetaData}/>
             </div>
 
             <div className={styles.footerRight}>

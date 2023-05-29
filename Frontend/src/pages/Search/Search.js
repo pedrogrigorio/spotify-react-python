@@ -60,6 +60,7 @@ function Search({activeSong, songMetaData, searchResult, clearOldRequests, actio
 
     const handleToggleLikeSong = async (index, status, song) => {
         
+        console.log(song)
         const updatedLikes = { ...songsLiked}
         updatedLikes[song.id] = status
         setSongsLike(updatedLikes)
