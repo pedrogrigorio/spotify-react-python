@@ -103,6 +103,11 @@ function Search({activeSong, songMetaData, searchResult, clearOldRequests, actio
                 <div className={styles.navbar_view}></div>
                 <div className={styles.container}>
                     <Genres />
+                    <div className={styles.search_footer}>
+                        <div>
+                            <hr />
+                        </div>
+                    </div>
                 </div>
             </>
         )

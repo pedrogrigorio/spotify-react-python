@@ -15,6 +15,21 @@
     padding-left: 2px;
 }
 
+.search_footer {
+    margin-top: 40px;
+}
+
+.search_footer div {
+    padding: 8px 16px 100px;
+    width: 100%;
+}
+
+.search_footer hr {
+    margin-top: 32px;
+    border-color: rgba(255, 255, 255, 0.1);
+    height: 1px;
+}
+
 /* ================================================
 *   1 - Categories
 *================================================== */
@@ -339,6 +354,7 @@ div#forward svg{
 .song_duration .like#active {
     opacity: 1;
 }
+
 /* 
 *   2.2.5 - Media Queries
 *-------------------------------------------------- */
@@ -354,3 +370,4 @@ div#forward svg{
         grid-template-areas: "song_index song_details song_album song_duration";
     }
 }
+
