@@ -6,10 +6,12 @@ import { create_playlist, delete_playlist, get_one_playlist } from '../../../ser
 import { connect } from 'react-redux'
 import * as PlaylistActions from '../../../store/actions/playlist'
 import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 function ContextMenu({x, y, playlist, contextMenuClose, setActionOccurred, setModal, setPlaylist}) {
 
   const contextMenuRef = useRef(null)
+  const location = useLocation();
   useOnClickOutside(contextMenuRef, contextMenuClose)
 
   async function handleCreatePlaylist() {
@@ -42,11 +44,19 @@ function ContextMenu({x, y, playlist, contextMenuClose, setActionOccurred, setMo
               </button>
             </li>
             <li>
-              <Link to='/' className={styles.redirect}>
-                <button onClick={handleDeletePlaylist}>
-                  <span>Apagar</span>
-                </button>
-              </Link>
+              {location.pathname === `/playlist/${playlist._id}` ? (
+                <Link to='/' className={styles.redirect}>
+                  <button onClick={handleDeletePlaylist}>
+                    <span>Apagar</span>
+                  </button>
+                </Link>
+              ) : (
+                <Link className={styles.redirect}>
+                  <button onClick={handleDeletePlaylist}>
+                    <span>Apagar</span>
+                  </button>
+                </Link>
+              )}
             </li>
             <hr />
           </>

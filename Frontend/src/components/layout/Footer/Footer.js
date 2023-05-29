@@ -15,18 +15,90 @@ import Audio from "./Audio"
 import Like from "../../icons/Like"
 import * as PlayActions from '../../../store/actions/play'
 import * as SearchActions from '../../../store/actions/search'
-import { memo } from "react"
-import { useMemo } from "react"
+import { getSong } from "../../../services/deezer"
 import Youtube from './YoutubeEngine'
 
-function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songData, songMetaData, activeSong, setActiveSong, activeIndex}){
+function Footer({isPlaying, settingSong, clearSettingSong, setSettingSong, setIsPlaying, songData, songMetaData, activeSong, setActiveSong, activeIndex, songIndex, playlist, setSongMetaData, setSongTrackData, setActiveIndex, setSongIndex}) {
 
     const [youtubeRef, setYotubeRef] = useState(null)
     const [volume, setVolume] = useState(100)
     const [duration, setDuration] = useState(0)
     const [currentTime, setCurrentTime] = useState(0)
 
-    
+    const [shuffleActive, setShuffleActive] = useState(false)
+    const [loopActive, setLoopActive] = useState(false)
+
+    const loadAudio = async (newSongIndex) => {
+        const newSong = playlist[newSongIndex]
+
+        const audio = (await getSong(newSong.id)).audio
+        setSongTrackData(audio)
+        setSongMetaData(newSong.title, newSong.artist, newSong.cover, newSong.id)
+        setActiveIndex(newSong.id)
+        setActiveSong({[newSong.id]: true})
+        setIsPlaying(true)
+        setSongIndex(newSongIndex)
+    }
+
+    useEffect(() => {
+        if (!playlist) {
+            return
+        }
+        if (currentTime !== duration) {
+            return
+        }
+        if (songIndex === (playlist.length - 1) && !loopActive && !shuffleActive) {
+            setCurrentTime(0)
+            setIsPlaying(false)
+            setActiveSong({[songIndex]: !activeSong[songIndex]})
+            return
+        }
+        if (songIndex === (playlist.length - 1) && loopActive) {
+            loadAudio(0)
+            return
+        }
+        if (shuffleActive) {
+            const randomIndex = Math.floor(Math.random() * playlist.length)
+            console.log(randomIndex)
+            loadAudio(randomIndex)
+            return
+        }
+        loadAudio(songIndex+1)
+        
+    }, [currentTime])
+
+    const handleControls = (type) => {
+        if (type === 'shuffle') {
+            setShuffleActive(!shuffleActive)
+            setLoopActive(false)
+            console.log(shuffleActive)
+        }
+        if (type === 'loop') {
+            setLoopActive(!loopActive)
+            setShuffleActive(false)
+            console.log(loopActive)
+        }
+        if (!playlist) {
+            return
+        }
+        if (type === 'next' && songIndex === (playlist.length - 1)) {
+            return
+        }
+        if (type === 'next') {
+            loadAudio(songIndex+1)
+        }
+        if (type === 'prev' && currentTime > 1) {
+            youtubeRef.seekTo(0)
+            return
+        }
+        if (type === 'prev' && songIndex === 0) {
+            return
+        }
+        if (type === 'prev') {
+            loadAudio(songIndex-1)
+        }
+    }
+
     const handleTrackClick = (position) => {
         youtubeRef.seekTo(position)
     }
@@ -34,6 +106,7 @@ function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songDat
     useEffect(() => {
         clearSettingSong()
         if(youtubeRef !== null) {
+            console.log(youtubeRef)
             if(isPlaying) {
                 youtubeRef.playVideo()
             }
@@ -57,6 +130,7 @@ function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songDat
 
     function toggle() {
         setIsPlaying(!isPlaying)
+        setSettingSong(true)
     }
 
     return (
@@ -74,11 +148,27 @@ function Footer({isPlaying, settingSong, clearSettingSong, setIsPlaying, songDat
 
             <div className={styles.footerMid}>
                 <ul className={styles.icons}>
-                    <div id={styles.shuffle}><Shuffle size="17" fill="#bababa"/></div>
-                    <div id={styles.previous}><Previous size="14"/></div>
-                    <div id={styles.play} onClick={toggle}><PlayButton size="47" active={isPlaying}/></div>
-                    <div id={styles.next}><Next size="14"/></div>
-                    <div id={styles.repeat}><Repeat size="16" fill="#bababa"/></div>
+                    <div 
+                        className={styles.shuffle} 
+                        id={shuffleActive ? `${styles.active}` : ""}
+                        onClick={() => handleControls('shuffle')}
+                    >
+                        <Shuffle size="17" fill="#bababa" active={shuffleActive}/>
+                    </div>
+                    <div id={styles.previous} onClick={() => handleControls('prev')}><Previous size="14"/></div>
+                    {songMetaData.title !== '' ? (
+                        <div id={styles.play} onClick={toggle}><PlayButton size="47" active={isPlaying}/></div>
+                    ) : (
+                        <div id={styles.play_inactive}><PlayButton size="47" active={true} fill='#B3B3B3'/></div>
+                    )}
+                    <div id={styles.next} onClick={() => handleControls('next')}><Next size="14"/></div>
+                    <div 
+                        className={styles.repeat} 
+                        id={loopActive ? `${styles.active}` : ""}
+                        onClick={() => handleControls('loop')}
+                    >
+                        <Repeat size="16" fill="#bababa" active={loopActive}/>
+                    </div>
                 </ul>
                 <PlayerSlider currentTime={currentTime} duration={duration} handleTrackClick={handleTrackClick} />
             </div>
@@ -100,13 +190,20 @@ const mapStateToProps = state => ({
     songData: state.play.songData,
     songMetaData: state.play.songMetaData,
     activeSong: state.search.activeSong,
-    activeIndex: state.search.activeIndex
+    activeIndex: state.search.activeIndex,
+    playlist: state.play.playlist,
+    songIndex: state.play.songIndex
 })
 
 const mapDispatchToProps = dispatch => ({
     setIsPlaying: (status) => dispatch(PlayActions.setIsPlaying(status)),
     clearSettingSong: (bool) => dispatch(PlayActions.clearSettingSong(bool)),
-    setActiveSong: (status) => dispatch(SearchActions.setActiveSong(status))
+    setActiveSong: (status) => dispatch(SearchActions.setActiveSong(status)),
+    setActiveIndex: (index) => dispatch(SearchActions.setActiveIndex(index)),
+    setSongMetaData: (title, artist, img, index) => dispatch(PlayActions.setSongMetaData(title, artist, img, index)),
+    setSongTrackData:(trackData) => dispatch(PlayActions.setSongTrackData(trackData)),
+    setSettingSong: (status) => dispatch(PlayActions.setSettingSong(status)),
+    setSongIndex: (index) => dispatch(PlayActions.setSongIndex(index)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(memo(Footer))
+export default connect(mapStateToProps, mapDispatchToProps)(Footer)

@@ -2,7 +2,7 @@ const INITIAL_STATE = {
 
     searchData: [],
     activeIndex: 0,
-    activeSong: {}
+    activeSong: {},
 }
 
 export default function search(state = INITIAL_STATE, action) {
@@ -35,6 +35,6 @@ export default function search(state = INITIAL_STATE, action) {
             activeSong: action.status
         }
     }
-    
+
     return state 
 }

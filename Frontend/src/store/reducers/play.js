@@ -8,7 +8,9 @@ const INITIAL_STATE = {
         artist: "", 
         img: "", 
         id: null
-    }
+    },
+    playlist: null,
+    songIndex: 0,
 } 
 
 export default function play(state = INITIAL_STATE, action) {
@@ -49,5 +51,26 @@ export default function play(state = INITIAL_STATE, action) {
         }
     }
 
+    else if (action.type === 'SET_PLAYLIST') {
+        return {
+            ...state,
+            playlist: action.playlist
+        }
+    }
+
+    else if (action.type === 'SET_SONG_INDEX') {
+        return {
+            ...state,
+            songIndex: action.index
+        }
+    }
+
+    else if (action.type === 'SET_SETTING_SONG') {
+        return {
+            ...state,
+            settingSong: state.status
+        }
+    }
+    
     return state 
 }

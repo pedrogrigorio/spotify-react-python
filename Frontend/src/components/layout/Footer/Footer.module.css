@@ -85,7 +85,7 @@
     align-items: center;
 }
 
-.icons #shuffle{
+.icons .shuffle{
     position: relative;
     top: 2px;
     right: 44px;
@@ -97,13 +97,14 @@
     right: 19px;
 }
 
-.icons #play{
+.icons #play,
+.icons #play_inactive {
     position: relative;
     top: 5px;
     right: 2px;
 }
 
-.icons #play:hover{
+.icons #play:hover {
     transform: scale(1.05);
     transition: .1s;
 }
@@ -114,17 +115,47 @@
     left: 16px;
 }
 
-.icons #repeat{
+.icons .repeat{
     position: relative;
     top: 2px;
     left: 41px;
 }
 
-.icons :hover{
+.icons .shuffle:hover,
+.icons #previous:hover,
+.icons #next:hover,
+.icons .repeat:hover,
+.icons #play:hover {
     cursor: pointer;
     filter: brightness(130%);
 }
-  
+
+.shuffle#active::after {
+    background-color: white;
+    border-radius: 50%;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 4px;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 4px;
+}
+
+.repeat#active::after {
+    content: "";
+    background-color: white;
+    border-radius: 50%;
+    bottom: 0;
+    display: block;
+    height: 4px;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 4px;
+}
+
 /* RIGHT */
 
 .footerRight {

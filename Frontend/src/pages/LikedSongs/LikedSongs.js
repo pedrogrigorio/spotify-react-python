@@ -11,10 +11,12 @@ import ToggleSongButton from '../Search/components/ToggleSongButton'
 import Like from '../../components/icons/Like'
 import useWindowWidth from "../../hooks/useWindowWidth"
 import SongOptions from "../../components/ui/SongOptions/SongOptions"
+import * as SearchActions from '../../store/actions/search'
 import * as PlayActions from '../../store/actions/play'
 import convertDate from "../../helpers/convertDate"
+import { getSong } from "../../services/deezer"
 
-function LikedSongs({activeSong, songMetaData, actionOccurred, isPlaying, setIsPlaying}) {
+function LikedSongs({activeSong, songMetaData, actionOccurred, isPlaying, setIsPlaying, setSongMetaData, setSongTrackData, setActiveSong, setActiveIndex, setPlaylistRedux, setSongIndexRedux}) {
 
     const width = useWindowWidth()
     const [playlist, setPlaylist] = useState()
@@ -25,10 +27,18 @@ function LikedSongs({activeSong, songMetaData, actionOccurred, isPlaying, setIsP
     const [songOptions, setSongOptions] = useState(initialSongOptions)
     const [playlists, setPlaylists] = useState([])
 
+    const [songs, setSongs] = useState([])
     const loadPlaylist = async () => {
         const data = await get_liked_songs_playlist()
         setPlaylist(data)
         setTotalSongs(data.length)
+
+        const array = []
+        data.forEach((song) => {
+            array.push(song.song)
+        })
+
+        setSongs(array)
     }
 
     useEffect(() => {
@@ -63,6 +73,29 @@ function LikedSongs({activeSong, songMetaData, actionOccurred, isPlaying, setIsP
         loadPlaylist()
     }
 
+    const handlePlay = async () => {
+        console.log(songs)
+        if (songs.some(song => song.id === songMetaData.id)) {
+            setIsPlaying(!isPlaying)
+        }
+        else {
+            if (songs.length > 0) {
+                console.log(songs[0].id)
+                const audio = (await getSong(songs[0].id)).audio
+                console.log(audio)
+                setSongTrackData(audio)
+                setSongMetaData(songs[0].title, songs[0].artist, songs[0].cover, songs[0].id)
+                
+                setActiveIndex(songs[0].id)
+                setActiveSong({[songs[0].id]: true})
+                setIsPlaying(true)
+
+                setPlaylistRedux(songs)
+                setSongIndexRedux(0)
+            }
+        }
+    }
+
     if (!playlist) {
         return null;
     }
@@ -94,8 +127,8 @@ function LikedSongs({activeSong, songMetaData, actionOccurred, isPlaying, setIsP
                 <div className={styles.content_background_gradient}></div>
                 <div className={styles.playlist_interaction_container}>
                     <div className={styles.playlist_interactions}>
-                        <button className={styles.play_button} onClick={() => setIsPlaying(!isPlaying)}>
-                            <Play2 size='28' fill='black' active={playlist.some(song => song.song.id === songMetaData.id) ? isPlaying : false}/>
+                        <button className={styles.play_button} onClick={() => handlePlay(playlist)}>
+                            <Play2 size='28' fill='black' active={songs.some(song => song.id === songMetaData.id) ? isPlaying : false}/>
                         </button>
                     </div>
                 </div>
@@ -176,7 +209,13 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    setIsPlaying: (status) => dispatch(PlayActions.setIsPlaying(status))
+    setIsPlaying: (status) => dispatch(PlayActions.setIsPlaying(status)),
+    setSongMetaData: (title, artist, img, index) => dispatch(PlayActions.setSongMetaData(title, artist, img, index)),
+    setSongTrackData:(trackData) => dispatch(PlayActions.setSongTrackData(trackData)),
+    setActiveSong: (status) => dispatch(SearchActions.setActiveSong(status)),
+    setActiveIndex: (index) => dispatch(SearchActions.setActiveIndex(index)),
+    setPlaylistRedux: (playlist) => dispatch(PlayActions.setPlaylist(playlist)),
+    setSongIndexRedux: (index) => dispatch(PlayActions.setSongIndex(index)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LikedSongs)

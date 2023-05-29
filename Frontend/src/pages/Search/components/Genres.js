@@ -8,8 +8,13 @@ export default function Genres() {
 
   useEffect(() => {
     const loadGenres = async () => {
-      const data = await getGenres()
-      setGenres(data)
+      try {
+        const data = await getGenres()
+        setGenres(data)
+      }
+      catch {
+        console.log('tratar erro')
+      }
     }
 
     loadGenres()

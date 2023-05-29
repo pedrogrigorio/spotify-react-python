@@ -9,7 +9,7 @@ import * as PlayActions from '../../store/actions/play'
 import * as SearchActions from '../../store/actions/search'
 import { getSong } from '../../services/deezer'
 
-function Library({actionOccurred, songMetaData, isPlaying, setIsPlaying, setSongMetaData, setSongTrackData, setActiveIndex, setActiveSong}){
+function Library({actionOccurred, songMetaData, isPlaying, setIsPlaying, setSongMetaData, setSongTrackData, setActiveIndex, setActiveSong, setPlaylistRedux, setSongIndexRedux}){
 
   const [playlists, setPlaylists] = useState()
   
@@ -39,6 +39,9 @@ function Library({actionOccurred, songMetaData, isPlaying, setIsPlaying, setSong
         setActiveIndex(playlist.songs[0].id)
         setActiveSong({[playlist.songs[0].id]: true})
         setIsPlaying(true)
+
+        setPlaylistRedux(playlist.songs)
+        setSongIndexRedux(0)
       }
     }
   }
@@ -86,7 +89,9 @@ const mapDispatchToProps = dispatch => ({
   setSongMetaData: (title, artist, img, index) => dispatch(PlayActions.setSongMetaData(title, artist, img, index)),
   setSongTrackData:(trackData) => dispatch(PlayActions.setSongTrackData(trackData)),
   setActiveSong: (status) => dispatch(SearchActions.setActiveSong(status)),
-  setActiveIndex: (index) => dispatch(SearchActions.setActiveIndex(index))
+  setActiveIndex: (index) => dispatch(SearchActions.setActiveIndex(index)),
+  setPlaylistRedux: (playlist) => dispatch(PlayActions.setPlaylist(playlist)),
+  setSongIndexRedux: (index) => dispatch(PlayActions.setSongIndex(index)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Library)

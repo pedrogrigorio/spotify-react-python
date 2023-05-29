@@ -165,7 +165,15 @@ function Search({activeSong, songMetaData, searchResult, clearOldRequests, actio
                                         <div id={activeSong[song.id] ? `${styles.active}` : ""}>
                                             <span id={songMetaData.id === song.id ? `${styles.active}` : ""}>{index+1}</span>
                                             <img src={equalizer} width='14' height='20' alt=''></img>
-                                            <ToggleSongButton index={song.id} title={song.title} artist={song.artist} img={song.cover}/>
+                                            <ToggleSongButton 
+                                                index={song.id} 
+                                                title={song.title} 
+                                                artist={song.artist} 
+                                                img={song.cover} 
+                                                isSearch={true}
+                                                isPlaylist={false}
+                                                listIndex={index}
+                                            />
                                         </div>
                                     </div>
                                     <div className={styles.song_details}>
@@ -213,7 +221,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    clearOldRequests: () => dispatch(SearchActions.clearOldRequests()),
+    clearOldRequests: () => dispatch(SearchActions.clearOldRequests())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search)
