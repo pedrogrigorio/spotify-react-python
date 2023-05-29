@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import * as homeActions from '../../store/actions/home'
 import {getTopAlbums, getTopSongs , getRecentSearch } from '../../services/deezer'
 import { useEffect, useState } from 'react'
-import ShowAll from './components/ShowAll'
 import { connect } from 'react-redux'
   
 
@@ -22,6 +21,11 @@ function Home(props){
 
         updatePage() 
     },[])
+
+    const handleTypeContent = (category, type) => {
+        props.typeShowAll(category)
+        props.typeNameShowAll(type)
+    }
 
 
     let contentList = []; 
@@ -53,7 +57,7 @@ function Home(props){
                             <h2>{props.updateHomeContent[category][0].title}</h2>
                             {props.updateHomeContent[category][0].title && (
                             <Link to={`/showall/${props.updateHomeContent[category][0].title}`}>
-                            <button onClick= { () => {props.typeShowAll(contentList)} }className={styles.showall}>
+                            <button onClick= { () => {handleTypeContent(category,props.updateHomeContent[category][0].title)} }className={styles.showall}>
                                 <h4>Mostrar tudo</h4>
                             </button>
                             </Link> 
@@ -82,7 +86,8 @@ const mapDispatchToProps = dispatch => ({
     setTopSongs: (updateSongData) => dispatch(homeActions.setTopSongs(updateSongData)),
     setTopAlbums: (updateAlbumData) => dispatch(homeActions.setTopAlbums(updateAlbumData)),
     setRecentsSearch: (updateRecentData) => dispatch(homeActions.setRecentSearch(updateRecentData)),
-    typeShowAll: (ShowAllContent) => dispatch(homeActions.typeShowAll(ShowAllContent))
+    typeShowAll: (typeShowAll) => dispatch(homeActions.typeShowAll(typeShowAll)),
+    typeNameShowAll: (typeNameShowAll) => dispatch(homeActions.typeNameShow(typeNameShowAll))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
