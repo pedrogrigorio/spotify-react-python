@@ -5,7 +5,9 @@ const INITIAL_STATE = {
         albums: [{title:null, content:[{title:null, artist:null, cover:null, id:null}]}],
     },
 
-    showAllContent: [] 
+    typeShowAll: null,
+
+    typeNameShowAll: null
 
 }
 
@@ -46,7 +48,14 @@ export default function home(state = INITIAL_STATE, action){
     else if (action.type === 'TYPE_SHOW_ALL_CONTENT') {
         return { 
             ...state,
-            showAllContent : action.contentShowAll
+            typeShowAll : action.typeShowAll
+        }
+    }
+
+    else if (action.type === 'TYPE_NAME_SHOW_ALL_CONTENT') {
+        return { 
+            ...state,
+            typeNameShowAll : action.typeNameShowAll
         }
     }
 

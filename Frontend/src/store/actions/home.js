@@ -19,9 +19,18 @@ export function setRecentSearch(recentsSearch) {
     }
 }
 
-export function typeShowAll(contentShowAll) {
+export function typeShowAll(typeShowAll) {
     return { 
         type : 'TYPE_SHOW_ALL_CONTENT',
-        contentShowAll
+        typeShowAll
     }
 }
+
+export function typeNameShow(typeNameShowAll) {
+    return { 
+        type : 'TYPE_NAME_SHOW_ALL_CONTENT',
+        typeNameShowAll
+    }
+}
+
+
