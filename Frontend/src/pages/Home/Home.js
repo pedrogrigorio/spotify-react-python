@@ -1,5 +1,5 @@
 import styles from './Home.module.css'
-import ToggleSongButton from './components/ToggleSongButton'
+import ToggleSongButton from './components/ToggleSongHomeButton'
 import { Link } from "react-router-dom";
 import * as homeActions from '../../store/actions/home'
 import {getTopAlbums, getTopSongs , getRecentSearch } from '../../services/deezer'

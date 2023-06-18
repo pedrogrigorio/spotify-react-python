@@ -6,7 +6,7 @@ import PlayButton from '../../../components/icons/PlayButton'
 import Play2 from '../../../components/icons/Play'
 import Styles from '../Home.module.css'
 
-function ToggleSongButton(props) { 
+function ToggleSongHomeButton(props) { 
 
     return (
         <button className={Styles.playbtn} >
@@ -17,4 +17,4 @@ function ToggleSongButton(props) {
 
 }
 
-export default ToggleSongButton
+export default ToggleSongHomeButton

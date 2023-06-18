@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux'
 import styles from './ShowAll.module.css'
+import ToggleSongButton from './ToggleSongHomeButton'
 
 function ShowAll(props) {
 
@@ -20,7 +21,7 @@ function ShowAll(props) {
                 <div className={styles.card}>
                   <div className={styles.cover}>
                     <img src={content.cover} alt='cover' />
-                    {/* <ToggleSongButton artist={content.artist} title={content.title} cover={content.cover} id={content.id} /> */}
+                    <ToggleSongButton artist={content.artist} title={content.title} cover={content.cover} id={content.id} />
                   </div>
                   <div className={styles.text}>
                     <h2>{content.title}</h2>
