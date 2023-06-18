@@ -1,32 +1,37 @@
-version: "3"
+version: "3.7"
 
 services:
   frontend:
-    build: ./frontend
-    command: npm run start-watch
+    type: web
+    env:
+      node: true
+    repo: https://github.com/your-username/your-repo
+    buildCommand: npm install && npm run build
+    startCommand: npm run start-watch
     ports:
       - "3000:3000"
     volumes:
       - ./frontend:/user/app
       - /user/app/node_modules
-  
+
   backend:
-    build: ./backend
-    command: uvicorn main:app --reload --host 0.0.0.0
+    type: web
+    env:
+      node: true
+    repo: https://github.com/your-username/your-repo
+    buildCommand: npm install && npm run build
+    startCommand: uvicorn main:app --reload --host 0.0.0.0
     ports:
       - "8000:8000"
     volumes:
       - ./backend:/usr/app
 
   redis:
-    image: redis
+    type: redis
     ports:
       - 6379:6379
-  
+
   mongo:
-    image: mongo
+    type: mongo
     ports:
       - 27017:27017
-
-
-Create a complete render.yaml to be used to deploy to the render using this docker compose shown above
