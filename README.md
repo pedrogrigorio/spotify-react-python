@@ -17,6 +17,8 @@ This repo contains a responsive Spotify Clone made with React, Redux, Axios, Pyt
 - [Python](https://python.org/)
 - [RedisDB](https://redis.io/)
 - [Docker](https://www.docker.com/)
+- [Redux](https://redux.js.org/)
+- [Axios](https://axios-http.com/)
 
 ## 📄 Available pages
 
@@ -32,7 +34,7 @@ This repo contains a responsive Spotify Clone made with React, Redux, Axios, Pyt
 - [x] Play
 - [x] Search engine
 - [x] Home page
-- [ ] See more page
+- [x] See more page
 - [x] Search initial page
 - [x] Playlists
 - [x] Liked songs page
