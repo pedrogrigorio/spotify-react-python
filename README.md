@@ -15,6 +15,7 @@ This repo contains a responsive Spotify Clone made with React, Redux, Axios, Pyt
 ## 🔧 Tools
 - [React](http://reactjs.org/)
 - [Python](https://python.org/)
+- [MongoDB](https://www.mongodb.com/)
 - [RedisDB](https://redis.io/)
 - [Docker](https://www.docker.com/)
 - [Redux](https://redux.js.org/)
